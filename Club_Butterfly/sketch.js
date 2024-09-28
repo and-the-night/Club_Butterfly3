@@ -175,7 +175,7 @@ let panners = [];
 let waveforms = [];
 
 let debug = false;
-let schedulePlay = false;
+let schedulePlay = true;
 
 function preload() {
   listenerImg = loadImage("big-butterfly.png");
