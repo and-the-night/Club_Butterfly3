@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.9/Tone.js"></script>
+
+    <script type="text/javascript" src="/socket.io/socket.io.js"></script>
+    <script type="text/javascript">
+      let leftOffset, topOffset;
+      let visitorsP;
+      let listeners = [];
+      
+
+      window.addEventListener("load", function () {
+        visitorsP = document.getElementById('visitors');
+        visitorsP.innerHTML = listeners.length;
+
+        leftOffset = window.innerWidth / 2 - 350;
+        topOffset = window.innerHeight / 2 - 350;
+
+        // Constraints - what do we want?
+        let constraints = { audio: true, video: true };
+      });
+
+      var socket = io.connect();
+
+      socket.on("connect", function () {
+        console.log("Connected");
+      });
+
+      // Receive from any event
+      socket.on("positionChange", function (data) {
+        if (listeners.length == 0) push(data);
+
+        let listener = listeners.find((l) => {
+          return l.id == data.id;
+        });
+
+        if (listener) {
+          // console.log("listener already exists!");
+          listener.x = data.x;
+          listener.y = data.y;
+          listener.a = data.a;
+        } else {
+          console.log("new listener");
+          listeners.push(data);
+          updateListenersNumber();
+        }
+      });
+
+      socket.on("listenerDisconnected", function (id) {
+        let listenerIndex = listeners.findIndex((l) => {
+          return l.id == id;
+        });
+
+        listeners.splice(listenerIndex, 1);
+        updateListenersNumber();
+      });
+
+      let sendPosition = function (pos) {
+        socket.emit("positionChange", pos);
+      };
+
+      let updateListenersNumber = () => {
+        visitorsP.innerHTML = listeners.length;
+      };
+    </script>
+
+    <link rel="stylesheet" type="text/css" href="style.css" />
+    <meta charset="utf-8" />
+  </head>
+  <body>
+    <main></main>
+    <p>You and <span id="visitors"></span> other butterflies are currently in</p>
+    <h1>Club Butterfly</h1>
+    <p>
+      Club Butterfly is an interactive musical experience that allows participants to control and manipulate music through their movement in space. Using the mobile device built in sensors, the app detects the participant movements and change the music in their headphones accordingly. This project aims to bring concepts of adaptive, immersive and non-linear music, common in video games, into real life. As participants are not confined to a specific space and can experience this project everywhere they wish to, the app creates a virtual space that brings together people from everywhere in the worls into one shared experience.
+    </p>
+    <script src="vehicle.js"></script>
+    <script src="draggable.js"></script>
+    <script src="sketch.js"></script>
+
+  </body>
+</html>

@@ -1,0 +1,108 @@
+@import url('https://fonts.googleapis.com/css2?family=Yeseva+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&display=swap');
+
+html,
+body {
+  margin: 0;
+  padding: 20px;
+  background: black;
+  color: #ff00f2;
+}
+canvas {
+  display: block;
+  border: 3px solid white;
+}
+
+body.desktop main {
+  position: absolute;
+  /*right: calc((100vh - 806px) / 2);*/
+  right: 50px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+body.mobile main {
+  display: table;
+  margin: 10px auto;
+}
+
+h1 {
+  font-size: 70px;
+  font-family: "Yeseva One", serif;
+  font-weight: 400;
+  font-style: italic;
+  margin: 0;
+}
+
+body.mobile h1 {
+  text-align: center;
+}
+
+h2 {
+  font-size: 30px;
+  font-family: "Yeseva One", serif;
+  font-weight: 400;
+  font-style: italic;
+  margin: 40px 0;
+}
+
+p {
+  font-family: "Jost", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 200;
+  font-style: normal;
+  font-size: 24px;
+}
+
+body.desktop p {
+  width: calc(100% - 900px);
+}
+
+body.mobile p {
+  font-weight: 400;
+}
+
+button {
+  width: 50px;
+  height: 50px;
+  font-size: 38px;
+  font-weight: bold;
+  margin: 20px 20px 0 0 ;
+  background: #ff00f2;
+  border: none;
+  transition: background 100ms;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #ff82f9;
+}
+
+button:active {
+  background: white;
+}
+
+body.mobile button {
+  display: table;
+  width: 200px;
+  height: 100px;
+  text-align: center;
+  font-family: "Jost", sans-serif;
+  color: black;
+  margin: 20px auto;
+}
+
+#thevideo {
+  position: absolute;
+}
+
+#thecanvas {
+  display: none;
+}
+
+.listener-video {
+  position: absolute;
+  width: 64px;
+  height: 48px;
+  filter: grayscale(100%);
+}
