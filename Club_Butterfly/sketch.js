@@ -190,9 +190,6 @@ function preload() {
 }
 
 function setup() {
-  p5lm = new p5LiveMedia(this, "DATA", null, "motion");
-  p5lm.on("data", newData);
-
   createCanvas(800, 800);
   colorMode(HSB, 100);
   angleMode(DEGREES);
