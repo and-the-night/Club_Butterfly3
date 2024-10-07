@@ -1,3 +1,5 @@
+let p5lm;
+
 // Device Detection
 let state;
 
@@ -188,6 +190,9 @@ function preload() {
 }
 
 function setup() {
+  p5lm = new p5LiveMedia(this, "DATA", null, "motion");
+  p5lm.on("data", newData);
+
   createCanvas(800, 800);
   colorMode(HSB, 100);
   angleMode(DEGREES);
@@ -244,36 +249,29 @@ function setup() {
   createElement("h2", "by &theNIGHT 2024");
 
   listener = new Draggable(20, 20, 32, 32, listenerImg);
-  autoListener = new Vehicle(100, 100, listenerImg);
+  autoListener = new Vehicle(width / 2, height - 100, listenerImg);
 
   let minRadius = width / 15;
   let maxRadius = width / 2;
 
-  areas[0] = new soundArea(width / 5, height / 5, 0, 0, minRadius, maxRadius);
+  areas[0] = new soundArea(
+    width / 2,
+    height - minRadius,
+    0,
+    0,
+    minRadius,
+    maxRadius
+  );
   areas[1] = new soundArea(
-    (width * 4) / 5,
-    height / 5,
+    width - minRadius,
+    height / 2,
     25,
     1,
     minRadius,
     maxRadius
   );
-  areas[2] = new soundArea(
-    (width * 4) / 5,
-    (height * 4) / 5,
-    50,
-    2,
-    minRadius,
-    maxRadius
-  );
-  areas[3] = new soundArea(
-    width / 5,
-    (height * 4) / 5,
-    75,
-    3,
-    minRadius,
-    maxRadius
-  );
+  areas[2] = new soundArea(width / 2, minRadius, 50, 2, minRadius, maxRadius);
+  areas[3] = new soundArea(minRadius, height / 2, 75, 3, minRadius, maxRadius);
 
   position = createVector(width / 2, height - 50);
   velocity = createVector(0, 0);

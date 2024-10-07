@@ -3,16 +3,21 @@
   <head>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.9/Tone.js"></script>
+    <script src="https://p5livemedia.itp.io/simplepeer.min.js"></script>
+    <script src="https://p5livemedia.itp.io/socket.io.js"></script>
+    <script
+      type="text/javascript"
+      src="https://p5livemedia.itp.io/simplepeer.min.js"
+    ></script>
 
     <script type="text/javascript" src="/socket.io/socket.io.js"></script>
     <script type="text/javascript">
       let leftOffset, topOffset;
       let visitorsP;
       let listeners = [];
-      
 
       window.addEventListener("load", function () {
-        visitorsP = document.getElementById('visitors');
+        visitorsP = document.getElementById("visitors");
         visitorsP.innerHTML = listeners.length;
 
         leftOffset = window.innerWidth / 2 - 350;
@@ -71,14 +76,24 @@
   </head>
   <body>
     <main></main>
-    <p>You and <span id="visitors"></span> other butterflies are currently in</p>
+    <p>
+      You and <span id="visitors"></span> other butterflies are currently in
+    </p>
     <h1>Club Butterfly</h1>
     <p>
-      Club Butterfly is an interactive musical experience that allows participants to control and manipulate music through their movement in space. Using the mobile device built in sensors, the app detects the participant movements and change the music in their headphones accordingly. This project aims to bring concepts of adaptive, immersive and non-linear music, common in video games, into real life. As participants are not confined to a specific space and can experience this project everywhere they wish to, the app creates a virtual space that brings together people from everywhere in the worls into one shared experience.
+      Club Butterfly is an interactive musical experience that allows
+      participants to control and manipulate music through their movement in
+      space. Using the mobile device built in sensors, the app detects the
+      participant movements and change the music in their headphones
+      accordingly. This project aims to bring concepts of adaptive, immersive
+      and non-linear music, common in video games, into real life. As
+      participants are not confined to a specific space and can experience this
+      project everywhere they wish to, the app creates a virtual space that
+      brings together people from everywhere in the worls into one shared
+      experience.
     </p>
     <script src="vehicle.js"></script>
     <script src="draggable.js"></script>
     <script src="sketch.js"></script>
-
   </body>
 </html>
