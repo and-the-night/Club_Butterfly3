@@ -250,8 +250,8 @@ function setup() {
 
   createElement("h2", "by &theNIGHT 2024");
 
-  listener = new Draggable(20, 20, 32, 32, listenerImg);
-  autoListener = new Vehicle(width / 2, height - 100, listenerImg);
+  listener = new Draggable(width / 2 - 16, height - 60, 32, 32, listenerImg);
+  autoListener = new Vehicle(width / 2, height - 60, listenerImg);
 
   let minRadius = width / 15;
   let maxRadius = width / 2;
