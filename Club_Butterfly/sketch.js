@@ -195,6 +195,9 @@ function setup() {
   angleMode(DEGREES);
   noStroke();
 
+  p5lm = new p5LiveMedia(this, "DATA", null, "motion");
+  p5lm.on("data", newData);
+
   for (let i = 0; i < channels.length; i++) {
     channels[i].loop = true;
     channels[i].volume.value = -100;
@@ -465,4 +468,8 @@ function showOthers() {
     image(visitorImg, -16, -16);
     pop();
   }
+}
+
+function newData(data) {
+  console.log(data);
 }
