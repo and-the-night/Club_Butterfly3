@@ -455,7 +455,7 @@ function mouseReleased() {
 
 function showOthers() {
   noStroke();
-  for (let l of listeners) {
+  for (let l of otherListeners) {
     push();
     translate(l.x, l.y);
     rotate(l.a);
