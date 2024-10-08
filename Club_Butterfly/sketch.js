@@ -172,6 +172,7 @@ class soundArea {
 let areas = [];
 let listener;
 let autoListener;
+// let listeners = [];
 let channels = [];
 let panners = [];
 let waveforms = [];
@@ -406,6 +407,7 @@ function draw() {
     listener.update(pos);
   }
 
+  p5lm.send(JSON.stringify({ x: listener.x, y: listener.y }));
   let heading = state == "wander" ? autoListener.vel.heading() : -alpha - 90;
 
   // if(sendPosition) sendPosition({ x: listener.x, y: listener.y, a: heading });
@@ -470,6 +472,6 @@ function showOthers() {
   }
 }
 
-function newData(data) {
-  console.log(data);
+function newData(data, id) {
+  console.log("data:", data, "from:", id);
 }
