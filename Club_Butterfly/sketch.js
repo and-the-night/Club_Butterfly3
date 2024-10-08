@@ -407,6 +407,7 @@ function draw() {
     listener.update(pos);
   }
 
+  console.log("x:", listener.x, "y:", listener.y);
   p5lm.send(JSON.stringify({ x: listener.x, y: listener.y }));
   let heading = state == "wander" ? autoListener.vel.heading() : -alpha - 90;
 
