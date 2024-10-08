@@ -454,6 +454,7 @@ function mouseReleased() {
 }
 
 function showOthers() {
+  console.log("otherListeners", otherListeners);
   noStroke();
   for (let l of otherListeners) {
     push();
