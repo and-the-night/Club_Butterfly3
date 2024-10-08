@@ -172,7 +172,7 @@ class soundArea {
 let areas = [];
 let listener;
 let autoListener;
-// let listeners = [];
+let otherListeners = [];
 let channels = [];
 let panners = [];
 let waveforms = [];
@@ -198,6 +198,7 @@ function setup() {
 
   p5lm = new p5LiveMedia(this, "DATA", null, "motion");
   p5lm.on("data", newData);
+  p5lm.on("disconnect", userDisconect);
 
   for (let i = 0; i < channels.length; i++) {
     channels[i].loop = true;
@@ -407,9 +408,8 @@ function draw() {
     listener.update(pos);
   }
 
-  console.log("x:", listener.x, "y:", listener.y);
-  p5lm.send(JSON.stringify({ x: listener.x, y: listener.y }));
   let heading = state == "wander" ? autoListener.vel.heading() : -alpha - 90;
+  p5lm.send(JSON.stringify({ x: listener.x, y: listener.y, a: heading }));
 
   // if(sendPosition) sendPosition({ x: listener.x, y: listener.y, a: heading });
   showOthers();
@@ -474,5 +474,26 @@ function showOthers() {
 }
 
 function newData(data, id) {
-  console.log("data:", data, "from:", id);
+  let d = JSON.parse(data);
+
+  let listener = otherListeners.find((l) => l.id == id);
+
+  if (!listener) {
+    otherListeners.push({ id: id, ...d });
+    console.log("user ", id, " connected");
+  } else {
+    listener.x = d.x;
+    listener.y = d.y;
+    listener.a = d.a;
+  }
+}
+
+function userDisconect(id) {
+  let listener = otherListeners.find((l) => l.id == id);
+
+  let index = otherListeners.indexOf(listener);
+  if (index !== -1) {
+    otherListeners.splice(index, 1);
+  }
+  console.log("user ", id, " disconnected");
 }
