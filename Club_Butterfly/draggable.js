@@ -16,7 +16,12 @@ class Draggable {
 
   over() {
     // Is mouse over object
-    if (mouseX > this.x && mouseX < this.x + this.w && mouseY > this.y && mouseY < this.y + this.h) {
+    if (
+      mouseX > this.x &&
+      mouseX < this.x + this.w &&
+      mouseY > this.y &&
+      mouseY < this.y + this.h
+    ) {
       this.rollover = true;
     } else {
       this.rollover = false;
@@ -24,7 +29,7 @@ class Draggable {
   }
 
   update(pos) {
-    if(pos) {
+    if (pos) {
       this.x = pos.x;
       this.y = pos.y;
     } else {
@@ -32,7 +37,7 @@ class Draggable {
       if (this.dragging) {
         this.x = mouseX + this.offsetX;
         this.y = mouseY + this.offsetY;
-      } 
+      }
     }
   }
 
@@ -48,16 +53,30 @@ class Draggable {
     }
 
     push();
-      translate(this.x + this.w / 2, this.y + this.h / 2);
-      rotate(-alpha);
-      triangle(-vehicleSize / 4, vehicleSize / 3, vehicleSize / 4, vehicleSize / 3, 0, -vehicleSize);
-      image(this.img, -this.w, -this.h);
+
+    translate(this.x, this.y);
+    rotate(-alpha);
+    triangle(
+      -vehicleSize / 4,
+      vehicleSize / 3,
+      vehicleSize / 4,
+      vehicleSize / 3,
+      0,
+      -vehicleSize
+    );
+    image(this.img, -this.w / 2, -this.h / 2);
+
     pop();
   }
 
   pressed() {
     // Did I click on the rectangle?
-    if (mouseX > this.x && mouseX < this.x + this.w && mouseY > this.y && mouseY < this.y + this.h) {
+    if (
+      mouseX > this.x - this.w / 2 &&
+      mouseX < this.x + this.w / 2 &&
+      mouseY > this.y - this.h / 2 &&
+      mouseY < this.y + this.h / 2
+    ) {
       this.dragging = true;
       // If so, keep track of relative location of click to corner of rectangle
       this.offsetX = this.x - mouseX;
@@ -69,4 +88,4 @@ class Draggable {
     // Quit dragging
     this.dragging = false;
   }
-};
+}

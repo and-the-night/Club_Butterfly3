@@ -36,40 +36,6 @@ let othersSize = 15;
 let listenerImg;
 let visitorImg;
 
-class Particle {
-  constructor(centerX, centerY, h) {
-    this.pos = p5.Vector.random2D().mult(25);
-    this.vel = createVector(0, 0);
-    this.acc = this.pos.copy().mult(random(0.0001, 0.00001));
-    this.centerX = centerX;
-    this.centerY = centerY;
-    this.h = h;
-    this.w = random(1, 5);
-  }
-
-  update() {
-    this.vel.add(this.acc);
-    this.pos.add(this.vel);
-  }
-
-  show() {
-    noStroke();
-    fill(this.h, 100, 100);
-    ellipse(this.pos.x + this.centerX, this.pos.y + this.centerY, this.w);
-  }
-
-  edges() {
-    return (
-      dist(
-        this.pos.x + this.centerX,
-        this.pos.y + this.centerY,
-        this.centerX,
-        this.centerY
-      ) > 400
-    );
-  }
-}
-
 function motion() {
   //iOS
   if (typeof DeviceMotionEvent.requestPermission === "function") {
@@ -135,79 +101,74 @@ function detect() {
   orientation();
 }
 
-// Sound Areas
-class soundArea {
-  constructor(x, y, h, channel, minRadius, maxRadius) {
-    this.x = x;
-    this.y = y;
-    this.h = h;
-    this.channel = channel;
-    this.volume = -Infinity;
-    this.minRadius = minRadius;
-    this.maxRadius = maxRadius;
-    this.particles = [];
-  }
-
-  addParticle() {
-    const p = new Particle(this.x, this.y, this.h);
-    this.particles.push(p);
-  }
-
-  show() {
-    noStroke();
-    fill(this.h, 100, 100, 20);
-    ellipse(this.x, this.y, this.maxRadius * 2);
-
-    for (let i = this.particles.length - 1; i >= 0; i--) {
-      if (!this.particles[i].edges()) {
-        this.particles[i].update();
-        this.particles[i].show();
-      } else {
-        this.particles.splice(i, 1);
-      }
-    }
-  }
-}
-
 let areas = [];
 let listener;
 let autoListener;
 let otherListeners = [];
-let channels = [];
-let panners = [];
-let waveforms = [];
 
 let debug = false;
 let schedulePlay = true;
+
+let canvasWidth = 800;
+let canvasHeight = 800;
 
 function preload() {
   listenerImg = loadImage("big-butterfly.png");
   visitorImg = loadImage("small-butterfly.png");
 
-  channels[0] = new Tone.Player("Club_Butterfly-HH.wav");
-  channels[1] = new Tone.Player("Club_Butterfly-KICK.wav");
-  channels[2] = new Tone.Player("Club_Butterfly-SNR.wav");
-  channels[3] = new Tone.Player("Club_Butterfly-BASS.wav");
+  let minRadius = canvasWidth / 16;
+  let maxRadius = canvasWidth / 2;
+
+  areas[0] = new soundArea(
+    canvasWidth / 2,
+    canvasHeight - 50,
+    0,
+    minRadius,
+    maxRadius,
+    "Club_Butterfly-HH.wav",
+    false
+  );
+  areas[1] = new soundArea(
+    canvasWidth - 50,
+    canvasHeight / 2,
+    25,
+    minRadius,
+    maxRadius,
+    "Club_Butterfly-KICK.wav",
+    false
+  );
+  areas[2] = new soundArea(
+    canvasWidth / 2,
+    50,
+    50,
+    minRadius,
+    maxRadius,
+    "Club_Butterfly-SNR.wav",
+    false
+  );
+  areas[3] = new soundArea(
+    50,
+    canvasHeight / 2,
+    75,
+    minRadius,
+    maxRadius,
+    "Club_Butterfly-BASS.wav",
+    false
+  );
 }
 
 function setup() {
-  createCanvas(800, 800);
+  createCanvas(canvasWidth, canvasHeight);
   colorMode(HSB, 100);
   angleMode(DEGREES);
   noStroke();
 
+  // P5LiveMedia
   p5lm = new p5LiveMedia(this, "DATA", null, "motion");
   p5lm.on("data", newData);
   p5lm.on("disconnect", userDisconect);
 
-  for (let i = 0; i < channels.length; i++) {
-    channels[i].loop = true;
-    channels[i].volume.value = -100;
-    panners[i] = new Tone.Panner(0).toDestination();
-    waveforms[i] = new Tone.Waveform();
-    channels[i].connect(panners[i]);
-    channels[i].connect(waveforms[i]);
-  }
+  // Buttons
 
   let playText = state == "mobile" ? "Play" : "►";
   let stopText = state == "mobile" ? "Stop" : "⏹";
@@ -219,15 +180,15 @@ function setup() {
 
     if (!isPlaying) {
       Tone.Transport.start();
-      for (let i = 0; i < channels.length; i++) {
-        channels[i].start();
+      for (let i = 0; i < areas.length; i++) {
+        areas[i].player.start();
         isPlaying = true;
         playBtn.html(stopText);
       }
     } else if (isPlaying) {
       Tone.Transport.stop();
-      for (let i = 0; i < channels.length; i++) {
-        channels[i].stop();
+      for (let i = 0; i < areas.length; i++) {
+        areas[i].player.stop();
         isPlaying = false;
         playBtn.html(playText);
       }
@@ -250,37 +211,41 @@ function setup() {
 
   createElement("h2", "by &theNIGHT 2024");
 
-  listener = new Draggable(width / 2 - 16, height - 60, 32, 32, listenerImg);
+  listener = new Draggable(width / 2, height - 60, 64, 64, listenerImg);
   autoListener = new Vehicle(width / 2, height - 60, listenerImg);
-
-  let minRadius = width / 15;
-  let maxRadius = width / 2;
-
-  areas[0] = new soundArea(
-    width / 2,
-    height - minRadius,
-    0,
-    0,
-    minRadius,
-    maxRadius
-  );
-  areas[1] = new soundArea(
-    width - minRadius,
-    height / 2,
-    25,
-    1,
-    minRadius,
-    maxRadius
-  );
-  areas[2] = new soundArea(width / 2, minRadius, 50, 2, minRadius, maxRadius);
-  areas[3] = new soundArea(minRadius, height / 2, 75, 3, minRadius, maxRadius);
 
   position = createVector(width / 2, height - 50);
   velocity = createVector(0, 0);
 }
 
+function newData(data, id) {
+  let d = JSON.parse(data);
+
+  let listener = otherListeners.find((l) => l.id == id);
+
+  if (!listener) {
+    otherListeners.push({ id: id, ...d });
+    console.log("user ", id, " connected");
+  } else {
+    listener.x = d.x;
+    listener.y = d.y;
+    listener.a = d.a;
+  }
+}
+
+function userDisconect(id) {
+  let listener = otherListeners.find((l) => l.id == id);
+
+  let index = otherListeners.indexOf(listener);
+  if (index !== -1) {
+    otherListeners.splice(index, 1);
+  }
+  console.log("user ", id, " disconnected");
+}
+
 function draw() {
   background(0, 0, 0);
+
   const transport = Tone.Transport.position.split(":");
   let isNew2Bar = transport[1] == "0" && transport[0] % 2 == 0;
 
@@ -295,85 +260,9 @@ function draw() {
   }
 
   for (let area of areas) {
-    let distance = Math.round(
-      dist(
-        area.x,
-        area.y,
-        listener.x + listener.w / 2,
-        listener.y + listener.h / 2
-      )
-    );
-
-    let volume = area.volume;
-
-    // Contiuous Volume Change
-    if (!schedulePlay) {
-      if (distance < area.minRadius) {
-        volume = 0;
-      } else if (distance > area.maxRadius) {
-        volume = -Infinity;
-      } else {
-        volume = map(distance, area.minRadius, area.maxRadius, 0, -15);
-      }
-    }
-
-    // Schedule Volume Change
-    if (schedulePlay) {
-      if (isNew2Bar) {
-        if (distance < area.maxRadius) {
-          volume = 0;
-        } else {
-          volume = -Infinity;
-        }
-      }
-    }
-
-    area.volume = volume;
-
-    if (volume > -15 && channels[area.channel].state == "started") {
-      area.addParticle();
-    }
-
-    channels[area.channel].volume.value = volume;
-
-    let panAngle = 0;
-    let listenerAngle = round(atan2(listener.y - area.y, listener.x - area.x));
-
-    if (volume == 1) {
-      panAngle = 0;
-    } else {
-      panAngle = sin(listenerAngle - 90 + alpha);
-    }
-
-    panners[area.channel].pan.setValueAtTime(panAngle, 0.25);
-
-    let wave = waveforms[area.channel].getValue();
-    fill(area.h, 100, 100);
-    noStroke();
-    beginShape();
-    for (let i = 0; i <= 360; i++) {
-      let waveIndex = floor(map(i, 0, 360, 0, wave.length - 1));
-      let waveRadius = map(wave[waveIndex], -1, 1, 0, 125);
-
-      vertex(area.x + sin(i) * waveRadius, area.y + cos(i) * waveRadius);
-    }
-    endShape(CLOSE);
-
-    let opacity = map(volume, -15, 0, 0, 255);
-
-    fill(area.h, 100, 100, opacity);
-
-    angleR = listenerAngle + 90;
-    angleL = listenerAngle - 90;
-
-    triangle(
-      listener.x + listener.w / 2,
-      listener.y + listener.h / 2,
-      area.x + area.minRadius * cos(angleR),
-      area.y + area.minRadius * sin(angleR),
-      area.x + area.minRadius * cos(angleL),
-      area.y + area.minRadius * sin(angleL)
-    );
+    let heading = state == "wander" ? autoListener.vel.heading() : alpha;
+    area.update(listener.x, listener.y, heading, isNew2Bar);
+    area.show(listener.x, listener.y);
 
     // Debugging
     if (debug) {
@@ -384,8 +273,6 @@ function draw() {
       text("D: " + distance, area.x - 30, area.y - 15);
       text("V: " + volume, area.x - 30, area.y + 15);
     }
-
-    area.show();
   }
 
   if (state == "mobile") {
@@ -396,7 +283,12 @@ function draw() {
     listener.over();
     listener.update();
     listener.show();
-  } else {
+    let pos = {
+      x: listener.x,
+      y: listener.y,
+    };
+    autoListener.update(pos);
+  } else if (state == "wander") {
     autoListener.wander();
     autoListener.update();
     autoListener.show();
@@ -408,8 +300,8 @@ function draw() {
     listener.update(pos);
   }
 
-  let heading = state == "wander" ? autoListener.vel.heading() : -alpha - 90;
-  p5lm.send(JSON.stringify({ x: listener.x, y: listener.y, a: heading }));
+  // let heading = state == "wander" ? autoListener.vel.heading() : -alpha - 90;
+  // p5lm.send(JSON.stringify({ x: listener.x, y: listener.y, a: heading }));
 
   // if(sendPosition) sendPosition({ x: listener.x, y: listener.y, a: heading });
   showOthers();
@@ -458,7 +350,7 @@ function showOthers() {
   for (let l of otherListeners) {
     push();
     translate(l.x, l.y);
-    rotate(l.a);
+    rotate(l.a + 90);
     triangle(
       -othersSize / 2,
       -othersSize / 4,
@@ -467,33 +359,7 @@ function showOthers() {
       othersSize,
       0
     );
-    rotate(90);
     image(visitorImg, -16, -16);
     pop();
   }
-}
-
-function newData(data, id) {
-  let d = JSON.parse(data);
-
-  let listener = otherListeners.find((l) => l.id == id);
-
-  if (!listener) {
-    otherListeners.push({ id: id, ...d });
-    console.log("user ", id, " connected");
-  } else {
-    listener.x = d.x;
-    listener.y = d.y;
-    listener.a = d.a;
-  }
-}
-
-function userDisconect(id) {
-  let listener = otherListeners.find((l) => l.id == id);
-
-  let index = otherListeners.indexOf(listener);
-  if (index !== -1) {
-    otherListeners.splice(index, 1);
-  }
-  console.log("user ", id, " disconnected");
 }
