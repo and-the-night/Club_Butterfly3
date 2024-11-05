@@ -16,6 +16,7 @@ if (
 }
 
 let isPlaying = false;
+let emptySketch = true;
 
 let x = 0;
 let y = 0;
@@ -116,45 +117,47 @@ function preload() {
   listenerImg = loadImage("big-butterfly.png");
   visitorImg = loadImage("small-butterfly.png");
 
-  let minRadius = canvasWidth / 16;
-  let maxRadius = canvasWidth / 2;
+  if (!emptySketch) {
+    let minRadius = canvasWidth / 16;
+    let maxRadius = canvasWidth / 2;
 
-  areas[0] = new soundArea(
-    canvasWidth / 2,
-    canvasHeight - 50,
-    0,
-    minRadius,
-    maxRadius,
-    "Club_Butterfly-HH.wav",
-    false
-  );
-  areas[1] = new soundArea(
-    canvasWidth - 50,
-    canvasHeight / 2,
-    25,
-    minRadius,
-    maxRadius,
-    "Club_Butterfly-KICK.wav",
-    false
-  );
-  areas[2] = new soundArea(
-    canvasWidth / 2,
-    50,
-    50,
-    minRadius,
-    maxRadius,
-    "Club_Butterfly-SNR.wav",
-    false
-  );
-  areas[3] = new soundArea(
-    50,
-    canvasHeight / 2,
-    75,
-    minRadius,
-    maxRadius,
-    "Club_Butterfly-BASS.wav",
-    false
-  );
+    areas[0] = new soundArea(
+      canvasWidth / 2,
+      canvasHeight - 50,
+      0,
+      minRadius,
+      maxRadius,
+      "Club_Butterfly-HH.wav",
+      false
+    );
+    areas[1] = new soundArea(
+      canvasWidth - 50,
+      canvasHeight / 2,
+      25,
+      minRadius,
+      maxRadius,
+      "Club_Butterfly-KICK.wav",
+      false
+    );
+    areas[2] = new soundArea(
+      canvasWidth / 2,
+      50,
+      50,
+      minRadius,
+      maxRadius,
+      "Club_Butterfly-SNR.wav",
+      false
+    );
+    areas[3] = new soundArea(
+      50,
+      canvasHeight / 2,
+      75,
+      minRadius,
+      maxRadius,
+      "Club_Butterfly-BASS.wav",
+      false
+    );
+  }
 }
 
 function setup() {
