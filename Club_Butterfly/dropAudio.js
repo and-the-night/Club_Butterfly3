@@ -38,23 +38,33 @@ if (emptySketch) {
       const dt = e.dataTransfer;
       const files = dt.files;
 
-      handleFiles(files);
+      handleFiles(files, e);
     }
 
-    function handleFiles(files) {
+    function handleFiles(files, e) {
       [...files].forEach((file) => {
         if (file.type.startsWith("audio/")) {
           // Process the audio file
           console.log("Audio file dropped:", file);
-          const minRadius = prompt("Enter the minimum radius:");
-          const maxRadius = prompt("Enter the maximum radius:");
+          // const minRadius = prompt("Enter the minimum radius:");
+          // const maxRadius = prompt("Enter the maximum radius:");
+
+          const dropAreaRect = dropArea.getBoundingClientRect();
+          const dropAreaX = dropAreaRect.left + window.scrollX;
+          const dropAreaY = dropAreaRect.top + window.scrollY;
+
+          const mouseX = e.clientX;
+          const mouseY = e.clientY;
+
+          x = mouseX - dropAreaX;
+          y = mouseY - dropAreaY;
 
           const sound = new soundArea(
-            mouseX,
-            mouseY,
+            x,
+            y,
             random(360),
-            minRadius,
-            maxRadius,
+            40,
+            400,
             URL.createObjectURL(file),
             false
           );
