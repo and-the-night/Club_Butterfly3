@@ -16,7 +16,8 @@ if (
 }
 
 let isPlaying = false;
-let emptySketch = true;
+let editableMap = true;
+let splitAudio = true;
 
 let x = 0;
 let y = 0;
@@ -117,7 +118,7 @@ function preload() {
   listenerImg = loadImage("big-butterfly.png");
   visitorImg = loadImage("small-butterfly.png");
 
-  if (!emptySketch) {
+  if (!editableMap) {
     let minRadius = canvasWidth / 16;
     let maxRadius = canvasWidth / 2;
 
@@ -342,10 +343,25 @@ function getListenerPosition() {
 
 function mousePressed() {
   listener.pressed();
+  areas.forEach((area) => {
+    if (area.isEditable) area.pressed();
+  });
 }
 
 function mouseReleased() {
   listener.released();
+  areas.forEach((area) => {
+    if (area.isEditable) area.released();
+  });
+}
+
+function doubleClicked() {
+  for (let i = areas.length - 1; i >= 0; i--) {
+    if (areas[i].isEditable && areas[i].centerClicked()) {
+      areas.splice(i, 1);
+      break;
+    }
+  }
 }
 
 function showOthers() {

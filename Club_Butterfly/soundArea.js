@@ -1,13 +1,41 @@
 class soundArea {
-  constructor(x, y, h, minRadius, maxRadius, filePath, schedulePlay) {
+  constructor(
+    x,
+    y,
+    h,
+    minRadius,
+    maxRadius,
+    filePath,
+    schedulePlay,
+    isEditable
+  ) {
     this.x = x;
     this.y = y;
     this.h = h;
     this.volume = -Infinity;
     this.minRadius = minRadius;
     this.maxRadius = maxRadius;
+    this.filePath = filePath;
     this.schedulePlay = schedulePlay;
+    this.isEditable = isEditable;
+    this.isDragging = false;
+    this.state = null;
     this.particles = [];
+    this.offsetX = 0;
+    this.offsetY = 0;
+
+    fetch(filePath)
+      .then((response) => response.blob())
+      .then((blob) => {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          this.filePath = reader.result;
+        };
+        reader.readAsDataURL(blob);
+      })
+      .catch((error) =>
+        console.error("Error converting file to base64:", error)
+      );
 
     this.player = new Tone.Player(filePath);
 
@@ -23,6 +51,8 @@ class soundArea {
   update(listenerX, listenerY, listenerAngle, isPlayTime) {
     this.updateVolume(listenerX, listenerY, isPlayTime);
     this.updatePan(listenerX, listenerY, listenerAngle);
+    this.updateAttributes();
+    this.updateCursor();
   }
 
   updateVolume(listenerX, listenerY, isPlayTime) {
@@ -63,11 +93,17 @@ class soundArea {
     }
 
     this.panner.pan.setValueAtTime(panAngle, 0.25);
+  }
 
-    fill(255);
-    textSize(20);
-    let panText = round(panAngle * 100) / 100;
-    text(panText, this.x, this.y + 100);
+  updateAttributes() {
+    if (this.state === "dragging") {
+      this.x = mouseX + this.offsetX;
+      this.y = mouseY + this.offsetY;
+    } else if (this.state === "resizingMin") {
+      this.minRadius = dist(this.x, this.y, mouseX, mouseY);
+    } else if (this.state === "resizingMax") {
+      this.maxRadius = dist(this.x, this.y, mouseX, mouseY);
+    }
   }
 
   show(listenerX, listenerY) {
@@ -133,7 +169,72 @@ class soundArea {
   }
 
   addParticle() {
-    const p = new Particle(this.x, this.y, this.h);
+    const p = new Particle(this.x, this.y, this.h, this.maxRadius);
     this.particles.push(p);
+  }
+
+  updateCursor() {
+    const distFromCenter = dist(this.x, this.y, mouseX, mouseY);
+    if (distFromCenter < this.minRadius - 10) {
+      cursor(MOVE);
+    } else if (
+      (distFromCenter >= this.minRadius - 10 &&
+        distFromCenter < this.minRadius + 10) ||
+      (distFromCenter >= this.maxRadius - 10 &&
+        distFromCenter < this.maxRadius + 10)
+    ) {
+      let angle = atan2(mouseY - this.y, mouseX - this.x);
+      if (
+        (angle > -22.5 && angle <= 22.5) ||
+        angle > 157.5 ||
+        angle <= -157.5
+      ) {
+        cursor("ew-resize");
+      } else if (
+        (angle > 22.5 && angle <= 67.5) ||
+        (angle > -157.5 && angle <= -112.5)
+      ) {
+        cursor("nwse-resize");
+      } else if (
+        (angle > 67.5 && angle <= 112.5) ||
+        (angle > -112.5 && angle <= -67.5)
+      ) {
+        cursor("ns-resize");
+      } else if (
+        (angle > 112.5 && angle <= 157.5) ||
+        (angle > -67.5 && angle <= -22.5)
+      ) {
+        cursor("nesw-resize");
+      }
+    } else {
+      cursor(ARROW);
+    }
+  }
+
+  pressed() {
+    this.offsetX = this.x - mouseX;
+    this.offsetY = this.y - mouseY;
+    const distFromCenter = dist(this.x, this.y, mouseX, mouseY);
+    if (distFromCenter < this.minRadius - 10) {
+      this.state = "dragging";
+    } else if (
+      distFromCenter >= this.minRadius - 10 &&
+      distFromCenter < this.minRadius + 10
+    ) {
+      this.state = "resizingMin";
+    } else if (
+      distFromCenter >= this.maxRadius - 10 &&
+      distFromCenter < this.maxRadius + 10
+    ) {
+      this.state = "resizingMax";
+    }
+  }
+
+  released() {
+    this.state = null;
+  }
+
+  centerClicked() {
+    return dist(this.x, this.y, mouseX, mouseY) < this.minRadius;
   }
 }

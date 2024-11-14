@@ -1,5 +1,5 @@
 class Particle {
-  constructor(centerX, centerY, h) {
+  constructor(centerX, centerY, h, maxRadius) {
     this.pos = p5.Vector.random2D().mult(25);
     this.vel = createVector(0, 0);
     this.acc = this.pos.copy().mult(random(0.0001, 0.00001));
@@ -7,6 +7,7 @@ class Particle {
     this.centerY = centerY;
     this.h = h;
     this.w = random(1, 5);
+    this.maxRadius = maxRadius;
   }
 
   update() {
@@ -27,7 +28,7 @@ class Particle {
         this.pos.y + this.centerY,
         this.centerX,
         this.centerY
-      ) > 400
+      ) > this.maxRadius
     );
   }
 }

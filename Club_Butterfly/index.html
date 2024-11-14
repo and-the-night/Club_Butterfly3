@@ -83,7 +83,7 @@
       You and <span id="visitors"></span> other butterflies are currently in
     </p>
     <h1>Club Butterfly</h1>
-    <p>
+    <!--<p>
       Club Butterfly is an interactive musical experience that allows
       participants to control and manipulate music through their movement in
       space. Using the mobile device built in sensors, the app detects the
@@ -94,12 +94,21 @@
       project everywhere they wish to, the app creates a virtual space that
       brings together people from everywhere in the world into one shared
       experience.
-    </p>
+    </p>-->
+    <button id="save" style="width: auto">Save Sketch</button>
+    <input type="text" id="sketchName" placeholder="Map Name" />
+    <button id="newSketch" style="width: auto">New Sketch</button>
+    <div id="savedSketchesContainer">
+      <h2>Saved Sketches</h2>
+      <div id="savedSketches"></div>
+    </div>
     <script src="vehicle.js"></script>
     <script src="draggable.js"></script>
     <script src="particle.js"></script>
     <script src="soundArea.js"></script>
     <script src="sketch.js"></script>
     <script src="dropAudio.js"></script>
+    <script src="authService.js" type="module"></script>
+    <script src="dbService.js"></script>
   </body>
 </html>
