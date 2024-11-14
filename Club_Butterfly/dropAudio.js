@@ -123,11 +123,4 @@ async function splitAudioFile(file) {
   console.log("Response", response);
   const result = await response.json();
   console.log(result.output[0]);
-
-  loadImage(result.output[0], function (newImage) {
-    //"data:image/png;base64," +
-    console.log("image loaded", newImage);
-    // image(img, 0, 0);
-    img = newImage;
-  });
 }

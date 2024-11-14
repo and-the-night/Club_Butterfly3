@@ -17,7 +17,7 @@ if (
 
 let isPlaying = false;
 let editableMap = true;
-let splitAudio = true;
+let splitAudio = false;
 
 let x = 0;
 let y = 0;
