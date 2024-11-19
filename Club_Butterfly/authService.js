@@ -21,8 +21,14 @@ import {
   createUserWithEmailAndPassword,
   GoogleAuthProvider,
 } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-auth.js";
+import {
+  getStorage,
+  uploadBytes,
+  uploadString,
+  ref as storageRef,
+} from "https://www.gstatic.com/firebasejs/10.4.0/firebase-storage.js";
 
-let db, auth, app, user, uid;
+let db, auth, app, user, uid, storage;
 let googleAuthProvider;
 let appName = "ClubButterfly";
 initFirebase();
@@ -41,6 +47,7 @@ function initFirebase() {
 
   db = getDatabase();
   auth = getAuth();
+  storage = getStorage();
   setPersistence(auth, browserSessionPersistence);
   googleAuthProvider = new GoogleAuthProvider();
 
@@ -235,6 +242,7 @@ saveButton.addEventListener("click", function () {
   let folder = appName + "/" + uid + "/" + sketchName + "/";
   const dbRef = ref(db, folder);
   const areasData = [];
+
   areas.forEach((area) => {
     areasData.push({
       x: area.x,
@@ -360,4 +368,26 @@ async function getSuggestedName() {
     .replaceAll("*", "");
 
   return textResponse;
+}
+
+function uploadImage() {
+  // let base64Image = me.canvas.toDataURL("image/png", 1.0);
+  // Create a storage reference from our storage service
+  var storageRef = storage.ref();
+  // var profilesRef = storageRef.child(appName + "/" + me.DBID + "/");
+  //  var filename = new Date().toString();
+  // latestProfile = Date.now().toString();
+  // me.profileFilename = latestProfile + ".png";
+  // me.addProfileURL(me.profileFilename);
+  var directory = profilesRef.child(latestProfile + ".png");
+  directory
+    .putString(base64Image, "data_url")
+    .then((snapshot) => {
+      console.log("uploaded");
+      updateMeInDB();
+    })
+    .catch((error) => {
+      // Uh-oh, an error occurred!
+      console.log("not uploaded" + error);
+    });
 }

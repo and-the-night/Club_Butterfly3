@@ -52,7 +52,6 @@ class soundArea {
     this.updateVolume(listenerX, listenerY, isPlayTime);
     this.updatePan(listenerX, listenerY, listenerAngle);
     this.updateAttributes();
-    this.updateCursor();
   }
 
   updateVolume(listenerX, listenerY, isPlayTime) {
@@ -171,44 +170,6 @@ class soundArea {
   addParticle() {
     const p = new Particle(this.x, this.y, this.h, this.maxRadius);
     this.particles.push(p);
-  }
-
-  updateCursor() {
-    const distFromCenter = dist(this.x, this.y, mouseX, mouseY);
-    if (distFromCenter < this.minRadius - 10) {
-      cursor(MOVE);
-    } else if (
-      (distFromCenter >= this.minRadius - 10 &&
-        distFromCenter < this.minRadius + 10) ||
-      (distFromCenter >= this.maxRadius - 10 &&
-        distFromCenter < this.maxRadius + 10)
-    ) {
-      let angle = atan2(mouseY - this.y, mouseX - this.x);
-      if (
-        (angle > -22.5 && angle <= 22.5) ||
-        angle > 157.5 ||
-        angle <= -157.5
-      ) {
-        cursor("ew-resize");
-      } else if (
-        (angle > 22.5 && angle <= 67.5) ||
-        (angle > -157.5 && angle <= -112.5)
-      ) {
-        cursor("nwse-resize");
-      } else if (
-        (angle > 67.5 && angle <= 112.5) ||
-        (angle > -112.5 && angle <= -67.5)
-      ) {
-        cursor("ns-resize");
-      } else if (
-        (angle > 112.5 && angle <= 157.5) ||
-        (angle > -67.5 && angle <= -22.5)
-      ) {
-        cursor("nesw-resize");
-      }
-    } else {
-      cursor(ARROW);
-    }
   }
 
   pressed() {

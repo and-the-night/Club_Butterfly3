@@ -60,8 +60,6 @@ if (editableMap) {
 
             const hue = floor(random(100));
 
-            console.log("Hue value:", hue);
-
             const sound = new soundArea(
               x,
               y,
@@ -95,6 +93,7 @@ async function splitAudioFile(file) {
   reader.readAsDataURL(file);
   reader.onloadend = () => {
     base64data = reader.result.split(",")[1];
+    console.log("Base64 data:", base64data);
     postData.input.audio = base64data;
   };
   await new Promise((resolve) => (reader.onloadend = resolve));
@@ -107,6 +106,8 @@ async function splitAudioFile(file) {
       audio: base64data,
     },
   };
+
+  console.log("Post data:", postData);
 
   let url = replicateProxy + "/create_n_get";
   const options = {
