@@ -24,18 +24,18 @@ class soundArea {
     this.offsetX = 0;
     this.offsetY = 0;
 
-    fetch(filePath)
-      .then((response) => response.blob())
-      .then((blob) => {
-        const reader = new FileReader();
-        reader.onloadend = () => {
-          this.filePath = reader.result;
-        };
-        reader.readAsDataURL(blob);
-      })
-      .catch((error) =>
-        console.error("Error converting file to base64:", error)
-      );
+    // fetch(filePath)
+    //   .then((response) => response.blob())
+    //   .then((blob) => {
+    //     const reader = new FileReader();
+    //     reader.onloadend = () => {
+    //       this.filePath = reader.result;
+    //     };
+    //     reader.readAsDataURL(blob);
+    //   })
+    //   .catch((error) =>
+    //     console.error("Error converting file to base64:", error)
+    //   );
 
     this.player = new Tone.Player(filePath);
 
@@ -188,6 +188,13 @@ class soundArea {
       distFromCenter < this.maxRadius + 10
     ) {
       this.state = "resizingMax";
+    }
+  }
+
+  rightPressed() {
+    const distFromCenter = dist(this.x, this.y, mouseX, mouseY);
+    if (distFromCenter < this.minRadius) {
+      this.h = random(100);
     }
   }
 

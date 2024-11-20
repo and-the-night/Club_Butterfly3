@@ -237,7 +237,20 @@ function enableSaveButton() {
   saveButton.disabled = false;
 }
 
-saveButton.addEventListener("click", function () {
+saveButton.addEventListener("click", async function () {
+  console.log(storage);
+  const storageRef2 = storageRef(storage, "some-child/");
+
+  await uploadBytes(storageRef2, areas[0].filePath).then((snapshot) => {
+    console.log("Uploaded a blob or file!");
+  });
+
+  // areas.forEach((area) => {
+  //   uploadBytes(storageRef2, area.filePath).then((snapshot) => {
+  //     console.log("Uploaded a blob or file!");
+  //   });
+  // });
+
   const sketchName = sketchNameInput.value;
   let folder = appName + "/" + uid + "/" + sketchName + "/";
   const dbRef = ref(db, folder);

@@ -343,10 +343,16 @@ function getListenerPosition() {
 }
 
 function mousePressed() {
-  listener.pressed();
-  areas.forEach((area) => {
-    if (area.isEditable) area.pressed();
-  });
+  if (mouseButton === LEFT) {
+    listener.pressed();
+    areas.forEach((area) => {
+      if (area.isEditable) area.pressed();
+    });
+  } else if (mouseButton === RIGHT) {
+    areas.forEach((area) => {
+      if (area.isEditable) area.rightPressed();
+    });
+  }
 }
 
 function mouseReleased() {
