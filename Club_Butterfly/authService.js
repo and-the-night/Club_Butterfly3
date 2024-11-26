@@ -25,6 +25,7 @@ import {
   getStorage,
   uploadBytes,
   uploadString,
+  getDownloadURL,
   ref as storageRef,
 } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-storage.js";
 
@@ -37,8 +38,9 @@ function initFirebase() {
   const firebaseConfig = {
     apiKey: "AIzaSyA7JqdQTayDT6qlCvzuIHpTPxLqvJQmlJI",
     authDomain: "shared-minds-967a2.firebaseapp.com",
+    databaseURL: "https://shared-minds-967a2-default-rtdb.firebaseio.com",
     projectId: "shared-minds-967a2",
-    storageBucket: "shared-minds-967a2.appspot.com",
+    storageBucket: "shared-minds-967a2.firebasestorage.app",
     messagingSenderId: "254122128784",
     appId: "1:254122128784:web:6b5aae86110cb85c472f15",
     measurementId: "G-C5QS5WX9VY",
@@ -227,7 +229,7 @@ function showLoginButtons() {
 
 // Save to DB
 const saveButton = document.getElementById("save");
-const sketchNameInput = document.getElementById("sketchName");
+const sketchNameInput = document.getElementById("sketchNameInput");
 
 function disableSaveButton() {
   saveButton.disabled = true;
@@ -237,38 +239,39 @@ function enableSaveButton() {
   saveButton.disabled = false;
 }
 
-saveButton.addEventListener("click", async function () {
-  console.log(storage);
-  const storageRef2 = storageRef(storage, "some-child/");
-
-  await uploadBytes(storageRef2, areas[0].filePath).then((snapshot) => {
-    console.log("Uploaded a blob or file!");
-  });
-
-  // areas.forEach((area) => {
-  //   uploadBytes(storageRef2, area.filePath).then((snapshot) => {
-  //     console.log("Uploaded a blob or file!");
-  //   });
-  // });
-
-  const sketchName = sketchNameInput.value;
-  let folder = appName + "/" + uid + "/" + sketchName + "/";
+saveButton.addEventListener("click", function () {
+  const folder = appName + "/" + uid + "/" + sketchName + "/";
   const dbRef = ref(db, folder);
   const areasData = [];
 
-  areas.forEach((area) => {
-    areasData.push({
-      x: area.x,
-      y: area.y,
-      h: area.h,
-      minRadius: area.minRadius,
-      maxRadius: area.maxRadius,
-      filePath: area.filePath,
-      schedulePlay: area.schedulePlay,
-      isEditable: area.isEditable,
-    });
+  Promise.all(
+    areas.map(async (area) => {
+      const file = area.filePath;
+      const fileRef = storageRef(storage, folder + file.name);
+
+      await uploadBytes(fileRef, file).then((snapshot) => {
+        console.log("Uploaded a file!");
+        return getDownloadURL(snapshot.ref).then((downloadURL) => {
+          console.log("File available at", downloadURL);
+          area.filePath = downloadURL;
+        });
+      });
+
+      areasData.push({
+        x: area.x,
+        y: area.y,
+        h: area.h,
+        minRadius: area.minRadius,
+        maxRadius: area.maxRadius,
+        filePath: area.filePath,
+        schedulePlay: area.schedulePlay,
+        isEditable: area.isEditable,
+      });
+    })
+  ).then(() => {
+    console.log("areasData2", areasData);
+    set(dbRef, areasData);
   });
-  set(dbRef, areasData);
 });
 
 // Load from All Sketches from DB
@@ -295,6 +298,7 @@ function showSavedSketches(sketches) {
     const sketch = sketches[key];
     const sketchDiv = document.createElement("div");
     sketchDiv.innerHTML = key;
+    sketchDiv.setAttribute("class", "saved-sketch");
     sketchDiv.addEventListener("click", function () {
       console.log("sketch clicked", key);
       loadSketch(sketch, key);
@@ -338,69 +342,48 @@ newSketchButton.addEventListener("click", createNewSketch);
 
 function createNewSketch() {
   areas = [];
-  getSuggestedName().then((name) => {
-    sketchNameInput.value = name;
-  });
+  const suggestedName = getSuggestedName();
+  updateSketchName(suggestedName);
 }
 
-async function getSuggestedName() {
-  const replicateProxyUrl =
-    "https://replicate-api-proxy.glitch.me/create_n_get/";
-  let prompt =
-    "Return random adjective which is not 'vibrant' followed by a random noun";
-  document.body.style.cursor = "progress";
-  const data = {
-    //mistral "cf18decbf51c27fed6bbdc3492312c1c903222a56e3fe9ca02d6cbe5198afc10",
-    //llama  "2d19859030ff705a87c746f7e96eea03aefb71f166725aee39692f1476566d48"
-    //"version": "2d19859030ff705a87c746f7e96eea03aefb71f166725aee39692f1476566d48",
-    modelURL:
-      "https://api.replicate.com/v1/models/meta/meta-llama-3-70b-instruct/predictions",
-    input: {
-      prompt: prompt,
-      max_tokens: 100,
-      max_length: 100,
-    },
-  };
-  console.log("Making a Fetch Request", data);
-  const options = {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Accept: "application/json",
-    },
-    body: JSON.stringify(data),
-  };
-  const raw_response = await fetch(replicateProxyUrl, options);
-  //turn it into json
-  const json_response = await raw_response.json();
-  document.body.style.cursor = "auto";
-  let textResponse = json_response.output
-    .join("")
-    .trim()
-    .split("\n")[2]
-    .replaceAll("*", "");
+function getSuggestedName() {
+  const randomInt1 = Math.floor(Math.random() * 100);
+  const randomInt2 = Math.floor(Math.random() * 100);
 
-  return textResponse;
+  return constellationAdjectives[randomInt2] + " " + constellations[randomInt1];
 }
 
-function uploadImage() {
-  // let base64Image = me.canvas.toDataURL("image/png", 1.0);
-  // Create a storage reference from our storage service
-  var storageRef = storage.ref();
-  // var profilesRef = storageRef.child(appName + "/" + me.DBID + "/");
-  //  var filename = new Date().toString();
-  // latestProfile = Date.now().toString();
-  // me.profileFilename = latestProfile + ".png";
-  // me.addProfileURL(me.profileFilename);
-  var directory = profilesRef.child(latestProfile + ".png");
-  directory
-    .putString(base64Image, "data_url")
-    .then((snapshot) => {
-      console.log("uploaded");
-      updateMeInDB();
-    })
-    .catch((error) => {
-      // Uh-oh, an error occurred!
-      console.log("not uploaded" + error);
-    });
+function updateSketchName(newSketchName) {
+  sketchName = newSketchName;
+  const sketchNameP = document.getElementById("sketchName");
+  sketchNameP.innerHTML = newSketchName;
+}
+
+// Edit Name
+let isEditNameMode = false;
+const editNameButton = document.getElementById("editName");
+editNameButton.addEventListener("click", toggleEditMode);
+
+sketchNameInput.addEventListener("keypress", function (event) {
+  if (event.key === "Enter") {
+    toggleEditMode();
+  }
+});
+
+function toggleEditMode() {
+  isEditNameMode = !isEditNameMode;
+  const sketchNameP = document.getElementById("sketchName");
+
+  if (isEditNameMode) {
+    sketchNameInput.style.display = "block";
+    sketchNameInput.value = sketchName;
+    sketchNameInput.focus();
+    editNameButton.innerHTML = "✓";
+    sketchNameP.style.display = "none";
+  } else {
+    sketchNameInput.style.display = "none";
+    editNameButton.innerHTML = "✎";
+    sketchNameP.style.display = "block";
+    updateSketchName(sketchNameInput.value);
+  }
 }

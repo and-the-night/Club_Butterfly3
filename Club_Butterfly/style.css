@@ -1,10 +1,10 @@
-@import url('https://fonts.googleapis.com/css2?family=Yeseva+One&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Yeseva+One&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&display=swap");
 
 html,
 body {
   margin: 0;
-  padding: 20px;
+  padding: 0;
   background: black;
   color: #ff00f2;
 }
@@ -24,6 +24,11 @@ body.desktop main {
 body.mobile main {
   display: table;
   margin: 10px auto;
+}
+
+body.desktop #leftContainer {
+  width: calc(100% - 900px);
+  margin-left: 40px;
 }
 
 h1 {
@@ -46,16 +51,13 @@ h2 {
   margin: 40px 0;
 }
 
-p {
+p,
+#sketchNameInput {
   font-family: "Jost", sans-serif;
   font-optical-sizing: auto;
   font-weight: 200;
   font-style: normal;
   font-size: 24px;
-}
-
-body.desktop p {
-  width: calc(100% - 900px);
 }
 
 body.mobile p {
@@ -67,7 +69,7 @@ button {
   height: 50px;
   font-size: 38px;
   font-weight: bold;
-  margin: 20px 20px 0 0 ;
+  margin: 20px 20px 0 0;
   background: #ff00f2;
   border: none;
   transition: background 100ms;
@@ -92,17 +94,73 @@ body.mobile button {
   margin: 20px auto;
 }
 
-#thevideo {
-  position: absolute;
+/* Sketch Name */
+#sketchNameContainer {
+  display: flex;
+  flex-direction: row;
 }
 
-#thecanvas {
-  display: none;
+#sketchName {
+  position: relative;
+  top: 1px;
+  margin: 0 0 0 10px;
+  line-height: 50px;
 }
 
-.listener-video {
-  position: absolute;
-  width: 64px;
-  height: 48px;
-  filter: grayscale(100%);
+#editName {
+  width: 50px;
+  text-align: center;
+  margin: 0;
+}
+
+#sketchNameInput {
+  width: 400px;
+  height: 50px;
+  padding-left: 10px;
+  box-sizing: border-box;
+  color: #ff00f2;
+  background: black;
+  border: 2px solid #ff00f2;
+  border-left: none;
+}
+
+#sketchNameInput:focus-visible {
+  outline: none;
+}
+
+/* Top Bar */
+#topBar {
+  height: 50px;
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 20px;
+  color: black;
+  background: #ff00f2;
+}
+
+#topBar p {
+  cursor: pointer;
+  margin: 8px;
+}
+
+#topBar p:hover {
+  color: white;
+}
+
+/* Saved Sketches */
+#savedSketches {
+}
+
+.saved-sketch {
+  font-family: "Jost", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 200;
+  font-style: normal;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.saved-sketch:hover {
+  background: #ff00f2;
+  color: black;
 }

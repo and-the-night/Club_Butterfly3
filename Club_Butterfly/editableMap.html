@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.9/Tone.js"></script>
+
+    <script type="text/javascript">
+      editableMap = true;
+    </script>
+
+    <link rel="stylesheet" type="text/css" href="style.css" />
+    <meta charset="utf-8" />
+  </head>
+  <body>
+    <main id="drop-area"></main>
+    <div id="topBar">
+      <p>Login with Google Account</p>
+    </div>
+    <div id="leftContainer">
+      <div id="sketchNameContainer">
+        <button id="editName">✎</button>
+        <p id="sketchName"></p>
+        <input type="text" id="sketchNameInput" style="display: none" />
+      </div>
+      <button id="save" style="width: auto">Save Sketch</button>
+      <button id="newSketch" style="width: auto">New Sketch</button>
+      <div id="savedSketchesContainer">
+        <h2>Saved Sketches</h2>
+        <div id="savedSketches"></div>
+      </div>
+    </div>
+
+    <script src="wordPool.js"></script>
+    <script src="vehicle.js"></script>
+    <script src="draggable.js"></script>
+    <script src="particle.js"></script>
+    <script src="soundArea.js"></script>
+    <script src="sketch.js"></script>
+    <script src="dropAudio.js"></script>
+    <script src="authService.js" type="module"></script>
+    <script src="cursorService.js"></script>
+  </body>
+</html>

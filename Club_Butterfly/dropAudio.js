@@ -60,16 +60,7 @@ if (editableMap) {
 
             const hue = floor(random(100));
 
-            const sound = new soundArea(
-              x,
-              y,
-              hue,
-              40,
-              200,
-              URL.createObjectURL(file),
-              false,
-              true
-            );
+            const sound = new soundArea(x, y, hue, 40, 200, file, false, true);
 
             areas.push(sound);
           } else {

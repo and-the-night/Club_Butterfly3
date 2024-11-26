@@ -16,7 +16,7 @@ if (
 }
 
 let isPlaying = false;
-let editableMap = true;
+// let editableMap = false;
 let splitAudio = false;
 
 let x = 0;
@@ -103,6 +103,7 @@ function detect() {
   orientation();
 }
 
+let sketchName;
 let areas = [];
 let listener;
 let autoListener;
@@ -168,9 +169,9 @@ function setup() {
   noStroke();
 
   // P5LiveMedia
-  p5lm = new p5LiveMedia(this, "DATA", null, "motion");
-  p5lm.on("data", newData);
-  p5lm.on("disconnect", userDisconect);
+  // p5lm = new p5LiveMedia(this, "DATA", null, "motion");
+  // p5lm.on("data", newData);
+  // p5lm.on("disconnect", userDisconect);
 
   // Buttons
 
