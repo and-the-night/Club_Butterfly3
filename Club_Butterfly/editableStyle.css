@@ -5,23 +5,21 @@ html,
 body {
   margin: 0;
   padding: 0;
-  background: black;
-  color: #ff00f2;
+  background: white;
+  color: black;
+
+  font-family: "Jost", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 200;
+  font-style: normal;
+  font-size: 24px;
 }
 canvas {
   display: block;
   border: 3px solid white;
 }
 
-body.desktop main {
-  position: absolute;
-  /*right: calc((100vh - 806px) / 2);*/
-  right: 50px;
-  top: 50%;
-  transform: translateY(-50%);
-}
-
-body.mobile main {
+body main {
   display: table;
   margin: 10px auto;
 }
@@ -51,13 +49,7 @@ h2 {
   margin: 40px 0;
 }
 
-p,
 #sketchNameInput {
-  font-family: "Jost", sans-serif;
-  font-optical-sizing: auto;
-  font-weight: 200;
-  font-style: normal;
-  font-size: 24px;
 }
 
 body.mobile p {
@@ -67,17 +59,20 @@ body.mobile p {
 button {
   width: 50px;
   height: 50px;
-  font-size: 38px;
+  font-size: 24px;
+  font-family: "Jost", sans-serif;
+  color: black;
   font-weight: bold;
-  margin: 20px 20px 0 0;
-  background: #ff00f2;
+  margin: 0 20px 0 0;
+  background: white;
   border: none;
   transition: background 100ms;
   cursor: pointer;
 }
 
 button:hover {
-  background: #ff82f9;
+  background: black;
+  color: white;
 }
 
 button:active {
@@ -98,13 +93,7 @@ body.mobile button {
 #sketchNameContainer {
   display: flex;
   flex-direction: row;
-}
-
-#sketchName {
-  position: relative;
-  top: 1px;
-  margin: 0 0 0 10px;
-  line-height: 50px;
+  width: 500px;
 }
 
 #editName {
@@ -133,9 +122,10 @@ body.mobile button {
   height: 50px;
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
   margin-bottom: 20px;
-  color: black;
-  background: #ff00f2;
+  color: white;
+  background: black;
 }
 
 #topBar p {
@@ -147,15 +137,16 @@ body.mobile button {
   color: white;
 }
 
-#topBar #userPhoto {
-  height: 35px;
-  border-radius: 50%;
-  vertical-align: -8px;
-  margin-right: 8px;
+#topLeftBar {
+  display: flex;
+  flex-direction: row;
 }
 
-#topBar #logOut {
-  margin-left: 8px;
+#topBar #userPhoto {
+  height: 34px;
+  margin: 8px;
+  border-radius: 50%;
+  cursor: pointer;
 }
 
 /* Saved Sketches */
@@ -174,4 +165,60 @@ body.mobile button {
 .saved-sketch:hover {
   background: #ff00f2;
   color: black;
+}
+
+/* Popups */
+.popup-wrapper {
+  position: relative;
+}
+
+.popup {
+  display: none;
+  position: absolute;
+  top: 100%;
+  padding: 10px;
+  border: 1px solid black;
+  background: white;
+  color: black;
+  font-weight: 200;
+  text-align: left;
+}
+
+.popup.show {
+  display: block;
+}
+
+.popup.left {
+  left: 0;
+}
+
+.popup.right {
+  right: 0;
+}
+
+.popup.center {
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.popup:before {
+  content: "";
+  position: absolute;
+  top: -20px;
+  left: 10px;
+  border: 10px solid transparent;
+  border-bottom-color: black;
+}
+
+.popup:after {
+  content: "";
+  position: absolute;
+  top: -18px;
+  left: 11px;
+  border: 9px solid transparent;
+  border-bottom-color: white;
+}
+
+#infoPopup {
+  width: 700px;
 }

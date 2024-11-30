@@ -8,27 +8,62 @@
       editableMap = true;
     </script>
 
-    <link rel="stylesheet" type="text/css" href="style.css" />
+    <link rel="stylesheet" type="text/css" href="editableStyle.css" />
     <meta charset="utf-8" />
   </head>
   <body>
-    <main id="drop-area"></main>
     <div id="topBar">
-      <p>Login with Google Account</p>
-    </div>
-    <div id="leftContainer">
-      <div id="sketchNameContainer">
-        <button id="editName">✎</button>
-        <p id="sketchName"></p>
-        <input type="text" id="sketchNameInput" style="display: none" />
+      <div id="topLeftBar">
+        <div id="loginContainer">
+          <p id="signInWithGoogle"><a>Login with Google Account</a></p>
+        </div>
+        <div id="userContainer" style="display: none">
+          <div class="popup-wrapper">
+            <img id="userPhoto" />
+            <div class="popup left" id="logOutPopup">
+              <a id="logOut">Logout</a>
+            </div>
+          </div>
+          <p>Hi <span id="userName"></span>!</p>
+        </div>
+        <div id="sketchNameContainer">
+          <button id="editName">✎</button>
+          <p id="sketchName"></p>
+          <input type="text" id="sketchNameInput" style="display: none" />
+        </div>
+        <div id="buttonsContainer">
+          <button id="newSketch" style="width: auto">New</button>
+          <button id="openSketch" class="popup-wrapper" style="width: auto">
+            Open
+            <div class="popup center" id="openSketchPopup">
+              <div id="savedSketchesContainer">
+                <div id="savedSketches"></div>
+              </div>
+            </div>
+          </button>
+          <button id="save" style="width: auto">Save</button>
+        </div>
       </div>
-      <button id="save" style="width: auto">Save Sketch</button>
-      <button id="newSketch" style="width: auto">New Sketch</button>
-      <div id="savedSketchesContainer">
-        <h2>Saved Sketches</h2>
-        <div id="savedSketches"></div>
+      <div id="infoContainer">
+        <a>by &theNIGHT</a>
+        <button id="info" class="popup-wrapper">
+          i
+          <div id="infoPopup" class="popup">
+            <p>Drag and drop audio files to place them in the sketch.</p>
+            <p>
+              The inner circle represents the are in which the audio is heard in
+              full volume and centered. Drag the inner radius to reposition the
+              sound area.
+            </p>
+            <p>Drag the edges of the inner radius to resize.</p>
+            <p>Drag the edges of the outer radius to resize.</p>
+            <p>Right click on the inner radius to change color.</p>
+            <p>Double click on the inner radius to delete.</p>
+          </div>
+        </button>
       </div>
     </div>
+    <main id="drop-area"></main>
 
     <script src="wordPool.js"></script>
     <script src="vehicle.js"></script>

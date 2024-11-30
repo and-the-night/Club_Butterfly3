@@ -73,40 +73,30 @@ onAuthStateChanged(auth, (user) => {
   }
 });
 
-let authDiv = document.createElement("div");
-// authDiv.style.position = "absolute";
-// authDiv.style.top = "10%";
-// authDiv.style.left = "85%";
-authDiv.style.width = "150px";
-//authDiv.style.height = "150px";
-authDiv.style.backgroundColor = "lightpink";
-authDiv.style.border = "1px solid black";
-authDiv.style.padding = "10px";
-authDiv.style.zIndex = "3000";
-document.body.appendChild(authDiv);
-
 function showLogOutButton(user) {
-  authDiv.innerHTML = "";
-  let userNameDiv = document.createElement("div");
+  const userContainer = document.getElementById("userContainer");
+  userContainer.style.display = "flex";
+  const userName = document.getElementById("userName");
+  userName.innerHTML = user.displayName;
+  const userPhoto = document.getElementById("userPhoto");
   if (user.photoURL) {
-    let userPic = document.createElement("img");
-    userPic.src = user.photoURL;
-    userPic.style.width = "50px";
-    userPic.style.height = "50px";
-    authDiv.appendChild(userPic);
-  }
-  if (user.displayName) {
-    userNameDiv.innerHTML = user.displayName;
+    userPhoto.src = user.photoURL;
+    userPhoto.style.display = "inline";
   } else {
-    userNameDiv.innerHTML = user.email;
+    userPhoto.style.display = "none";
   }
-  let logOutButton = document.createElement("button");
-  authDiv.appendChild(userNameDiv);
-  logOutButton.innerHTML = "Log Out";
-  logOutButton.setAttribute("id", "logOut");
-  logOutButton.setAttribute("class", "authButton");
-  authDiv.appendChild(logOutButton);
+
+  userPhoto.addEventListener("click", function () {
+    const logOutPopup = document.getElementById("logOutPopup");
+    if (logOutPopup.classList.contains("show")) {
+      logOutPopup.classList.remove("show");
+    } else {
+      logOutPopup.classList.add("show");
+    }
+  });
+
   document.getElementById("logOut").addEventListener("click", function () {
+    console.log("signing out");
     signOut(auth)
       .then(() => {
         // Sign-out successful.
@@ -117,50 +107,17 @@ function showLogOutButton(user) {
         console.log("error signing out");
       });
   });
+
+  const loginContainer = document.getElementById("loginContainer");
+  loginContainer.style.display = "none";
 }
 
 function showLoginButtons() {
-  authDiv.innerHTML = "";
-  let signUpWithGoogleButton = document.createElement("button");
-  signUpWithGoogleButton.innerHTML = "Google Login";
-  signUpWithGoogleButton.setAttribute("id", "signInWithGoogle");
-  signUpWithGoogleButton.setAttribute("class", "authButton");
-  authDiv.appendChild(signUpWithGoogleButton);
+  const userContainer = document.getElementById("userContainer");
+  userContainer.style.display = "none";
 
-  authDiv.appendChild(document.createElement("br"));
-  authDiv.appendChild(document.createElement("br"));
-
-  let emailDiv = document.createElement("div");
-  emailDiv.innerHTML = "Email";
-  authDiv.appendChild(emailDiv);
-
-  let emailInput = document.createElement("input");
-  emailInput.setAttribute("id", "email");
-  emailInput.setAttribute("class", "authInput");
-  emailInput.setAttribute("type", "text");
-  emailInput.setAttribute("placeholder", "email@email.com");
-  authDiv.appendChild(emailInput);
-
-  let passwordInput = document.createElement("input");
-  passwordInput.setAttribute("id", "password");
-  passwordInput.setAttribute("type", "password");
-  passwordInput.setAttribute("class", "authInput");
-  passwordInput.setAttribute("placeholder", "password");
-  passwordInput.setAttribute("suggest", "current-password");
-  passwordInput.setAttribute("autocomplete", "on");
-  authDiv.appendChild(passwordInput);
-
-  let signUpWithEmailButton = document.createElement("button");
-  signUpWithEmailButton.innerHTML = "Sign Up";
-  signUpWithEmailButton.setAttribute("id", "signUpWithEmail");
-  signUpWithEmailButton.setAttribute("class", "authButton");
-  authDiv.appendChild(signUpWithEmailButton);
-
-  let signInWithEmailButton = document.createElement("button");
-  signInWithEmailButton.innerHTML = "Sign In";
-  signInWithEmailButton.setAttribute("id", "signInWithEmail");
-  signInWithEmailButton.setAttribute("class", "authButton");
-  authDiv.appendChild(signInWithEmailButton);
+  const loginContainer = document.getElementById("loginContainer");
+  loginContainer.style.display = "block";
 
   document
     .getElementById("signInWithGoogle")
@@ -184,44 +141,6 @@ function showLoginButtons() {
           // The AuthCredential type that was used.
           const credential = GoogleAuthProvider.credentialFromError(error);
           // ...
-        });
-      event.stopPropagation();
-    });
-
-  document
-    .getElementById("signInWithEmail")
-    .addEventListener("click", function (event) {
-      let email = document.getElementById("email").value;
-      let password = document.getElementById("password").value;
-      signInWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-          // Signed in
-          const user = userCredential.user;
-          // ...
-        })
-        .catch((error) => {
-          const errorCode = error.code;
-          const errorMessage = error.message;
-        });
-      event.stopPropagation();
-    });
-
-  document
-    .getElementById("signUpWithEmail")
-    .addEventListener("click", function (event) {
-      let email = document.getElementById("email").value;
-      let password = document.getElementById("password").value;
-      createUserWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-          // Signed up
-          const user = userCredential.user;
-          console.log(user);
-          // ...
-        })
-        .catch((error) => {
-          const errorCode = error.code;
-          const errorMessage = error.message;
-          // ..
         });
       event.stopPropagation();
     });
@@ -269,7 +188,6 @@ saveButton.addEventListener("click", function () {
       });
     })
   ).then(() => {
-    console.log("areasData2", areasData);
     set(dbRef, areasData);
   });
 });
@@ -287,6 +205,15 @@ function getSavedSketches() {
   });
 }
 
+document.getElementById("openSketch").addEventListener("click", function () {
+  const openSketchPopup = document.getElementById("openSketchPopup");
+  if (openSketchPopup.classList.contains("show")) {
+    openSketchPopup.classList.remove("show");
+  } else {
+    openSketchPopup.classList.add("show");
+  }
+});
+
 function showSavedSketches(sketches) {
   const sketchesDivContainer = document.getElementById(
     "savedSketchesContainer"
@@ -300,7 +227,6 @@ function showSavedSketches(sketches) {
     sketchDiv.innerHTML = key;
     sketchDiv.setAttribute("class", "saved-sketch");
     sketchDiv.addEventListener("click", function () {
-      console.log("sketch clicked", key);
       loadSketch(sketch, key);
     });
     sketchesDiv.appendChild(sketchDiv);
@@ -347,7 +273,7 @@ function createNewSketch() {
 }
 
 function getSuggestedName() {
-  const randomInt1 = Math.floor(Math.random() * 100);
+  const randomInt1 = Math.floor(Math.random() * 88);
   const randomInt2 = Math.floor(Math.random() * 100);
 
   return constellationAdjectives[randomInt2] + " " + constellations[randomInt1];
@@ -370,7 +296,17 @@ sketchNameInput.addEventListener("keypress", function (event) {
   }
 });
 
-function toggleEditMode() {
+sketchNameInput.addEventListener("blur", function () {
+  toggleEditMode();
+});
+
+const sketchNameP = document.getElementById("sketchName");
+sketchNameP.addEventListener("dblclick", function () {
+  toggleEditMode();
+});
+
+function toggleEditMode(e) {
+  e.preventDefault();
   isEditNameMode = !isEditNameMode;
   const sketchNameP = document.getElementById("sketchName");
 
@@ -387,3 +323,13 @@ function toggleEditMode() {
     updateSketchName(sketchNameInput.value);
   }
 }
+
+// Info
+document.getElementById("info").addEventListener("click", function () {
+  const infoPopup = document.getElementById("infoPopup");
+  if (infoPopup.classList.contains("show")) {
+    infoPopup.classList.remove("show");
+  } else {
+    infoPopup.classList.add("show");
+  }
+});

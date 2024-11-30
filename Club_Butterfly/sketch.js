@@ -310,7 +310,7 @@ function draw() {
 
   // if(sendPosition) sendPosition({ x: listener.x, y: listener.y, a: heading });
   showOthers();
-  updateCursor();
+  if (editableMap) updateCursor();
 }
 
 function getListenerPosition() {

@@ -24,18 +24,18 @@ class soundArea {
     this.offsetX = 0;
     this.offsetY = 0;
 
-    // fetch(filePath)
-    //   .then((response) => response.blob())
-    //   .then((blob) => {
-    //     const reader = new FileReader();
-    //     reader.onloadend = () => {
-    //       this.filePath = reader.result;
-    //     };
-    //     reader.readAsDataURL(blob);
-    //   })
-    //   .catch((error) =>
-    //     console.error("Error converting file to base64:", error)
-    //   );
+    fetch(filePath)
+      .then((response) => response.blob())
+      .then((blob) => {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          this.filePath = reader.result;
+        };
+        reader.readAsDataURL(blob);
+      })
+      .catch((error) =>
+        console.error("Error converting file to base64:", error)
+      );
 
     this.player = new Tone.Player(filePath);
 
@@ -168,7 +168,13 @@ class soundArea {
   }
 
   addParticle() {
-    const p = new Particle(this.x, this.y, this.h, this.maxRadius);
+    const p = new Particle(
+      this.x,
+      this.y,
+      this.h,
+      this.minRadius,
+      this.maxRadius
+    );
     this.particles.push(p);
   }
 

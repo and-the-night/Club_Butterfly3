@@ -1,6 +1,6 @@
 class Particle {
-  constructor(centerX, centerY, h, maxRadius) {
-    this.pos = p5.Vector.random2D().mult(25);
+  constructor(centerX, centerY, h, minRadius, maxRadius) {
+    this.pos = p5.Vector.random2D().mult(minRadius);
     this.vel = createVector(0, 0);
     this.acc = this.pos.copy().mult(random(0.0001, 0.00001));
     this.centerX = centerX;
