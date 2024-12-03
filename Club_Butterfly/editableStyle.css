@@ -24,11 +24,6 @@ body main {
   margin: 10px auto;
 }
 
-body.desktop #leftContainer {
-  width: calc(100% - 900px);
-  margin-left: 40px;
-}
-
 h1 {
   font-size: 70px;
   font-family: "Yeseva One", serif;
@@ -57,13 +52,12 @@ body.mobile p {
 }
 
 button {
-  width: 50px;
-  height: 50px;
+  height: 38px;
   font-size: 24px;
   font-family: "Jost", sans-serif;
   color: black;
   font-weight: bold;
-  margin: 0 20px 0 0;
+  margin: 6px 20px 0 0;
   background: white;
   border: none;
   transition: background 100ms;
@@ -97,20 +91,25 @@ body.mobile button {
 }
 
 #editName {
-  width: 50px;
   text-align: center;
-  margin: 0;
+  margin-right: 0;
 }
 
 #sketchNameInput {
   width: 400px;
-  height: 50px;
-  padding-left: 10px;
+  height: 38px;
+  padding-left: 9px;
+  margin-top: 6px;
   box-sizing: border-box;
-  color: #ff00f2;
+  color: white;
   background: black;
-  border: 2px solid #ff00f2;
+  border: 2px solid white;
   border-left: none;
+  font-family: "Jost", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 200;
+  font-style: normal;
+  font-size: 24px;
 }
 
 #sketchNameInput:focus-visible {
@@ -134,6 +133,7 @@ body.mobile button {
 
 #topBar a:hover {
   cursor: pointer;
+  background: black;
   color: white;
 }
 
@@ -150,21 +150,14 @@ body.mobile button {
 }
 
 /* Saved Sketches */
-#savedSketches {
-}
-
 .saved-sketch {
-  font-family: "Jost", sans-serif;
-  font-optical-sizing: auto;
-  font-weight: 200;
-  font-style: normal;
-  font-size: 24px;
+  padding: 0 10px;
   cursor: pointer;
 }
 
 .saved-sketch:hover {
-  background: #ff00f2;
-  color: black;
+  background: black;
+  color: white;
 }
 
 /* Popups */
@@ -175,7 +168,7 @@ body.mobile button {
 .popup {
   display: none;
   position: absolute;
-  top: 100%;
+  top: calc(100% + 8px);
   padding: 10px;
   border: 1px solid black;
   background: white;
@@ -189,11 +182,12 @@ body.mobile button {
 }
 
 .popup.left {
-  left: 0;
+  left: 4px;
+  top: calc(100% + 2px);
 }
 
 .popup.right {
-  right: 0;
+  right: -11px;
 }
 
 .popup.center {
@@ -205,20 +199,55 @@ body.mobile button {
   content: "";
   position: absolute;
   top: -20px;
-  left: 10px;
   border: 10px solid transparent;
   border-bottom-color: black;
+}
+
+.popup.left:before {
+  left: 10px;
+}
+
+.popup.right:before {
+  right: 10px;
+}
+
+.popup.center:before {
+  left: calc(50% - 10px);
 }
 
 .popup:after {
   content: "";
   position: absolute;
   top: -18px;
-  left: 11px;
   border: 9px solid transparent;
   border-bottom-color: white;
 }
 
+.popup.left:after {
+  left: 11px;
+}
+
+.popup.right:after {
+  right: 11px;
+}
+
+.popup.center:after {
+  left: calc(50% - 9px);
+}
+
 #infoPopup {
   width: 700px;
+}
+
+#openSketchPopup {
+  width: 500px;
+  padding: 10px 0;
+}
+
+#logOutPopup {
+  padding: 10px 0;
+}
+
+#logOutPopup a {
+  padding: 0 10px;
 }

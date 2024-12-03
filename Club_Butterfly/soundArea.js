@@ -7,7 +7,8 @@ class soundArea {
     maxRadius,
     filePath,
     schedulePlay,
-    isEditable
+    isEditable,
+    file
   ) {
     this.x = x;
     this.y = y;
@@ -16,6 +17,7 @@ class soundArea {
     this.minRadius = minRadius;
     this.maxRadius = maxRadius;
     this.filePath = filePath;
+    this.file = file;
     this.schedulePlay = schedulePlay;
     this.isEditable = isEditable;
     this.isDragging = false;
@@ -37,7 +39,7 @@ class soundArea {
         console.error("Error converting file to base64:", error)
       );
 
-    this.player = new Tone.Player(filePath);
+    this.player = new Tone.Player(this.filePath);
 
     this.player.loop = true;
     this.player.volume.value = this.volume;

@@ -60,7 +60,21 @@ if (editableMap) {
 
             const hue = floor(random(100));
 
-            const sound = new soundArea(x, y, hue, 40, 200, file, false, true);
+            const blob = new Blob([file], { type: file.type });
+            const url = URL.createObjectURL(blob);
+            console.log("Blob URL:", url);
+
+            const sound = new soundArea(
+              x,
+              y,
+              hue,
+              40,
+              200,
+              url,
+              false,
+              true,
+              file
+            );
 
             areas.push(sound);
           } else {

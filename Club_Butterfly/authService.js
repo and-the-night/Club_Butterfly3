@@ -91,6 +91,7 @@ function showLogOutButton(user) {
     if (logOutPopup.classList.contains("show")) {
       logOutPopup.classList.remove("show");
     } else {
+      closePopups();
       logOutPopup.classList.add("show");
     }
   });
@@ -165,7 +166,7 @@ saveButton.addEventListener("click", function () {
 
   Promise.all(
     areas.map(async (area) => {
-      const file = area.filePath;
+      const file = area.file;
       const fileRef = storageRef(storage, folder + file.name);
 
       await uploadBytes(fileRef, file).then((snapshot) => {
@@ -210,6 +211,7 @@ document.getElementById("openSketch").addEventListener("click", function () {
   if (openSketchPopup.classList.contains("show")) {
     openSketchPopup.classList.remove("show");
   } else {
+    closePopups();
     openSketchPopup.classList.add("show");
   }
 });
@@ -297,6 +299,7 @@ sketchNameInput.addEventListener("keypress", function (event) {
 });
 
 sketchNameInput.addEventListener("blur", function () {
+  console.log("blur");
   toggleEditMode();
 });
 
@@ -306,7 +309,7 @@ sketchNameP.addEventListener("dblclick", function () {
 });
 
 function toggleEditMode(e) {
-  e.preventDefault();
+  if (e) e.preventDefault();
   isEditNameMode = !isEditNameMode;
   const sketchNameP = document.getElementById("sketchName");
 
@@ -330,6 +333,17 @@ document.getElementById("info").addEventListener("click", function () {
   if (infoPopup.classList.contains("show")) {
     infoPopup.classList.remove("show");
   } else {
+    closePopups();
     infoPopup.classList.add("show");
   }
 });
+
+// Close all popups
+function closePopups() {
+  const popups = document.getElementsByClassName("popup");
+  for (const popup of popups) {
+    if (popup.classList.contains("show")) {
+      popup.classList.remove("show");
+    }
+  }
+}
