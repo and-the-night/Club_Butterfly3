@@ -26,7 +26,9 @@ class soundArea {
     this.offsetX = 0;
     this.offsetY = 0;
 
-    fetch(filePath)
+    fetch(filePath, {
+      mode: "no-cors",
+    })
       .then((response) => response.blob())
       .then((blob) => {
         const reader = new FileReader();
