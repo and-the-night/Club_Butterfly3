@@ -149,6 +149,12 @@ body.mobile button {
   cursor: pointer;
 }
 
+#topBar #info {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+}
+
 /* Saved Sketches */
 .saved-sketch {
   padding: 0 10px;
