@@ -12,44 +12,53 @@
     <meta charset="utf-8" />
   </head>
   <body>
-    <div id="topBar">
-      <div id="topLeftBar">
+    <div id="leftBar">
+      <div id="userActionsContainer">
         <div id="loginContainer">
           <p id="signInWithGoogle"><a>Login with Google Account</a></p>
         </div>
         <div id="userContainer" style="display: none">
           <div class="popup-wrapper">
             <img id="userPhoto" />
-            <div class="popup left" id="logOutPopup">
+            <div class="popup bottom" id="logOutPopup">
               <a id="logOut">Logout</a>
             </div>
           </div>
           <p>Hi <span id="userName"></span>!</p>
         </div>
+  
+
         <div id="sketchNameContainer">
-          <button id="editName">✎</button>
           <p id="sketchName"></p>
           <input type="text" id="sketchNameInput" style="display: none" />
+          <button id="editName">✎</button>
         </div>
         <div id="buttonsContainer">
-          <button id="newSketch" style="width: auto">New</button>
-          <button id="openSketch" class="popup-wrapper" style="width: auto">
-            Open
-            <div class="popup center" id="openSketchPopup">
-              <div id="savedSketchesContainer">
-                <div id="savedSketches"></div>
+          <div>
+            <button id="newSketch">New</button>
+          </div>
+          <div>
+            <button id="openSketch" class="popup-wrapper">
+              Open
+              <div class="popup left align-top" id="openSketchPopup">
+                <div id="savedSketchesContainer">
+                  <div id="savedSketches"></div>
+                </div>
               </div>
-            </div>
-          </button>
-          <button id="save" style="width: auto">Save</button>
-          <button id="share">Share</button>
+            </button>
+          </div>
+          <div>
+            <button id="save">Save</button>
+          </div>
+          <div>
+            <button id="share">Share</button>
+          </div>
         </div>
       </div>
       <div id="infoContainer">
-        <a>by &theNIGHT</a>
         <button id="info" class="popup-wrapper">
           i
-          <div id="infoPopup" class="popup right">
+          <div id="infoPopup" class="popup left align-bottom">
             <ul>
               <li>Drag and drop audio files to place them in the sketch.</li>
               <li>
@@ -67,9 +76,16 @@
             </ul>
           </div>
         </button>
+        <a>Created by &theNIGHT</a>
       </div>
     </div>
-    <main id="drop-area"></main>
+    <div id="mainContainer">
+      <main id="drop-area"></main>
+      <div id="transportButtonsContainer">
+        <button id="playBtn">►</button>
+        <button id="stateBtn">↝</button>
+      </div>
+    </div>
 
     <script src="wordPool.js"></script>
     <script src="vehicle.js"></script>

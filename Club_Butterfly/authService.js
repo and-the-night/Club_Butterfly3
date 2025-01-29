@@ -32,6 +32,14 @@ import {
 let db, auth, app, user, uid, storage;
 let googleAuthProvider;
 let appName = "ClubButterfly";
+
+const composition = {
+  name,
+  areas: [],
+  isSaved: false,
+  isDirty: false,
+}
+
 initFirebase();
 
 function initFirebase() {
@@ -73,6 +81,21 @@ onAuthStateChanged(auth, (user) => {
   }
 });
 
+function getUrlQuery() {
+  const params = new URLSearchParams(window.location.search);
+  const query = {};
+  for (const [key, value] of params.entries()) {
+    query[key] = value;
+  }
+  return query;
+}
+
+const queryParams = getUrlQuery();
+console.log("queryParams", queryParams);
+
+if (queryParams.comp) {
+}
+
 function showLogOutButton(user) {
   const userContainer = document.getElementById("userContainer");
   userContainer.style.display = "flex";
@@ -86,7 +109,8 @@ function showLogOutButton(user) {
     userPhoto.style.display = "none";
   }
 
-  userPhoto.addEventListener("click", function () {
+  userPhoto.addEventListener("click", function (e) {
+    e.stopPropagation();
     const logOutPopup = document.getElementById("logOutPopup");
     if (logOutPopup.classList.contains("show")) {
       logOutPopup.classList.remove("show");
@@ -206,7 +230,8 @@ function getSavedSketches() {
   });
 }
 
-document.getElementById("openSketch").addEventListener("click", function () {
+document.getElementById("openSketch").addEventListener("click", function (e) {
+  e.stopPropagation();
   const openSketchPopup = document.getElementById("openSketchPopup");
   if (openSketchPopup.classList.contains("show")) {
     openSketchPopup.classList.remove("show");
@@ -294,13 +319,12 @@ editNameButton.addEventListener("click", toggleEditMode);
 
 sketchNameInput.addEventListener("keypress", function (event) {
   if (event.key === "Enter") {
-    toggleEditMode();
+    toggleEditMode(false);
   }
 });
 
 sketchNameInput.addEventListener("blur", function () {
-  console.log("blur");
-  toggleEditMode();
+  toggleEditMode(false);
 });
 
 const sketchNameP = document.getElementById("sketchName");
@@ -308,27 +332,33 @@ sketchNameP.addEventListener("dblclick", function () {
   toggleEditMode();
 });
 
-function toggleEditMode(e) {
-  if (e) e.preventDefault();
-  isEditNameMode = !isEditNameMode;
+function toggleEditMode(enterEditMode) {
+  // if (e) e.preventDefault(); WHY?
+
+  if(enterEditMode !== undefined) {
+    isEditNameMode = enterEditMode;
+  } else {
+    isEditNameMode = !isEditNameMode;
+  }
   const sketchNameP = document.getElementById("sketchName");
 
   if (isEditNameMode) {
     sketchNameInput.style.display = "block";
     sketchNameInput.value = sketchName;
     sketchNameInput.focus();
-    editNameButton.innerHTML = "✓";
+    editNameButton.style.display = "none";
     sketchNameP.style.display = "none";
   } else {
     sketchNameInput.style.display = "none";
-    editNameButton.innerHTML = "✎";
     sketchNameP.style.display = "block";
+    editNameButton.style.display = "block";
     updateSketchName(sketchNameInput.value);
   }
 }
 
 // Info
-document.getElementById("info").addEventListener("click", function () {
+document.getElementById("info").addEventListener("click", function (e) {
+  e.stopPropagation();
   const infoPopup = document.getElementById("infoPopup");
   if (infoPopup.classList.contains("show")) {
     infoPopup.classList.remove("show");
@@ -339,6 +369,10 @@ document.getElementById("info").addEventListener("click", function () {
 });
 
 // Close all popups
+document.body.addEventListener("click", function (event) {
+  closePopups();
+});
+
 function closePopups() {
   const popups = document.getElementsByClassName("popup");
   for (const popup of popups) {

@@ -12,16 +12,24 @@ body {
   font-optical-sizing: auto;
   font-weight: 200;
   font-style: normal;
-  font-size: 24px;
+  font-size: 20px;
 }
+
+body {
+  display: flex;
+  flex-direction: row;
+}
+
 canvas {
   display: block;
   border: 3px solid white;
 }
 
-body main {
+#mainContainer {
   display: table;
-  margin: 10px auto;
+  margin: 0 auto;
+  height: 800px;
+  transform: translateY(calc(50vh - 400px));
 }
 
 h1 {
@@ -44,19 +52,17 @@ h2 {
   margin: 40px 0;
 }
 
-#sketchNameInput {
-}
-
 body.mobile p {
   font-weight: 400;
 }
 
 button {
   height: 38px;
-  font-size: 24px;
+  font-size: 20px;
   font-family: "Jost", sans-serif;
+  font-weight: 200;
   color: black;
-  font-weight: bold;
+  padding: 0;
   margin: 6px 20px 0 0;
   background: white;
   border: none;
@@ -65,8 +71,7 @@ button {
 }
 
 button:hover {
-  background: black;
-  color: white;
+  color: grey;
 }
 
 button:active {
@@ -83,82 +88,116 @@ body.mobile button {
   margin: 20px auto;
 }
 
+/* Left Bar */
+#leftBar {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 420px;
+  height: 100vh;
+  padding: 20px;
+  box-sizing: border-box;
+  color: black;
+  background: white;
+  border-right: 1px solid black;
+}
+
+#leftBar p {
+  margin: 0;
+}
+
+/* User Info */
+#userContainer p {
+  margin: 3px 0 3px 8px;
+}
+
 /* Sketch Name */
 #sketchNameContainer {
   display: flex;
   flex-direction: row;
-  width: 500px;
+  margin: 40px 0 20px;
+}
+
+#sketchNameContainer p {
+  margin: 8px 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 #editName {
   text-align: center;
-  margin-right: 0;
+  margin-left: 4px;
 }
 
 #sketchNameInput {
   width: 400px;
   height: 38px;
   padding-left: 9px;
-  margin-top: 6px;
+  margin: 4px 0 0 -10px;
   box-sizing: border-box;
-  color: white;
-  background: black;
-  border: 2px solid white;
-  border-left: none;
+  color: black;
+  background: white;
+  border: 1px solid black;
+  border-radius: 2px;
   font-family: "Jost", sans-serif;
   font-optical-sizing: auto;
   font-weight: 200;
   font-style: normal;
-  font-size: 24px;
+  font-size: 20px;
 }
 
 #sketchNameInput:focus-visible {
   outline: none;
 }
 
-/* Top Bar */
-#topBar {
-  height: 50px;
+#buttonsContainer {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: space-between;
-  margin-bottom: 20px;
-  color: white;
-  background: black;
 }
 
-#topBar p {
-  margin: 8px;
+#buttonsContainer button {
+  display: inline-block;
+  width: auto;
+  text-align: left;
 }
 
-#topBar a:hover {
+#leftBar a {
+  color: black;
+  text-decoration: none;
   cursor: pointer;
-  background: black;
-  color: white;
+  transition: color 100ms;
+  z-index: 1;
 }
 
-#topLeftBar {
-  display: flex;
-  flex-direction: row;
+#leftBar a:hover {
+  color: grey;
 }
 
-#topBar #userPhoto {
-  height: 34px;
-  margin: 8px;
-  border-radius: 50%;
-  cursor: pointer;
-}
-
-#topBar #info {
-  width: 34px;
+#leftBar #userPhoto {
   height: 34px;
   border-radius: 50%;
-  margin: 8px;
+  cursor: pointer;
+}
+
+#leftBar #info {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin: 8px 0;
+  border: 1px solid black;
+  font-weight: bold;
+}
+
+#leftBar #info:hover {
+  background: black;
+  color: white;
 }
 
 /* Saved Sketches */
 .saved-sketch {
-  padding: 0 10px;
+  padding: 4px 10px;
   cursor: pointer;
 }
 
@@ -175,86 +214,130 @@ body.mobile button {
 .popup {
   display: none;
   position: absolute;
-  top: calc(100% + 8px);
   padding: 10px;
   border: 1px solid black;
   background: white;
   color: black;
   font-weight: 200;
   text-align: left;
+  z-index: 2;
 }
 
 .popup.show {
   display: block;
 }
 
-.popup.left {
-  left: 4px;
-  top: calc(100% + 2px);
+/* Popup opens Bottom */
+.popup.bottom {
+  top: calc(100% + 4px);
+  left: calc(50% - 15px);
 }
 
-.popup.right {
-  right: -11px;
-}
-
-.popup.center {
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-.popup:before {
+.popup.bottom:before {
   content: "";
   position: absolute;
   top: -20px;
+  left: 4px;
   border: 10px solid transparent;
   border-bottom-color: black;
 }
 
-.popup.left:before {
-  left: 10px;
-}
-
-.popup.right:before {
-  right: 10px;
-}
-
-.popup.center:before {
-  left: calc(50% - 10px);
-}
-
-.popup:after {
+.popup.bottom:after {
   content: "";
   position: absolute;
   top: -18px;
+  left: 5px;
   border: 9px solid transparent;
   border-bottom-color: white;
 }
 
+/* Popup opens Left */
+.popup.left {
+  left: calc(100% + 12px);
+}
+
+.popup.left.align-top {
+  top: 4px;
+}
+
+.popup.left.align-bottom {
+  bottom: 0;
+}
+
+.popup.left:before {
+  content: "";
+  position: absolute;
+  left: -20px;
+  border: 10px solid transparent;
+  border-right-color: black;
+}
+
 .popup.left:after {
-  left: 11px;
+  content: "";
+  position: absolute;
+  left: -18px;
+  border: 9px solid transparent;
+  border-right-color: white;
 }
 
-.popup.right:after {
-  right: 11px;
+.popup.left.align-top:before {
+  top: 4px;
 }
 
-.popup.center:after {
-  left: calc(50% - 9px);
+.popup.left.align-top:after {
+  top: 5px;
 }
 
+.popup.left.align-bottom:before {
+  bottom: 8px;
+}
+
+.popup.left.align-bottom:after {
+  bottom: 9px;
+}
+
+/* Info Popup */
 #infoPopup {
   width: 700px;
+  padding: 0 10px 0 0;
 }
 
 #openSketchPopup {
   width: 500px;
-  padding: 10px 0;
+  padding: 0;
 }
 
 #logOutPopup {
-  padding: 10px 0;
+  padding: 4px 0;
 }
 
 #logOutPopup a {
   padding: 0 10px;
+}
+
+#infoContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Transport Buttons */
+#transportButtonsContainer {
+  position: absolute;
+  right: -20px;
+  top: 0;
+  transform: translateX(100%);
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+
+#transportButtonsContainer button {
+  width: 40px;
+  height: 40px;
+  margin: 4px 0;
+  padding: 0;
+  background: white;
+  border: 1px solid black;
+  border-radius: 50%;
+  cursor: pointer;
 }

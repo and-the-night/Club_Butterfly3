@@ -168,53 +168,47 @@ function setup() {
   angleMode(DEGREES);
   noStroke();
 
-  // P5LiveMedia
-  // p5lm = new p5LiveMedia(this, "DATA", null, "motion");
-  // p5lm.on("data", newData);
-  // p5lm.on("disconnect", userDisconect);
-
   // Buttons
 
   let playText = state == "mobile" ? "Play" : "►";
   let stopText = state == "mobile" ? "Stop" : "⏹";
 
-  let playBtn = createButton(playText);
+  // let playBtn = createButton(playText);
+  let playBtn = document.getElementById("playBtn");
 
-  playBtn.mousePressed(() => {
+  playBtn.addEventListener("click", () => {
     if (state == "mobile") detect();
 
     if (!isPlaying) {
       Tone.Transport.start();
+      playBtn.innerHTML = stopText;
       for (let i = 0; i < areas.length; i++) {
         areas[i].player.start();
         isPlaying = true;
-        playBtn.html(stopText);
       }
     } else if (isPlaying) {
       Tone.Transport.stop();
+      playBtn.innerHTML = playText;
       for (let i = 0; i < areas.length; i++) {
         areas[i].player.stop();
         isPlaying = false;
-        playBtn.html(playText);
       }
     }
   });
 
   if (state != "mobile") {
-    let stateBtn = createButton("↝");
+    let stateBtn = document.getElementById("stateBtn");
 
-    stateBtn.mousePressed(() => {
+    stateBtn.addEventListener("click", () => {
       if (state == "drag") {
         state = "wander";
-        stateBtn.html("⌖");
+        stateBtn.innerHTML = "⌖";
       } else if (state == "wander") {
         state = "drag";
-        stateBtn.html("↝");
+        stateBtn.innerHTML = "↝";
       }
     });
   }
-
-  createElement("h2", "by &theNIGHT 2024");
 
   listener = new Draggable(width / 2, height - 60, 64, 64, listenerImg);
   autoListener = new Vehicle(width / 2, height - 60, listenerImg);
@@ -261,7 +255,7 @@ function draw() {
       fill("white");
     }
     textSize(40);
-    text(Tone.Transport.position, 10, height - 20);
+    // text(Tone.Transport.position, 10, height - 20);
   }
 
   for (let area of areas) {
