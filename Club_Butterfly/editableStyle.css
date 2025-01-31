@@ -197,6 +197,7 @@ body.mobile button {
 
 /* Saved Sketches */
 .saved-sketch {
+  position: relative;
   padding: 4px 10px;
   cursor: pointer;
 }
@@ -204,6 +205,15 @@ body.mobile button {
 .saved-sketch:hover {
   background: black;
   color: white;
+}
+
+.saved-sketch:first-of-type:hover:after {
+  content: "";
+  position: absolute;
+  left: -20px;
+  border: 10px solid transparent;
+  border-right-color: black;
+  z-index: 2;
 }
 
 /* Popups */

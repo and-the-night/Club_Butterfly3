@@ -34,9 +34,9 @@ let googleAuthProvider;
 let appName = "ClubButterfly";
 
 const composition = {
+  id: null,
   name,
   areas: [],
-  isSaved: false,
   isDirty: false,
 }
 
@@ -184,22 +184,29 @@ function enableSaveButton() {
 }
 
 saveButton.addEventListener("click", function () {
-  const folder = appName + "/" + uid + "/" + sketchName + "/";
+  const folder = appName + "/" + uid + "/";
   const dbRef = ref(db, folder);
   const areasData = [];
 
+  console.log("areas", areas);  
+
   Promise.all(
     areas.map(async (area) => {
-      const file = area.file;
-      const fileRef = storageRef(storage, folder + file.name);
-
-      await uploadBytes(fileRef, file).then((snapshot) => {
-        console.log("Uploaded a file!");
-        return getDownloadURL(snapshot.ref).then((downloadURL) => {
-          console.log("File available at", downloadURL);
-          area.filePath = downloadURL;
+      console.log("area1", area);
+      if(area.file) {
+        const file = area.file;
+        const fileRef = storageRef(storage, folder + file.name);
+  
+        await uploadBytes(fileRef, file).then((snapshot) => {
+          console.log("Uploaded a file!");
+          return getDownloadURL(snapshot.ref).then((downloadURL) => {
+            console.log("File available at", downloadURL);
+            area.filePath = downloadURL;
+          });
         });
-      });
+
+        area.file = null;
+      }
 
       areasData.push({
         x: area.x,
@@ -211,9 +218,27 @@ saveButton.addEventListener("click", function () {
         schedulePlay: area.schedulePlay,
         isEditable: area.isEditable,
       });
+  
+      return areasData;
     })
-  ).then(() => {
-    set(dbRef, areasData);
+  ).then((areasData) => {
+    if(composition.id) { 
+      console.log("updating existing sketch");
+      const folder = appName + "/" + uid + "/" + composition.id + "/";
+      const dbRef = ref(db, folder);
+
+      update(dbRef, { areas: areasData });
+    } else {
+      console.log("saving new sketch");
+      const newComposition = {
+        name: sketchName,
+        areas: areasData,
+      };
+
+      const newRef = push(dbRef, newComposition);
+      composition.id = newRef.key;
+    }
+
   });
 });
 
@@ -222,6 +247,7 @@ function getSavedSketches() {
   const sketchesRef = ref(db, appName + "/" + uid + "/");
   onValue(sketchesRef, (snapshot) => {
     const sketches = snapshot.val();
+    console.log("sketches", sketches);
     if (sketches) {
       showSavedSketches(sketches);
     } else {
@@ -251,7 +277,7 @@ function showSavedSketches(sketches) {
   for (const key in sketches) {
     const sketch = sketches[key];
     const sketchDiv = document.createElement("div");
-    sketchDiv.innerHTML = key;
+    sketchDiv.innerHTML = sketch.name;
     sketchDiv.setAttribute("class", "saved-sketch");
     sketchDiv.addEventListener("click", function () {
       loadSketch(sketch, key);
@@ -269,11 +295,14 @@ function hideSavedSketches() {
 
 // Load Sketch from DB
 function loadSketch(sketch, key) {
-  console.log("load sketch", sketch);
-  sketchNameInput.value = key;
+  composition.id = key;
+  composition.name = sketch.name;
+  composition.areas = sketch.areas;
+  composition.isDirty = false;
+
+  updateSketchName(sketch.name);
   areas = [];
-  sketch.forEach((areaData) => {
-    console.log(areaData);
+  sketch.areas[0].forEach((areaData) => {
     areas.push(
       new soundArea(
         areaData.x,
@@ -287,6 +316,8 @@ function loadSketch(sketch, key) {
       )
     );
   });
+  console.log("areas", areas);
+  console.log("composition", composition);
 }
 
 // New Sketch
@@ -294,7 +325,19 @@ const newSketchButton = document.getElementById("newSketch");
 newSketchButton.addEventListener("click", createNewSketch);
 
 function createNewSketch() {
+  isDirty = false;
+  console.log("isDirty", isDirty);
+  if(composition.isDirty) {
+    const userConfirmed = confirm("Are you sure you want to create a new sketch? Any unsaved changes will be lost.");
+    if (!userConfirmed) {
+      return;
+    }
+  }
   areas = [];
+  composition.id = null;
+  composition.name = null;
+  composition.areas = [];
+  composition.isDirty = false;
   const suggestedName = getSuggestedName();
   updateSketchName(suggestedName);
 }
@@ -310,6 +353,13 @@ function updateSketchName(newSketchName) {
   sketchName = newSketchName;
   const sketchNameP = document.getElementById("sketchName");
   sketchNameP.innerHTML = newSketchName;
+
+  if(composition.id) {
+    const folder = appName + "/" + uid + "/" + composition.id + "/";
+    const dbRef = ref(db, folder);
+
+    update(dbRef, { name: newSketchName });
+  }
 }
 
 // Edit Name

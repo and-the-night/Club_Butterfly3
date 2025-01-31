@@ -16,8 +16,7 @@ if (
 }
 
 let isPlaying = false;
-// let editableMap = false;
-let splitAudio = false;
+let isDirty = false;
 
 let x = 0;
 let y = 0;

@@ -32,14 +32,15 @@ class soundArea {
       .then((response) => response.blob())
       .then((blob) => {
         const reader = new FileReader();
-        reader.onloadend = () => {
-          this.filePath = reader.result;
-        };
         reader.readAsDataURL(blob);
+        reader.onloadend = () => {
+          this.blob = reader.result;
+        };
       })
       .catch((error) =>
         console.error("Error converting file to base64:", error)
       );
+
 
     this.player = new Tone.Player(this.filePath);
 
