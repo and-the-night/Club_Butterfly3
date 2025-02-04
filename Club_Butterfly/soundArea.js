@@ -61,6 +61,7 @@ class soundArea {
 
   updateVolume(listenerX, listenerY, isPlayTime) {
     let distance = dist(this.x, this.y, listenerX, listenerY);
+    let edge = 20;
 
     // Contiuous Volume Change
     if (!this.schedulePlay) {
@@ -68,8 +69,12 @@ class soundArea {
         this.volume = 0;
       } else if (distance > this.maxRadius) {
         this.volume = -Infinity;
+      } else if(this.maxRadius - distance < edge) {
+        let distFromMax = this.maxRadius - distance;
+        this.volume = map(distFromMax, 0, edge, -60, -9);
       } else {
-        this.volume = map(distance, this.minRadius, this.maxRadius, 0, -15);
+        let distFromMin = distance - this.minRadius;
+        this.volume = map(distFromMin, this.minRadius, this.maxRadius - edge, 0, -9);
       }
     }
 
@@ -87,14 +92,20 @@ class soundArea {
 
   updatePan(listenerX, listenerY, listenerAngle) {
     let angle = round(atan2(listenerY - this.y, listenerX - this.x));
+    let distance = dist(this.x, this.y, listenerX, listenerY);
 
     let panAngle = 0;
 
-    if (this.volume == 0) {
+    if (distance < this.minRadius) {
       panAngle = 0;
-    } else {
-      panAngle = sin(angle - 90 + listenerAngle);
+    } else if (distance < this.maxRadius) {
+      panAngle = sin(angle + listenerAngle); // Compare with Mobile version!!! used to be sin(angle - 90 + listenerAngle)
     }
+
+    // Debugging
+    // fill(255);
+    // textSize(20);
+    // text("Pan Angle: " + panAngle, this.x, this.y + 10);
 
     this.panner.pan.setValueAtTime(panAngle, 0.25);
   }
@@ -188,16 +199,19 @@ class soundArea {
     this.offsetY = this.y - mouseY;
     const distFromCenter = dist(this.x, this.y, mouseX, mouseY);
     if (distFromCenter < this.minRadius - 10) {
+      isDirty = true;
       this.state = "dragging";
     } else if (
       distFromCenter >= this.minRadius - 10 &&
       distFromCenter < this.minRadius + 10
     ) {
+      isDirty = true;
       this.state = "resizingMin";
     } else if (
       distFromCenter >= this.maxRadius - 10 &&
       distFromCenter < this.maxRadius + 10
     ) {
+      isDirty = true;
       this.state = "resizingMax";
     }
   }
@@ -205,6 +219,7 @@ class soundArea {
   rightPressed() {
     const distFromCenter = dist(this.x, this.y, mouseX, mouseY);
     if (distFromCenter < this.minRadius) {
+      isDirty = true;
       this.h = random(100);
     }
   }

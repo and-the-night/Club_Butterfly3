@@ -1,5 +1,3 @@
-let p5lm;
-
 // Device Detection
 let state;
 
@@ -161,53 +159,59 @@ function preload() {
   }
 }
 
+// Buttons
+
+let playText = state == "mobile" ? "Play" : "►";
+let stopText = state == "mobile" ? "Stop" : "⏹";
+
+// let playBtn = createButton(playText);
+let playBtn = document.getElementById("playBtn");
+
+playBtn.addEventListener("click", () => {
+  if (state == "mobile") detect();
+
+  if (!isPlaying) {
+    playAudio();
+  } else if (isPlaying) {
+    stopAudio();
+  }
+});
+
+let stateBtn = document.getElementById("stateBtn");
+
+if (state != "mobile") {
+  stateBtn.addEventListener("click", () => {
+    if (state == "drag") {
+      state = "wander";
+    } else if (state == "wander") {
+      state = "drag";
+    }
+  });
+}
+
+function playAudio() {
+  Tone.Transport.start();
+  playBtn.innerHTML = stopText;
+  isPlaying = true;
+  for (let i = 0; i < areas.length; i++) {
+    areas[i].player.start();
+  }
+}
+
+function stopAudio() {
+  Tone.Transport.stop();
+  playBtn.innerHTML = playText;
+  isPlaying = false;
+  for (let i = 0; i < areas.length; i++) {
+    areas[i].player.stop();
+  }
+}
+
 function setup() {
   createCanvas(canvasWidth, canvasHeight);
   colorMode(HSB, 100);
   angleMode(DEGREES);
   noStroke();
-
-  // Buttons
-
-  let playText = state == "mobile" ? "Play" : "►";
-  let stopText = state == "mobile" ? "Stop" : "⏹";
-
-  // let playBtn = createButton(playText);
-  let playBtn = document.getElementById("playBtn");
-
-  playBtn.addEventListener("click", () => {
-    if (state == "mobile") detect();
-
-    if (!isPlaying) {
-      Tone.Transport.start();
-      playBtn.innerHTML = stopText;
-      for (let i = 0; i < areas.length; i++) {
-        areas[i].player.start();
-        isPlaying = true;
-      }
-    } else if (isPlaying) {
-      Tone.Transport.stop();
-      playBtn.innerHTML = playText;
-      for (let i = 0; i < areas.length; i++) {
-        areas[i].player.stop();
-        isPlaying = false;
-      }
-    }
-  });
-
-  if (state != "mobile") {
-    let stateBtn = document.getElementById("stateBtn");
-
-    stateBtn.addEventListener("click", () => {
-      if (state == "drag") {
-        state = "wander";
-        stateBtn.innerHTML = "⌖";
-      } else if (state == "wander") {
-        state = "drag";
-        stateBtn.innerHTML = "↝";
-      }
-    });
-  }
 
   listener = new Draggable(width / 2, height - 60, 64, 64, listenerImg);
   autoListener = new Vehicle(width / 2, height - 60, listenerImg);
@@ -247,16 +251,6 @@ function draw() {
   const transport = Tone.Transport.position.split(":");
   let isNew2Bar = transport[1] == "0" && transport[0] % 2 == 0;
 
-  if (schedulePlay) {
-    if (isNew2Bar) {
-      fill("red");
-    } else {
-      fill("white");
-    }
-    textSize(40);
-    // text(Tone.Transport.position, 10, height - 20);
-  }
-
   for (let area of areas) {
     let heading = state == "wander" ? autoListener.vel.heading() : alpha;
     area.update(listener.x, listener.y, heading, isNew2Bar);
@@ -270,6 +264,16 @@ function draw() {
       textSize(20);
       text("D: " + distance, area.x - 30, area.y - 15);
       text("V: " + volume, area.x - 30, area.y + 15);
+
+      if (schedulePlay) {
+        if (isNew2Bar) {
+          fill("red");
+        } else {
+          fill("white");
+        }
+        textSize(40);
+        text(Tone.Transport.position, 10, height - 20);
+      }
     }
   }
 
@@ -278,6 +282,7 @@ function draw() {
     listener.show();
     listener.update(position);
   } else if (state == "drag") {
+    stateBtn.innerHTML = "↝";
     listener.over();
     listener.update();
     listener.show();
@@ -287,6 +292,7 @@ function draw() {
     };
     autoListener.update(pos);
   } else if (state == "wander") {
+    stateBtn.innerHTML = "⌖";
     autoListener.wander();
     autoListener.update();
     autoListener.show();

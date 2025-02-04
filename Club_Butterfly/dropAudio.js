@@ -63,6 +63,8 @@ if (editableMap) {
           const url = URL.createObjectURL(blob);
           console.log("Blob URL:", url);
 
+          isDirty = true;
+
           const sound = new soundArea(
             x,
             y,

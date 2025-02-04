@@ -37,7 +37,6 @@ const composition = {
   id: null,
   name,
   areas: [],
-  isDirty: false,
 }
 
 initFirebase();
@@ -64,20 +63,22 @@ function initFirebase() {
   createNewSketch();
 }
 
-onAuthStateChanged(auth, (user) => {
-  if (user) {
+onAuthStateChanged(auth, (newUser) => {
+  if (newUser) {
+    user = newUser;
     // User is signed in, see docs for a list of available properties
     // https://firebase.google.com/docs/reference/js/auth.user
     uid = user.uid;
     console.log("userino is signed in", user);
     showLogOutButton(user);
     getSavedSketches();
-    enableSaveButton();
+    enableUserButtons();
   } else {
+    user = undefined;
     console.log("userino is signed out");
     showLoginButtons();
     hideSavedSketches();
-    disableSaveButton();
+    disableUserButtons();
   }
 });
 
@@ -110,6 +111,7 @@ function showLogOutButton(user) {
   }
 
   userPhoto.addEventListener("click", function (e) {
+    console.log("click photo");
     e.stopPropagation();
     const logOutPopup = document.getElementById("logOutPopup");
     if (logOutPopup.classList.contains("show")) {
@@ -171,24 +173,27 @@ function showLoginButtons() {
     });
 }
 
+// Enable\Disable User Buttons
+const userButtons = document.getElementsByClassName("user-button");
+
+function disableUserButtons() {
+  for (const button of userButtons) {
+    button.disabled = true;
+  }
+}
+
+function enableUserButtons() {
+  for (const button of userButtons) {
+    button.disabled = false;
+  }
+}
+
 // Save to DB
 const saveButton = document.getElementById("save");
-const sketchNameInput = document.getElementById("sketchNameInput");
-
-function disableSaveButton() {
-  saveButton.disabled = true;
-}
-
-function enableSaveButton() {
-  saveButton.disabled = false;
-}
-
 saveButton.addEventListener("click", function () {
   const folder = appName + "/" + uid + "/";
   const dbRef = ref(db, folder);
   const areasData = [];
-
-  console.log("areas", areas);  
 
   Promise.all(
     areas.map(async (area) => {
@@ -228,6 +233,7 @@ saveButton.addEventListener("click", function () {
       const dbRef = ref(db, folder);
 
       update(dbRef, { areas: areasData });
+
     } else {
       console.log("saving new sketch");
       const newComposition = {
@@ -240,6 +246,8 @@ saveButton.addEventListener("click", function () {
     }
 
   });
+
+  isDirty = false;
 });
 
 // Load from All Sketches from DB
@@ -251,7 +259,7 @@ function getSavedSketches() {
     if (sketches) {
       showSavedSketches(sketches);
     } else {
-      console.log("No sketches found");
+      showMoSketches();
     }
   });
 }
@@ -267,11 +275,17 @@ document.getElementById("openSketch").addEventListener("click", function (e) {
   }
 });
 
+const sketchesDivContainer = document.getElementById(
+  "savedSketchesContainer"
+);
+
+const noSavedSketches = document.getElementById(
+  "noSavedSketches"
+);
+
 function showSavedSketches(sketches) {
-  const sketchesDivContainer = document.getElementById(
-    "savedSketchesContainer"
-  );
   sketchesDivContainer.style.display = "block";
+  noSavedSketches.style.display = "none";
   const sketchesDiv = document.getElementById("savedSketches");
   sketchesDiv.innerHTML = "";
   for (const key in sketches) {
@@ -283,7 +297,31 @@ function showSavedSketches(sketches) {
       loadSketch(sketch, key);
     });
     sketchesDiv.appendChild(sketchDiv);
+
+    const deleteButton = document.createElement("button");
+    deleteButton.setAttribute("class", "delete-button");
+    deleteButton.innerHTML = "D";
+    deleteButton.addEventListener("click", function (e) {
+      e.stopPropagation();
+      const userConfirmed = confirm("Are you sure you want to delete this composition?");
+      if (userConfirmed) {
+      const sketchRef = ref(db, appName + "/" + uid + "/" + key);
+      set(sketchRef, null).then(() => {
+        console.log("Sketch deleted");
+        getSavedSketches();
+        createNewSketch();
+        closePopups();
+      }).catch((error) => {
+        console.error("Error deleting sketch:", error);
+      });
+      }
+    });
+    sketchDiv.appendChild(deleteButton);
   }
+}
+
+function showMoSketches() {
+  noSavedSketches.style.display = "block";
 }
 
 function hideSavedSketches() {
@@ -295,10 +333,19 @@ function hideSavedSketches() {
 
 // Load Sketch from DB
 function loadSketch(sketch, key) {
+  if(isDirty) {
+    const userConfirmed = confirm("Are you sure you want to load a saved composition? Any unsaved changes will be lost.");
+    if (!userConfirmed) {
+      return;
+    }
+  }
+  resetSketch();
+
   composition.id = key;
   composition.name = sketch.name;
   composition.areas = sketch.areas;
-  composition.isDirty = false;
+  
+  isDirty = false;
 
   updateSketchName(sketch.name);
   areas = [];
@@ -316,8 +363,6 @@ function loadSketch(sketch, key) {
       )
     );
   });
-  console.log("areas", areas);
-  console.log("composition", composition);
 }
 
 // New Sketch
@@ -325,19 +370,17 @@ const newSketchButton = document.getElementById("newSketch");
 newSketchButton.addEventListener("click", createNewSketch);
 
 function createNewSketch() {
-  isDirty = false;
-  console.log("isDirty", isDirty);
-  if(composition.isDirty) {
-    const userConfirmed = confirm("Are you sure you want to create a new sketch? Any unsaved changes will be lost.");
+  if(isDirty) {
+    const userConfirmed = confirm("Are you sure you want to create a new composition? Any unsaved changes will be lost.");
     if (!userConfirmed) {
       return;
     }
   }
+  resetSketch();
   areas = [];
   composition.id = null;
   composition.name = null;
   composition.areas = [];
-  composition.isDirty = false;
   const suggestedName = getSuggestedName();
   updateSketchName(suggestedName);
 }
@@ -362,10 +405,26 @@ function updateSketchName(newSketchName) {
   }
 }
 
+// Reset
+function resetSketch() {
+  stopAudio();
+  state = "drag";
+
+  if(listener) {
+    const pos = {
+      x: canvasWidth / 2,
+      y: canvasHeight - 60
+    }
+    listener.update(pos);
+  }
+}
+
 // Edit Name
 let isEditNameMode = false;
 const editNameButton = document.getElementById("editName");
 editNameButton.addEventListener("click", toggleEditMode);
+
+const sketchNameInput = document.getElementById("sketchNameInput");
 
 sketchNameInput.addEventListener("keypress", function (event) {
   if (event.key === "Enter") {

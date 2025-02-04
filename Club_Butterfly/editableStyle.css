@@ -57,6 +57,7 @@ body.mobile p {
 }
 
 button {
+  position: relative;
   height: 38px;
   font-size: 20px;
   font-family: "Jost", sans-serif;
@@ -70,13 +71,27 @@ button {
   cursor: pointer;
 }
 
-button:hover {
-  color: grey;
+button:not([disabled]):hover {
+  color: purple;
 }
 
-button:active {
-  background: white;
+button[disabled] {
+  color: grey;
+  cursor: default;
 }
+
+button[disabled]:hover:after {
+  content: "Sign in to use this feature";
+  position: absolute;
+  color: black;
+  top: 0;
+  left: calc(100% + 20px);
+  width: 205px;
+  padding: 4px;
+  border: 1px solid black;
+} 
+
+
 
 body.mobile button {
   display: table;
@@ -158,7 +173,6 @@ body.mobile button {
 }
 
 #buttonsContainer button {
-  display: inline-block;
   width: auto;
   text-align: left;
 }
@@ -196,6 +210,9 @@ body.mobile button {
 }
 
 /* Saved Sketches */
+#noSavedSketches {
+  padding: 4px;
+}
 .saved-sketch {
   position: relative;
   padding: 4px 10px;
@@ -306,23 +323,46 @@ body.mobile button {
   bottom: 9px;
 }
 
-/* Info Popup */
-#infoPopup {
-  width: 700px;
-  padding: 0 10px 0 0;
-}
-
+/* Open Sketch Popup */
 #openSketchPopup {
-  width: 500px;
+  width: 320px;
   padding: 0;
 }
 
+.delete-button {
+  display: none;
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  padding: 0;
+  margin: 0;
+  color: white;
+  cursor: pointer;
+}
+
+.delete-button:hover {
+  color: red;
+}
+
+.saved-sketch:hover .delete-button {
+  display: block;
+}
+
+/* Log Out Popup */
 #logOutPopup {
   padding: 4px 0;
 }
 
 #logOutPopup a {
   padding: 0 10px;
+}
+
+/* Info Popup */
+#infoPopup {
+  width: 700px;
+  padding: 0 10px 0 0;
 }
 
 #infoContainer {

@@ -70,31 +70,26 @@ class Vehicle {
     fill(255);
     noStroke();
     push();
-    translate(this.pos.x, this.pos.y);
-    rotate(this.vel.heading());
-    triangle(-this.r / 3, -this.r / 4, -this.r / 3, this.r / 4, this.r, 0);
-    rotate(90);
-    image(this.img, -32, -32);
+      translate(this.pos.x, this.pos.y);
+      rotate(this.vel.heading());
+      triangle(-this.r / 3, -this.r / 4, -this.r / 3, this.r / 4, this.r, 0);
+      rotate(90);
+      image(this.img, -32, -32);
     pop();
   }
 
   edges() {
     let hitEdge = false;
-    if (this.pos.x > width) {
+    if (this.pos.x > width || this.pos.x < 0) {
       this.vel.mult(-1, 1);
-      hitEdge = true;
-    } else if (this.pos.x < 0) {
-      this.vel.mult(-1, 1);
-      hitEdge = true;
-    }
-    if (this.pos.y > height) {
-      this.vel.mult(1, -1);
-      hitEdge = true;
-    } else if (this.pos.y < 0) {
-      this.vel.mult(1, -1);
       hitEdge = true;
     }
 
+    if (this.pos.y > height || this.pos.y < 0) {
+      this.vel.mult(1, -1);
+      hitEdge = true;
+    } 
+    
     if (hitEdge) {
       this.currentPath = [];
       this.paths.push(this.currentPath);
