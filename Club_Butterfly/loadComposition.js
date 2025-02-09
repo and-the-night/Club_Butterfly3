@@ -72,7 +72,7 @@ function getUrlQuery() {
   
 const queryParams = getUrlQuery();
 document.getElementById("debug-version").innerHTML = "debug 1";
-document.getElementById("debug").innerHTML = "query: " + queryParams.user + " " + queryParams.comp;
+document.getElementById("debug").innerHTML = "user: " + queryParams.user + "; comp" + queryParams.comp;
 
 if (queryParams.user && queryParams.comp) {
     loadComposition(queryParams.user, queryParams.comp);
