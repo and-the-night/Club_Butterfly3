@@ -61,9 +61,6 @@ function initFirebase() {
   googleAuthProvider = new GoogleAuthProvider();
 }
 
-// user: YD8ItyO6CmbF9dMOvanwGjUyG473
-// comp: -OIDrg0gIxwdqp2vSKMp
-
 function getUrlQuery() {
     const params = new URLSearchParams(window.location.search);
     const query = {};
@@ -77,7 +74,7 @@ const queryParams = getUrlQuery();
 
 if (queryParams.user && queryParams.comp) {
     loadComposition(queryParams.user, queryParams.comp);
-    document.getElementById("debug").innerHTML = "value: ";
+    document.getElementById("debug").innerHTML = "query: " + queryParams.user + " " + queryParams.comp;
 }
 
 function loadComposition(uid, compId) {
