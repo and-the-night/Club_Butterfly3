@@ -483,8 +483,7 @@ function enableShareButton() {
       sharePopup.classList.remove("show");
     } else {
       closePopups();
-      sharePopup.classLi
-      st.add("show");
+      sharePopup.classList.add("show");
     }
   });
 
