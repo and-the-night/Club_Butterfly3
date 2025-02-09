@@ -77,6 +77,7 @@ const queryParams = getUrlQuery();
 
 if (queryParams.user && queryParams.comp) {
     loadComposition(queryParams.user, queryParams.comp);
+    document.getElementById("debug").innerHTML = "value: ";
 }
 
 function loadComposition(uid, compId) {
@@ -84,7 +85,6 @@ function loadComposition(uid, compId) {
   onValue(compRef, (snapshot) => {
     const comp = snapshot.val();
 
-    document.getElementById("debug").innerHTML = "value: " + JSON.stringify(comp);
 
     const compName = document.getElementById("compositionName");
     compName.innerHTML = comp.name;
