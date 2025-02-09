@@ -73,29 +73,16 @@ onAuthStateChanged(auth, (newUser) => {
     showLogOutButton(user);
     getSavedSketches();
     enableUserButtons();
+    disableShareButton(user)
   } else {
     user = undefined;
     console.log("userino is signed out");
     showLoginButtons();
     hideSavedSketches();
     disableUserButtons();
+    disableShareButton();
   }
 });
-
-function getUrlQuery() {
-  const params = new URLSearchParams(window.location.search);
-  const query = {};
-  for (const [key, value] of params.entries()) {
-    query[key] = value;
-  }
-  return query;
-}
-
-const queryParams = getUrlQuery();
-console.log("queryParams", queryParams);
-
-if (queryParams.comp) {
-}
 
 function showLogOutButton(user) {
   const userContainer = document.getElementById("userContainer");
@@ -197,7 +184,6 @@ saveButton.addEventListener("click", function () {
 
   Promise.all(
     areas.map(async (area) => {
-      console.log("area1", area);
       if(area.file) {
         const file = area.file;
         const fileRef = storageRef(storage, folder + file.name);
@@ -227,23 +213,26 @@ saveButton.addEventListener("click", function () {
       return areasData;
     })
   ).then((areasData) => {
+    const newComposition = {
+      author: user.displayName,
+      name: sketchName,
+      areas: areasData,
+    };
     if(composition.id) { 
       console.log("updating existing sketch");
       const folder = appName + "/" + uid + "/" + composition.id + "/";
       const dbRef = ref(db, folder);
 
-      update(dbRef, { areas: areasData });
+      update(dbRef, newComposition);
 
     } else {
       console.log("saving new sketch");
-      const newComposition = {
-        name: sketchName,
-        areas: areasData,
-      };
 
       const newRef = push(dbRef, newComposition);
       composition.id = newRef.key;
     }
+
+    enableShareButton();
 
   });
 
@@ -259,7 +248,7 @@ function getSavedSketches() {
     if (sketches) {
       showSavedSketches(sketches);
     } else {
-      showMoSketches();
+      showNoSketches();
     }
   });
 }
@@ -320,7 +309,7 @@ function showSavedSketches(sketches) {
   }
 }
 
-function showMoSketches() {
+function showNoSketches() {
   noSavedSketches.style.display = "block";
 }
 
@@ -344,6 +333,8 @@ function loadSketch(sketch, key) {
   composition.id = key;
   composition.name = sketch.name;
   composition.areas = sketch.areas;
+
+  enableShareButton();
   
   isDirty = false;
 
@@ -383,6 +374,7 @@ function createNewSketch() {
   composition.areas = [];
   const suggestedName = getSuggestedName();
   updateSketchName(suggestedName);
+  disableShareButton(user);
 }
 
 function getSuggestedName() {
@@ -464,6 +456,64 @@ function toggleEditMode(enterEditMode) {
     updateSketchName(sketchNameInput.value);
   }
 }
+
+// Share
+function disableShareButton(user) {
+  const shareButton = document.getElementById("share");
+  shareButton.disabled = true;
+
+  if(user) {
+    shareButton.classList.add("disabled-not-saved");
+  } else {
+    shareButton.classList.remove("disabled-not-saved");
+  }
+
+  shareButton.removeEventListener("click", function (e) {});
+};
+
+function enableShareButton() {
+  const shareButton = document.getElementById("share");
+  shareButton.classList.remove("disabled-not-saved");
+  shareButton.disabled = false;
+
+  shareButton.addEventListener("click", function (e) {
+    e.stopPropagation();
+    const sharePopup = document.getElementById("sharePopup");
+    if (sharePopup.classList.contains("show")) {
+      sharePopup.classList.remove("show");
+    } else {
+      closePopups();
+      sharePopup.classLi
+      st.add("show");
+    }
+  });
+
+  const queryParams = `composition.html?user=${uid}&comp=${composition.id}`;
+  const shareUrl = window.location.href.replace("editableMap.html", queryParams);
+  document.getElementById("shareLink").href = shareUrl;
+
+  document.getElementById("copyLink").addEventListener("click", function (e) {
+    e.stopPropagation();
+
+    const successMessage = document.createElement("div");
+    successMessage.classList.add("success-message");
+    successMessage.innerText = "Link copied to clipboard!";
+    document.body.appendChild(successMessage);
+
+    setTimeout(() => {
+      successMessage.remove();
+    }, 3000);
+    
+    navigator.clipboard.writeText(shareUrl).then(function () {
+      console.log("Copied to clipboard");
+    });
+  });
+
+  document.getElementById("qrCode").src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${shareUrl}`;
+}
+
+
+
 
 // Info
 document.getElementById("info").addEventListener("click", function (e) {

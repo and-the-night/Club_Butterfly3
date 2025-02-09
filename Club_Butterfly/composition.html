@@ -3,16 +3,10 @@
   <head>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.9/Tone.js"></script>
-    <script src="https://p5livemedia.itp.io/simplepeer.min.js"></script>
-    <script src="https://p5livemedia.itp.io/socket.io.js"></script>
-    <script
-      type="text/javascript"
-      src="https://p5livemedia.itp.io/simplepeer.min.js"
-    ></script>
-    <script
-      type="text/javascript"
-      src="https://p5livemedia.itp.io/p5livemedia.js"
-    ></script>
+
+    <script type="text/javascript">
+      loadedComposition = true;
+    </script>
 
     <script type="text/javascript">
       let leftOffset, topOffset;
@@ -83,29 +77,20 @@
   <body>
     <main></main>
     <div id="leftContainer">
+      <h1 id="compositionName"></h1>
       <p>
-        You and <span id="visitors"></span> other butterflies are currently in
-      </p>
-      <h1>Club Butterfly</h1>
-      <p>
-        Club Butterfly is an interactive musical experience that allows
-        participants to control and manipulate music through their movement in
-        space. Using the mobile device built in sensors, the app detects the
-        participant movements and change the music in their headphones
-        accordingly. This project aims to bring concepts of adaptive, immersive
-        and non-linear music, common in video games, into real life. As
-        participants are not confined to a specific space and can experience
-        this project everywhere they wish to, the app creates a virtual space
-        that brings together people from everywhere in the world into one shared
-        experience.
+        by
+        <span id="compositionAuthor">Anonymous</span>
       </p>
     </div>
     <button id="playBtn">►</button>
     <button id="stateBtn">↝</button>
+
     <script src="vehicle.js"></script>
     <script src="draggable.js"></script>
     <script src="particle.js"></script>
     <script src="soundArea.js"></script>
+    <script src="loadComposition.js" type="module"></script>
     <script src="sketch.js"></script>
     <script src="cursorService.js"></script>
   </body>

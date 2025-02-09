@@ -56,6 +56,7 @@ body.mobile p {
   font-weight: 400;
 }
 
+/* Buttons */
 button {
   position: relative;
   height: 38px;
@@ -72,7 +73,7 @@ button {
 }
 
 button:not([disabled]):hover {
-  color: purple;
+  color: #ff00f2;
 }
 
 button[disabled] {
@@ -81,17 +82,23 @@ button[disabled] {
 }
 
 button[disabled]:hover:after {
-  content: "Sign in to use this feature";
-  position: absolute;
+  /* position: absolute; */
+  font-size: 14px;
   color: black;
-  top: 0;
-  left: calc(100% + 20px);
-  width: 205px;
-  padding: 4px;
-  border: 1px solid black;
+  /* top: 0; */
+  /* left: calc(100% + 20px); */
+  /* width: 205px; */
+  /* padding: 4px; */
 } 
 
 
+button[disabled]:not(.disabled-not-saved):hover:after {
+  content: "(Sign in to use this feature)";
+}
+
+button[disabled].disabled-not-saved:hover:after {
+  content: "(Save the composition to use this feature)";
+}
 
 body.mobile button {
   display: table;
@@ -101,6 +108,10 @@ body.mobile button {
   font-family: "Jost", sans-serif;
   color: black;
   margin: 20px auto;
+}
+
+body.mobile #stateButton {
+  display: none;
 }
 
 /* Left Bar */
@@ -119,6 +130,11 @@ body.mobile button {
 
 #leftBar p {
   margin: 0;
+}
+
+/* User Login */
+#loginContainer {
+  margin-bottom: 52px;
 }
 
 /* User Info */
@@ -149,7 +165,7 @@ body.mobile button {
   width: 400px;
   height: 38px;
   padding-left: 9px;
-  margin: 4px 0 0 -10px;
+  margin: 4px 0 3px -10px;
   box-sizing: border-box;
   color: black;
   background: white;
@@ -186,7 +202,7 @@ body.mobile button {
 }
 
 #leftBar a:hover {
-  color: grey;
+  color: #ff00f2;
 }
 
 #leftBar #userPhoto {
@@ -357,6 +373,37 @@ body.mobile button {
 
 #logOutPopup a {
   padding: 0 10px;
+}
+
+/* Share Popup */
+#sharePopup {
+  width: 320px;
+}
+
+#copyLink {
+  display: inline-block;
+  position: relative;
+  width: 20px;
+  height: 20px;
+  vertical-align: middle;
+  background: url('images/copy-icon-black.png') no-repeat;
+}
+
+#copyLink:after {
+  content: "";
+  display: block;
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: url('images/copy-icon-pink.png') no-repeat;
+  opacity: 0;
+  transition: opacity 100ms;
+}
+
+#copyLink:hover:after {
+  opacity: 1;
 }
 
 /* Info Popup */

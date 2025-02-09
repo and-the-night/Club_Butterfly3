@@ -15,6 +15,7 @@ if (
 
 let isPlaying = false;
 let isDirty = false;
+let isDragging = false;
 
 let x = 0;
 let y = 0;
@@ -116,7 +117,7 @@ function preload() {
   listenerImg = loadImage("big-butterfly.png");
   visitorImg = loadImage("small-butterfly.png");
 
-  if (!editableMap) {
+  if (!editableMap && !loadedComposition) {
     let minRadius = canvasWidth / 16;
     let maxRadius = canvasWidth / 2;
 
@@ -309,7 +310,7 @@ function draw() {
 
   // if(sendPosition) sendPosition({ x: listener.x, y: listener.y, a: heading });
   showOthers();
-  if (editableMap) updateCursor();
+  updateCursor();
 }
 
 function getListenerPosition() {
@@ -351,9 +352,18 @@ function mousePressed() {
       mouseY > listener.y + listener.h / 2 ||
       mouseY < listener.y - listener.h / 2
     ) {
-      areas.forEach((area) => {
-        if (area.isEditable) area.pressed();
-      });
+      for (let i = areas.length - 1; i >= 0; i--) {
+        if (areas[i].isEditable) {
+          const isBeingEdited = areas[i].pressed();
+          if (isBeingEdited) {
+            break;
+          }
+        }
+      }
+    } else {
+      if(state == "drag") {
+        isDragging = true;
+      }
     }
   } else if (mouseButton === RIGHT) {
     areas.forEach((area) => {
@@ -364,6 +374,7 @@ function mousePressed() {
 
 function mouseReleased() {
   listener.released();
+  isDragging = false;
   areas.forEach((area) => {
     if (area.isEditable) area.released();
   });

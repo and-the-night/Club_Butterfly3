@@ -51,10 +51,19 @@
             </button>
           </div>
           <div>
-            <button id="save" class="user-button">Save</button>
+            <button id="save" class="user-button">Save </button>
           </div>
           <div>
-            <button id="share" class="user-button">Share</button>
+            <button id="share" class="popup-wrapper">
+              Share
+              <div class="popup left align-top" id="sharePopup">
+                <div class="share-link-container">
+                  <a id="shareLink" target="_blank">Composition link</a>
+                  <span id="copyLink"></span>
+                </div>
+                <img id="qrCode" alt="" title="" />
+              </div>
+            </button>
           </div>
         </div>
       </div>

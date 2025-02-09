@@ -166,7 +166,7 @@ class soundArea {
   showTriangle(listenerX, listenerY) {
     let listenerAngle = round(atan2(listenerY - this.y, listenerX - this.x));
 
-    let opacity = map(this.volume, -15, 0, 0, 255);
+    let opacity = map(this.volume, -10, 0, 0, 255);
 
     fill(this.h, 100, 100, opacity);
 
@@ -198,22 +198,30 @@ class soundArea {
     this.offsetX = this.x - mouseX;
     this.offsetY = this.y - mouseY;
     const distFromCenter = dist(this.x, this.y, mouseX, mouseY);
+    
+    let isBeingEdited = false;
+
     if (distFromCenter < this.minRadius - 10) {
       isDirty = true;
+      isBeingEdited = true;
       this.state = "dragging";
     } else if (
       distFromCenter >= this.minRadius - 10 &&
       distFromCenter < this.minRadius + 10
     ) {
       isDirty = true;
+      isBeingEdited = true;
       this.state = "resizingMin";
     } else if (
       distFromCenter >= this.maxRadius - 10 &&
       distFromCenter < this.maxRadius + 10
     ) {
       isDirty = true;
+      isBeingEdited = true;
       this.state = "resizingMax";
     }
+
+    return isBeingEdited;
   }
 
   rightPressed() {
