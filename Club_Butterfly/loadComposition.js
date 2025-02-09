@@ -84,6 +84,8 @@ function loadComposition(uid, compId) {
   onValue(compRef, (snapshot) => {
     const comp = snapshot.val();
 
+    document.getElementById("debug").innerHTML = "value: " + JSON.stringify(comp);
+
     const compName = document.getElementById("compositionName");
     compName.innerHTML = comp.name;
 
