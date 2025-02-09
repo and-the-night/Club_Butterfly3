@@ -487,7 +487,7 @@ function enableShareButton() {
     }
   });
 
-  const queryParams = `composition.html?comp=${composition.id}&user=${uid}`;
+  const queryParams = `composition.html?user=${uid};comp=${composition.id}`;
   const shareUrl = window.location.href.replace("editableMap.html", queryParams);
   document.getElementById("shareLink").href = shareUrl;
 
