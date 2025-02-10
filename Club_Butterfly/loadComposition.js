@@ -75,10 +75,10 @@ function getUrlQuery() {
 }
   
 const queryParams = getUrlQuery();
-document.getElementById("debug-version").innerHTML = "debug 1";
-document.getElementById("debug").innerHTML = "user: " + queryParams.user + "; comp" + queryParams.comp;
+document.getElementById("debug-version").innerHTML = "debug 5";
 
 if (queryParams.user && queryParams.comp) {
+    document.getElementById("debug").innerHTML = "user: " + queryParams.user + "; comp" + queryParams.comp;
     loadComposition(queryParams.user, queryParams.comp);
 }
 
