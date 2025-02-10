@@ -65,7 +65,11 @@ function getUrlQuery() {
     const params = new URLSearchParams(window.location.search);
     const query = {};
     for (const [key, value] of params.entries()) {
-        query[key] = value;
+        if(key === "comp") {
+            const data = value.split(";");
+            query.user = data[0];
+            query.comp = data[1];
+        }
     }
     return query;
 }
