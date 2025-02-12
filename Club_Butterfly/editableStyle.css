@@ -345,6 +345,11 @@ body.mobile #stateButton {
   padding: 0;
 }
 
+#savedSketchesContainer {
+  max-height: calc(100vh - 330px);
+  overflow-y: auto;
+}
+
 .delete-button {
   display: none;
   position: absolute;
@@ -377,7 +382,14 @@ body.mobile #stateButton {
 
 /* Share Popup */
 #sharePopup {
-  width: 320px;
+  width: 200px;
+}
+
+.share-link-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
 }
 
 #copyLink {
@@ -437,4 +449,28 @@ body.mobile #stateButton {
   border: 1px solid black;
   border-radius: 50%;
   cursor: pointer;
+}
+
+/* Blocker */
+#blocker {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 3;
+}
+
+#blocker:after {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100px;
+  height: 100px;
+  transform: translate(-50%, -50%);
+  background: url('images/loading.gif') no-repeat red;
 }

@@ -3,91 +3,35 @@
   <head>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.9/Tone.js"></script>
-
-    <script type="text/javascript">
-      loadedComposition = true;
-    </script>
-
-    <script type="text/javascript">
-      let leftOffset, topOffset;
-      let visitorsP;
-      let listeners = [];
-
-      window.addEventListener("load", function () {
-        visitorsP = document.getElementById("visitors");
-        // visitorsP.innerHTML = listeners.length;
-
-        leftOffset = window.innerWidth / 2 - 350;
-        topOffset = window.innerHeight / 2 - 350;
-
-        // Constraints - what do we want?
-        let constraints = { audio: true, video: true };
-      });
-
-      var socket = io.connect();
-
-      socket.on("connect", function () {
-        console.log("Connected");
-      });
-
-      // Receive from any event
-      socket.on("positionChange", function (data) {
-        if (listeners.length == 0) push(data);
-
-        let listener = listeners.find((l) => {
-          return l.id == data.id;
-        });
-
-        if (listener) {
-          // console.log("listener already exists!");
-          listener.x = data.x;
-          listener.y = data.y;
-          listener.a = data.a;
-        } else {
-          console.log("new listener");
-          listeners.push(data);
-          updateListenersNumber();
-        }
-      });
-
-      socket.on("listenerDisconnected", function (id) {
-        let listenerIndex = listeners.findIndex((l) => {
-          return l.id == id;
-        });
-
-        listeners.splice(listenerIndex, 1);
-        updateListenersNumber();
-      });
-
-      let sendPosition = function (pos) {
-        socket.emit("positionChange", pos);
-      };
-
-      let updateListenersNumber = () => {
-        visitorsP.innerHTML = listeners.length;
-      };
-    </script>
     <script type="text/javascript">
       editableMap = false;
       loadedComposition = true;
     </script>
 
     <link rel="stylesheet" type="text/css" href="style.css" />
+    <link rel="stylesheet" type="text/css" href="composition.css" />
+
     <meta charset="utf-8" />
   </head>
   <body>
     <main></main>
     <div id="leftContainer">
-      <h1 id="compositionName"></h1>
+      <h1 id="compositionName">
+        Loading...
+      </h1>
       <p>
         by
         <span id="compositionAuthor">Anonymous</span>
       </p>
+      <p id="desktop-text">
+        Desktop text: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+      </p>
+      <p id="mobile-text">
+        Mobile text: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+      </p>
+      <button id="playBtn">►</button>
+      <button id="stateBtn">↝</button>
     </div>
-    <button id="playBtn">►</button>
-    <button id="stateBtn">↝</button>
-    <div id="debug-version"></div>
-    <div id="debug">no data</div>
 
     <script src="vehicle.js"></script>
     <script src="draggable.js"></script>

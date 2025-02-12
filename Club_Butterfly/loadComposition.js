@@ -75,16 +75,16 @@ function getUrlQuery() {
 }
   
 const queryParams = getUrlQuery();
-document.getElementById("debug-version").innerHTML = "debug 5";
 
 if (queryParams.user && queryParams.comp) {
-    document.getElementById("debug").innerHTML = "user: " + queryParams.user + "; comp" + queryParams.comp;
     loadComposition(queryParams.user, queryParams.comp);
 }
 
 function loadComposition(uid, compId) {
+  console.log("Loading composition at: " + Date.now());
   const compRef = ref(db, appName + "/" + uid + "/" + compId + "/");
   onValue(compRef, (snapshot) => {
+    console.log("Snapshot received at: " + Date.now());
     const comp = snapshot.val();
 
 

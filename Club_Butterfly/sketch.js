@@ -333,6 +333,16 @@ function getListenerPosition() {
     velocity.set(0, 0);
   }
 
+  // Draw a graph of y
+  stroke(255);
+  noFill();
+  beginShape();
+  for (let i = 0; i < width; i++) {
+    let yValue = map(y, -10, 10, height, 0); // Adjust the mapping as needed
+    vertex(i, yValue);
+  }
+  endShape();
+
   if (position.y < 0) position.y = 0;
   if (position.y > height) position.y = height;
   if (position.x < 0) position.x = 0;
@@ -383,7 +393,11 @@ function mouseReleased() {
 function doubleClicked() {
   for (let i = areas.length - 1; i >= 0; i--) {
     if (areas[i].isEditable && areas[i].centerClicked()) {
-      areas.splice(i, 1);
+      let confirmDelete = confirm("Are you sure you want to delete this sound area?");
+      if (confirmDelete) {
+        areas[i].player.dispose();
+        areas.splice(i, 1);
+      }
       break;
     }
   }

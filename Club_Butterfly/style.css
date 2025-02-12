@@ -94,6 +94,19 @@ body.mobile button {
   margin: 20px auto;
 }
 
+body.mobile button#state-button {
+  display: none;
+}
+
+/* Texts */
+.mobile #desktop-text {
+  display: none;
+}
+
+.desktop #mobile-text {
+  display: none;
+}
+
 /* Sketch Name */
 #sketchNameContainer {
   display: flex;
