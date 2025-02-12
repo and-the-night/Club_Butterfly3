@@ -344,7 +344,7 @@ function getListenerPosition() {
   endShape();
 
     // Draw a graph of velocity
-    stroke('red');
+    stroke(255, 0, 0);
     noFill();
     beginShape();
     for (let i = 0; i < width; i++) {
