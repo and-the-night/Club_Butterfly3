@@ -343,6 +343,16 @@ function getListenerPosition() {
   }
   endShape();
 
+    // Draw a graph of velocity
+    stroke('red');
+    noFill();
+    beginShape();
+    for (let i = 0; i < width; i++) {
+      let yValue = map(velocity.mag(), -10, 10, height, 0); // Adjust the mapping as needed
+      vertex(i, yValue);
+    }
+    endShape();
+
   if (position.y < 0) position.y = 0;
   if (position.y > height) position.y = height;
   if (position.x < 0) position.x = 0;
