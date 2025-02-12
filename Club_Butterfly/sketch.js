@@ -331,10 +331,11 @@ function getListenerPosition() {
     let acc = p5.Vector.fromAngle(((-alpha - 90) * PI) / 180);
     acc.setMag(absY / 32);
     velocity.add(acc);
-    position.add(velocity);
   } else {
-    velocity.set(0, 0);
+    // velocity.set(0, 0); // used to be uncommented
   }
+
+  position.add(velocity); // used to be line 333
 
   accValues.push(absY);
   if(accValues.length > width) accValues.shift();
@@ -347,7 +348,8 @@ function getListenerPosition() {
   noFill();
   beginShape();
   for (let i = 0; i < accValues.length; i++) {
-    vertex(i, accValues[i]);
+    accValue = map(accValues[i], 0, 10, 0, height);
+    vertex(i, accValues);
   }
   endShape();
 
@@ -356,13 +358,15 @@ function getListenerPosition() {
     noFill();
     beginShape();
     for (let i = 0; i < velValues; i++) {
+      velValue = map(velValues[i], 0, 10, 0, height);
       vertex(i, velValues[i]);
     }
     endShape();
 
     textSize(50);
+    fill(255);
 
-    text("velocity" + velocity.mag(), 10, 50);
+    text("velocity1" + velocity.mag(), 10, 50);
 
   if (position.y < 0) position.y = 0;
   if (position.y > height) position.y = height;
