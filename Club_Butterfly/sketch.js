@@ -353,6 +353,8 @@ function getListenerPosition() {
     }
     endShape();
 
+    text("version 1.0", 10, 10);
+
   if (position.y < 0) position.y = 0;
   if (position.y > height) position.y = height;
   if (position.x < 0) position.x = 0;
