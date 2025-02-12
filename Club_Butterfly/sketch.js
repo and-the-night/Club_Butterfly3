@@ -249,10 +249,6 @@ function userDisconect(id) {
 function draw() {
   background(0, 0, 0);
 
-  textSize(50);
-
-  text("Version 1", 10, 50)
-
   const transport = Tone.Transport.position.split(":");
   let isNew2Bar = transport[1] == "0" && transport[0] % 2 == 0;
 
@@ -317,6 +313,9 @@ function draw() {
   updateCursor();
 }
 
+accValues = [];
+velValues = [];
+
 function getListenerPosition() {
   let absY = Math.abs(y);
   let alphaChange = Math.abs(prevAlpha - alpha);
@@ -337,13 +336,18 @@ function getListenerPosition() {
     velocity.set(0, 0);
   }
 
+  accValues.push(absY);
+  if(accValues.length > width) accValues.shift();
+
+  velValues.push(velocity.mag());
+  if(velValues.length > width) velValues.shift();
+
   // Draw a graph of y
   stroke(255);
   noFill();
   beginShape();
-  for (let i = 0; i < width; i++) {
-    let yValue = map(y, -10, 10, height, 0); // Adjust the mapping as needed
-    vertex(i, yValue);
+  for (let i = 0; i < accValues.length; i++) {
+    vertex(i, accValues[i]);
   }
   endShape();
 
@@ -351,13 +355,14 @@ function getListenerPosition() {
     stroke(255, 0, 0);
     noFill();
     beginShape();
-    for (let i = 0; i < width; i++) {
-      let yValue = map(velocity.mag(), -10, 10, height, 0); // Adjust the mapping as needed
-      vertex(i, yValue);
+    for (let i = 0; i < velValues; i++) {
+      vertex(i, velValues[i]);
     }
     endShape();
 
-    text("version 1.0", 10, 10);
+    textSize(50);
+
+    text("velocity" + velocity.mag(), 10, 50);
 
   if (position.y < 0) position.y = 0;
   if (position.y > height) position.y = height;
