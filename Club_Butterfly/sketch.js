@@ -249,6 +249,10 @@ function userDisconect(id) {
 function draw() {
   background(0, 0, 0);
 
+  textSize(50);
+
+  text("Version 1", 10, 50)
+
   const transport = Tone.Transport.position.split(":");
   let isNew2Bar = transport[1] == "0" && transport[0] % 2 == 0;
 
