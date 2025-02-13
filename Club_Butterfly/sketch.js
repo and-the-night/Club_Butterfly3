@@ -366,7 +366,7 @@ function getListenerPosition() {
     textSize(50);
     fill(255);
 
-    text("velocity2: " + velocity.mag().toFixed(2), 10, 50);
+    text("velocity3: " + velocity.mag().toFixed(2), 10, 50);
 
 
   if (position.y < 0) position.y = 0;
