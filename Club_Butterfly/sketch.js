@@ -93,6 +93,7 @@ function orientationListener() {
 }
 
 let startButton;
+let sizeSlider;
 let position;
 let velocity;
 
@@ -219,6 +220,8 @@ function setup() {
 
   position = createVector(width / 2, height - 50);
   velocity = createVector(0, 0);
+
+  sizeSlider = createSlider(0, 100);
 }
 
 function newData(data, id) {
@@ -313,9 +316,6 @@ function draw() {
   updateCursor();
 }
 
-accValues = [];
-velValues = [];
-
 function getListenerPosition() {
   let absY = Math.abs(y);
   let alphaChange = Math.abs(prevAlpha - alpha);
@@ -337,7 +337,7 @@ function getListenerPosition() {
   }
 
     textSize(50);
-    text("velocity4: " + velocity.mag().toFixed(2), 10, 50);
+    text("slider: " + sizeSlider.value());
 
 
   if (position.y < 0) position.y = 0;

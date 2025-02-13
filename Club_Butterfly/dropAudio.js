@@ -79,6 +79,7 @@ if (editableMap) {
 
             areas.push(sound);
         } else {
+          showMessage("Not an audio file");
           console.log("Not an audio file:", file);
         }
       });
@@ -86,3 +87,14 @@ if (editableMap) {
   });
 }
 
+// Messages
+function showMessage(msgText) {
+  const message = document.createElement("div");
+  message.classList.add("message-popup");
+  message.innerText = msgText;
+  document.body.appendChild(message);
+
+  setTimeout(() => {
+    message.remove();
+  }, 2000);
+}

@@ -164,6 +164,9 @@ class soundArea {
   }
 
   showTriangle(listenerX, listenerY) {
+    let distance = dist(this.x, this.y, listenerX, listenerY);
+    if(distance < this.minRadius) return;
+    
     let listenerAngle = round(atan2(listenerY - this.y, listenerX - this.x));
 
     let opacity = map(this.volume, -10, 0, 0, 255);

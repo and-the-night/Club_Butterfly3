@@ -27,7 +27,7 @@ body.mobile main {
 }
 
 body.desktop #leftContainer {
-  width: calc(100% - 900px);
+  width: calc(100% - 940px);
   margin-left: 40px;
 }
 
@@ -94,7 +94,7 @@ body.mobile button {
   margin: 20px auto;
 }
 
-body.mobile button#state-button {
+body.mobile button#stateBtn {
   display: none;
 }
 

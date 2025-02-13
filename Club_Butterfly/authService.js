@@ -182,9 +182,13 @@ saveButton.addEventListener("click", function () {
   const dbRef = ref(db, folder);
   const areasData = [];
 
+  showBlocker('saving');
+
   Promise.all(
     areas.map(async (area) => {
       if(area.file) {
+        showBlocker('uploading');
+
         const file = area.file;
         const fileRef = storageRef(storage, folder + file.name);
   
@@ -194,7 +198,7 @@ saveButton.addEventListener("click", function () {
             console.log("File available at", downloadURL);
             area.filePath = downloadURL;
           });
-        });
+        })
 
         area.file = null;
       }
@@ -223,19 +227,25 @@ saveButton.addEventListener("click", function () {
       const folder = appName + "/" + uid + "/" + composition.id + "/";
       const dbRef = ref(db, folder);
 
-      update(dbRef, newComposition);
-
+      update(dbRef, newComposition).then(() => {
+        hideBlocker();
+        showMessage("Composition saved successfully!");
+      });
     } else {
       console.log("saving new sketch");
 
-      const newRef = push(dbRef, newComposition);
+      const newRef = push(dbRef, newComposition).then(() => {
+        hideBlocker();
+        showMessage("Composition saved successfully!");
+      })
+
       composition.id = newRef.key;
     }
 
     enableShareButton();
 
   });
-
+  
   isDirty = false;
 });
 
@@ -494,25 +504,15 @@ function enableShareButton() {
   document.getElementById("copyLink").addEventListener("click", function (e) {
     e.stopPropagation();
 
-    const successMessage = document.createElement("div");
-    successMessage.classList.add("success-message");
-    successMessage.innerText = "Link copied to clipboard!";
-    document.body.appendChild(successMessage);
-
-    setTimeout(() => {
-      successMessage.remove();
-    }, 3000);
+    showMessage("Link copied to clipboard");
     
     navigator.clipboard.writeText(shareUrl).then(function () {
       console.log("Copied to clipboard");
     });
   });
 
-  document.getElementById("qrCode").src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${shareUrl}`;
+  document.getElementById("qrCode").src = `https://quickchart.io/qr?text=${shareUrl}&size=200`;
 }
-
-
-
 
 // Info
 document.getElementById("info").addEventListener("click", function (e) {
@@ -538,4 +538,18 @@ function closePopups() {
       popup.classList.remove("show");
     }
   }
+}
+
+// Blocker 
+function showBlocker(blockerClass) {
+  console.log("showing blocker");
+  const blocker = document.getElementById('blocker');
+  blocker.style.display = "block";
+  blocker.classList.add(blockerClass);
+}
+
+function hideBlocker() {
+  console.log("hiding blocker");
+  const blocker = document.getElementById('blocker');
+  blocker.style.display = "none";
 }
