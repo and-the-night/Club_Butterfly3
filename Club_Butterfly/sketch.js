@@ -329,7 +329,7 @@ function getListenerPosition() {
     // gammaChange < 2
   ) {
     let acc = p5.Vector.fromAngle(((-alpha - 90) * PI) / 180);
-    acc.setMag(absY / 32);
+    acc.setMag(y / 32);
     velocity.add(acc);
   } else {
     // velocity.set(0, 0); // used to be uncommented
