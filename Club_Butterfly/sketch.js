@@ -329,13 +329,14 @@ function getListenerPosition() {
     // gammaChange < 2
   ) {
     let acc = p5.Vector.fromAngle(((-alpha - 90) * PI) / 180);
-    acc.setMag(y / 32);
+    acc.setMag(absY / 32);
     velocity.add(acc);
     position.add(velocity); // used to be line 333
   } else {
     velocity.set(0, 0); 
   }
 
+    textSize(50);
     text("velocity4: " + velocity.mag().toFixed(2), 10, 50);
 
 
