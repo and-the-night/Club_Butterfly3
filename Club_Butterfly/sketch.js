@@ -321,8 +321,11 @@ function getListenerPosition() {
   let betaChange = Math.abs(prevBeta - beta);
   let gammaChange = Math.abs(prevGamma - gamma);
 
+  size = sizeSlider.value;
+  
+  fill(255);
   textSize(50);
-  text(sizeSlider.value, 10, 50);
+  text("size: " + sizeSlider.value, 10, 50);
   
 
   if (
@@ -332,7 +335,7 @@ function getListenerPosition() {
     // gammaChange < 2
   ) {
     let acc = p5.Vector.fromAngle(((-alpha - 90) * PI) / 180);
-    acc.setMag(absY / 32);
+    acc.setMag(absY / size);
     velocity.add(acc);
     position.add(velocity); // used to be line 333
   } else {
