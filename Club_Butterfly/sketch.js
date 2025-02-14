@@ -166,7 +166,6 @@ function preload() {
 let playText = state == "mobile" ? "Play" : "►";
 let stopText = state == "mobile" ? "Stop" : "⏹";
 
-// let playBtn = createButton(playText);
 let playBtn = document.getElementById("playBtn");
 
 playBtn.addEventListener("click", () => {
@@ -221,7 +220,7 @@ function setup() {
   position = createVector(width / 2, height - 50);
   velocity = createVector(0, 0);
 
-  sizeSlider = createSlider(0, 100);
+  sizeSlider = document.getElementById("sizeSlider");
 }
 
 function newData(data, id) {
@@ -322,6 +321,10 @@ function getListenerPosition() {
   let betaChange = Math.abs(prevBeta - beta);
   let gammaChange = Math.abs(prevGamma - gamma);
 
+  textSize(50);
+  text(sizeSlider.value, 10, 50);
+  
+
   if (
     absY > 0.1 &&
     alphaChange < 2 &&
@@ -335,10 +338,6 @@ function getListenerPosition() {
   } else {
     velocity.set(0, 0); 
   }
-
-    textSize(50);
-    text("slider: " + sizeSlider.value());
-
 
   if (position.y < 0) position.y = 0;
   if (position.y > height) position.y = height;
