@@ -64,8 +64,6 @@ function initFirebase() {
 function getUrlQuery() {
     const params = new URLSearchParams(window.location.search);
     const query = {};
-    const compName = document.getElementById("compositionName");
-    compName.innerHTML = "12345";
     for (const [key, value] of params.entries()) {
         if(key === "comp") {
             const data = value.split(";");
@@ -98,6 +96,7 @@ function loadComposition(uid, compId) {
     compAuthor.innerHTML = comp.author;
 
     areas = [];
+    console.log("compareas:", comp.areas);
     comp.areas[0].forEach((areaData) => {
       areas.push(
         new soundArea(
