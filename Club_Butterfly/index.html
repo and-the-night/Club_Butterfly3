@@ -3,16 +3,6 @@
   <head>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.9/Tone.js"></script>
-    <script src="https://p5livemedia.itp.io/simplepeer.min.js"></script>
-    <script src="https://p5livemedia.itp.io/socket.io.js"></script>
-    <script
-      type="text/javascript"
-      src="https://p5livemedia.itp.io/simplepeer.min.js"
-    ></script>
-    <script
-      type="text/javascript"
-      src="https://p5livemedia.itp.io/p5livemedia.js"
-    ></script>
 
     <script type="text/javascript">
       let leftOffset, topOffset;
@@ -79,6 +69,7 @@
     </script>
 
     <link rel="stylesheet" type="text/css" href="style.css" />
+    <link rel="stylesheet" type="text/css" href="onboardingMobile.css" />
     <meta charset="utf-8" />
   </head>
   <body>
@@ -103,7 +94,7 @@
         <p>
           You and <span id="visitors"></span> other butterflies are currently in
         </p>
-        <h1>Club Butterfly</h1>
+        <h1 id="compName">Loading...</h1>
       </div>
       <p>
         Club Butterfly is an interactive musical experience that allows
@@ -120,11 +111,18 @@
       <button id="playBtn">►</button>
       <button id="stateBtn">↝</button>
     </div>
+    <div id="onboardingMobilePopup">
+      <h1 id="onboardingMobileTitle"></h1>
+      <p id="onboardingMobileText"></p>
+      <button id="onboardingMobileNextButton">Next</button>
+    </div>
     <script src="vehicle.js"></script>
     <script src="draggable.js"></script>
     <script src="particle.js"></script>
     <script src="soundArea.js"></script>
+    <script src="compsData.js"></script>
     <script src="sketch.js"></script>
     <script src="cursorService.js"></script>
+    <script src="onboardingMobile.js"></script>
   </body>
 </html>

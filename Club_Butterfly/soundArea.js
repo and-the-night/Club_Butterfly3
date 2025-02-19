@@ -71,10 +71,10 @@ class soundArea {
         this.volume = -Infinity;
       } else if(this.maxRadius - distance < edge) {
         let distFromMax = this.maxRadius - distance;
-        this.volume = map(distFromMax, 0, edge, -60, -9);
+        this.volume = map(distFromMax, 0, edge, -60, -12);
       } else {
         let distFromMin = distance - this.minRadius;
-        this.volume = map(distFromMin, this.minRadius, this.maxRadius - edge, 0, -9);
+        this.volume = map(distFromMin, this.minRadius, this.maxRadius - edge, 0, -12);
       }
     }
 
