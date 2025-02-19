@@ -64,11 +64,14 @@ function initFirebase() {
 function getUrlQuery() {
     const params = new URLSearchParams(window.location.search);
     const query = {};
+    const compName = document.getElementById("compositionName");
+    compName.innerHTML = "12345";
     for (const [key, value] of params.entries()) {
         if(key === "comp") {
             const data = value.split(";");
             query.user = data[0];
             query.comp = data[1];
+            
         }
     }
     return query;
