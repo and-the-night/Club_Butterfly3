@@ -338,31 +338,37 @@ function draw() {
 }
 
 function getListenerPosition() {
-  let absY = Math.abs(y);
   let alphaChange = Math.abs(prevAlpha - alpha);
   let betaChange = Math.abs(prevBeta - beta);
   let gammaChange = Math.abs(prevGamma - gamma);
 
-  size = sizeSlider.value;
+  size = sizeSlider.value ? sizeSlider.value : 20;
   
   fill(255);
   textSize(50);
   text("size: " + sizeSlider.value, 10, 50);
   
+  let acc = p5.Vector.fromAngle(((-alpha - 90) * PI) / 180);
 
   if (
-    absY > 0.1 &&
+    // apply Lerp fo y acceleration
+    y > 0.1 &&
     alphaChange < 2 &&
     betaChange < 20
     // gammaChange < 2
   ) {
-    let acc = p5.Vector.fromAngle(((-alpha - 90) * PI) / 180);
-    acc.setMag(absY / size);
+    acc.setMag(y / size);
+  } else {
+    acc.set(0,0);
+    // velocity.set(0, 0); 
+    // option 1: instead of going straight to 0
+    velocity.mult(0.9);
+  }
+  
+    // option 1: instead of going straight to 0
+    // velocity.mult(0.9);
     velocity.add(acc);
     position.add(velocity); // used to be line 333
-  } else {
-    velocity.set(0, 0); 
-  }
 
   if (position.y < 0) position.y = 0;
   if (position.y > height) position.y = height;
