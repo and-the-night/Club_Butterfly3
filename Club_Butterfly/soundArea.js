@@ -99,7 +99,7 @@ class soundArea {
     if (distance < this.minRadius) {
       panAngle = 0;
     } else if (distance < this.maxRadius) {
-      panAngle = sin(angle + listenerAngle); // Compare with Mobile version!!! used to be sin(angle - 90 + listenerAngle)
+      panAngle = sin(angle - 90 + listenerAngle); // Compare with Mobile version!!! used to be sin(angle - 90 + listenerAngle)
     }
 
     // Debugging

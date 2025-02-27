@@ -17,3 +17,7 @@
     font-size: 40px;
     text-align: center;
 }
+
+.desktop #onboardingMobilePopup button {
+  width: auto;
+}
