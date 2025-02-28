@@ -352,12 +352,12 @@ function getListenerPosition() {
 
   if (
     // apply Lerp fo y acceleration
-    y > 0.1 &&
-    alphaChange < 2 &&
-    betaChange < 20
+    y > 0.1 
     // gammaChange < 2
   ) {
-    acc.setMag(y / size);
+    if (alphaChange < 2 && betaChange < 20) {
+      acc.setMag(y / size);
+    }
   } else if (y < -0.1) {
     acc.set(0,0);
     // velocity.set(0, 0); 
