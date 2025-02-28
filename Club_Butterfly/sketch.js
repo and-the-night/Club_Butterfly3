@@ -358,7 +358,7 @@ function getListenerPosition() {
     // gammaChange < 2
   ) {
     acc.setMag(y / size);
-  } else {
+  } else if (y < -0.1) {
     acc.set(0,0);
     // velocity.set(0, 0); 
     // option 1: instead of going straight to 0
