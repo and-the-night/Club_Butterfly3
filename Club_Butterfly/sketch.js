@@ -352,13 +352,14 @@ function getListenerPosition() {
 
   if (
     // apply Lerp fo y acceleration
-    y > 0.1 
+    y > 1
     // gammaChange < 2
   ) {
     if (alphaChange < 2 && betaChange < 20) {
       acc.setMag(y / size);
+      velocity.add(acc);
     }
-  } else if (y < -0.1) {
+  } else if (y < 1) {
     acc.set(0,0);
     // velocity.set(0, 0); 
     // option 1: instead of going straight to 0
@@ -367,7 +368,6 @@ function getListenerPosition() {
   
     // option 1: instead of going straight to 0
     // velocity.mult(0.9);
-    velocity.add(acc);
     position.add(velocity); // used to be line 333
 
   if (position.y < 0) position.y = 0;
