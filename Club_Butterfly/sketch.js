@@ -350,16 +350,12 @@ function getListenerPosition() {
   
   let acc = p5.Vector.fromAngle(((-alpha - 90) * PI) / 180);
 
-  if (
-    // apply Lerp fo y acceleration
-    y > 1
-    // gammaChange < 2
-  ) {
+  if (y > 0.5) {
     if (alphaChange < 2 && betaChange < 20) {
       acc.setMag(y / size);
       velocity.add(acc);
     }
-  } else if (y < 1) {
+  } else if (y < 0.5) {
     acc.set(0,0);
     // velocity.set(0, 0); 
     // option 1: instead of going straight to 0
