@@ -344,12 +344,9 @@ function getListenerPosition() {
 
   size = sizeSlider.value ? sizeSlider.value : 20;
   
-  fill(255);
-  textSize(50);
-  text("size: " + sizeSlider.value, 10, 50);
   
   let acc = p5.Vector.fromAngle(((-alpha - 90) * PI) / 180);
-
+  
   if (y > 0.5) {
     if (alphaChange < 2 && betaChange < 20) {
       acc.setMag(y / size);
@@ -361,6 +358,12 @@ function getListenerPosition() {
     // option 1: instead of going straight to 0
     velocity.mult(0.9);
   }
+  fill(255);
+  textSize(50);
+  text("size: " + sizeSlider.value, 10, 50);
+  
+  text("volicity: " + velocity.mag(), 10, 100);
+  text("acc: " + acc.mag(), 10, 150);
   
     // option 1: instead of going straight to 0
     // velocity.mult(0.9);
