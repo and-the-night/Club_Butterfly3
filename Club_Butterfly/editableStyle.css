@@ -193,6 +193,20 @@ body.mobile #stateButton {
   text-align: left;
 }
 
+#buttonsContainer button.saving {
+  animation: buttonColorChange 1s infinite alternate;
+  pointer-events: none;
+}
+
+@keyframes buttonColorChange {
+  0% {
+    color: black;
+  }
+  100% {
+    color: #ff00f2;
+  }
+}
+
 #leftBar a {
   color: black;
   text-decoration: none;

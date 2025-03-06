@@ -182,12 +182,11 @@ saveButton.addEventListener("click", function () {
   const dbRef = ref(db, folder);
   const areasData = [];
 
-  showBlocker('saving');
+  showSaving();
 
   Promise.all(
     areas.map(async (area) => {
       if(area.file) {
-        showBlocker('uploading');
 
         const file = area.file;
         const fileRef = storageRef(storage, folder + file.name);
@@ -228,15 +227,15 @@ saveButton.addEventListener("click", function () {
       const dbRef = ref(db, folder);
 
       update(dbRef, newComposition).then(() => {
-        hideBlocker();
-        showMessage("Composition saved successfully!");
+        showSaved();
+        // showMessage("Composition saved successfully!");
       });
     } else {
       console.log("saving new sketch");
 
       const newRef = push(dbRef, newComposition).then(() => {
-        hideBlocker();
-        showMessage("Composition saved successfully!");
+        showSaved();
+        // showMessage("Composition saved successfully!");
       })
 
       composition.id = newRef.key;
@@ -248,6 +247,22 @@ saveButton.addEventListener("click", function () {
   
   isDirty = false;
 });
+
+function showSaving() {
+  const saveButton = document.getElementById("save");
+  saveButton.innerHTML = "Saving...";
+  saveButton.classList.add("saving");
+}
+
+function showSaved() {
+  const saveButton = document.getElementById("save");
+  saveButton.innerHTML = "Saved ✓";
+  saveButton.classList.remove("saving");
+  setTimeout(() => {
+    saveButton.innerHTML = "Save";
+  }
+  , 2000);
+}
 
 // Load from All Sketches from DB
 function getSavedSketches() {

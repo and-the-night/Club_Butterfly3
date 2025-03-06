@@ -150,7 +150,8 @@ function preload() {
       0,
       minRadius,
       maxRadius,
-      "audio/constellation/CH1.wav",
+      // "audio/constellation/CH1.wav",
+      "audio/clubButterfly/Club_Butterfly-HH.wav",
       false
     );
     areas[1] = new soundArea(
