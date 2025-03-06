@@ -315,9 +315,6 @@ function showSavedSketches(sketches) {
     const deleteButton = document.createElement("button");
     deleteButton.setAttribute("class", "delete-button");
     
-
-    const deleteIcon = createElement("img");
-    deleteButton.appendChild(deleteIcon);
     deleteButton.addEventListener("click", function (e) {
       e.stopPropagation();
       const userConfirmed = confirm("Are you sure you want to delete this composition?");

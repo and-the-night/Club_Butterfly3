@@ -344,26 +344,29 @@ function getListenerPosition() {
 
   size = sizeSlider.value ? sizeSlider.value : 20;
   
-  
   let acc = p5.Vector.fromAngle(((-alpha - 90) * PI) / 180);
   
-  if (y > 0.1) {
-    if (alphaChange < 2 && betaChange < 20) {
-      acc.setMag(y / size);
-      velocity.add(acc);
-    }
+  if (y > 0.1 && alphaChange < 2 && betaChange < 20) {
+    acc.setMag(y / size);
+    velocity.add(acc);
+    fill(255);
   } else {
     acc.set(0,0);
     // velocity.set(0, 0); 
     // option 1: instead of going straight to 0
     velocity.mult(0.9);
+    if(velocity.mag() < 0.1) {
+      velocity.set(0,0);
+    }
+    fill('red');
   }
-  fill(255);
-  textSize(50);
+  textSize(30);
   text("size: " + sizeSlider.value, 10, 50);
   
-  text("volicity: " + velocity.mag(), 10, 100);
-  text("acc: " + acc.mag(), 10, 150);
+  text("volicity: " + velocity.mag(), 10, 80);
+  text("acc: " + acc.mag(), 10, 110);
+  text("gamma:" + gamma, 10, 140);
+  text("sin(gamma)" + sin(gamma), 10, 170);
   
     // option 1: instead of going straight to 0
     // velocity.mult(0.9);
