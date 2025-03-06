@@ -367,7 +367,7 @@ function getListenerPosition() {
   text("acc: " + acc.mag(), 10, 110);
   text("beta:" + beta, 10, 140);
   text("sin(beta)" + sin(beta), 10, 170);
-  text("cos(beta)" + cos(beta), 10, 170);
+  text("cos(beta)" + cos(beta), 10, 200);
   
     // option 1: instead of going straight to 0
     // velocity.mult(0.9);
