@@ -150,7 +150,7 @@ function preload() {
       0,
       minRadius,
       maxRadius,
-      "audio/clubButterfly/Club_Butterfly-HH.wav",
+      "audio/constellation/CH1.wav",
       false
     );
     areas[1] = new soundArea(
@@ -159,7 +159,7 @@ function preload() {
       25,
       minRadius,
       maxRadius,
-      "audio/clubButterfly/Club_Butterfly-KICK.wav",
+      "audio/constellation/CH2.wav",
       false
     );
     areas[2] = new soundArea(
@@ -168,7 +168,7 @@ function preload() {
       50,
       minRadius,
       maxRadius,
-      "audio/clubButterfly/Club_Butterfly-SNR.wav",
+      "audio/constellation/CH3.wav",
       false
     );
     areas[3] = new soundArea(
@@ -177,7 +177,7 @@ function preload() {
       75,
       minRadius,
       maxRadius,
-      "audio/clubButterfly/Club_Butterfly-BASS.wav",
+      "audio/constellation/CH4.wav",
       false
     );
   }
@@ -352,7 +352,7 @@ function getListenerPosition() {
       acc.setMag(y / size);
       velocity.add(acc);
     }
-  } else if (y < -0.1) {
+  } else {
     acc.set(0,0);
     // velocity.set(0, 0); 
     // option 1: instead of going straight to 0
