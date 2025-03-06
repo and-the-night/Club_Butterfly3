@@ -365,8 +365,8 @@ function getListenerPosition() {
   
   text("volicity: " + velocity.mag(), 10, 80);
   text("acc: " + acc.mag(), 10, 110);
-  text("gamma:" + gamma, 10, 140);
-  text("sin(gamma)" + sin(gamma), 10, 170);
+  text("beta:" + beta, 10, 140);
+  text("sin(beta)" + sin(beta), 10, 170);
   
     // option 1: instead of going straight to 0
     // velocity.mult(0.9);
