@@ -346,7 +346,7 @@ function getListenerPosition() {
   
   let acc = p5.Vector.fromAngle(((-alpha - 90) * PI) / 180);
   
-  if (y > 0.1 && alphaChange < 2 && betaChange < 20) {
+  if (y > 1 && alphaChange < 2 && betaChange < 20) {
     acc.setMag(y / size);
     velocity.add(acc);
     fill(255);
@@ -367,6 +367,7 @@ function getListenerPosition() {
   text("acc: " + acc.mag(), 10, 110);
   text("beta:" + beta, 10, 140);
   text("sin(beta)" + sin(beta), 10, 170);
+  text("cos(beta)" + cos(beta), 10, 170);
   
     // option 1: instead of going straight to 0
     // velocity.mult(0.9);
