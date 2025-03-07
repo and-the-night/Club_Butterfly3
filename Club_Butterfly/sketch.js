@@ -185,10 +185,11 @@ function preload() {
 
 // Buttons
 
-let playText = "►";
-let stopText = "⏹";
+let playText = state === "mobile" ? "Play" : "►";
+let stopText = state === "mobile" ? "Stop" : "⏹";
 
 let playBtn = document.getElementById("playBtn");
+playBtn.innerHTML = playText;
 
 playBtn.addEventListener("click", () => {
   if (state == "mobile") detect();
@@ -345,9 +346,11 @@ function getListenerPosition() {
   size = sizeSlider.value ? sizeSlider.value : 20;
   
   let acc = p5.Vector.fromAngle(((-alpha - 90) * PI) / 180);
+
+  const forwardAcc = y * cos(beta) + z * sin(beta);
   
-  if (y > 1 && alphaChange < 2 && betaChange < 20) {
-    acc.setMag(y / size);
+  if (forwardAcc > 0.5 && alphaChange < 2 && betaChange < 20) {
+    acc.setMag(forwardAcc / size);
     velocity.add(acc);
     fill(255);
   } else {
