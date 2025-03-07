@@ -2,7 +2,9 @@ class soundArea {
   constructor(
     x,
     y,
-    h,
+    r,
+    g,
+    b,
     minRadius,
     maxRadius,
     filePath,
@@ -12,7 +14,9 @@ class soundArea {
   ) {
     this.x = x;
     this.y = y;
-    this.h = h;
+    this.r = r;
+    this.g = g;
+    this.b = b;
     this.volume = -Infinity;
     this.minRadius = minRadius;
     this.maxRadius = maxRadius;
@@ -134,7 +138,7 @@ class soundArea {
 
   showMaxRadius() {
     noStroke();
-    fill(this.h, 100, 100, 20);
+    fill(this.r, this.g, this.b, 20);
     ellipse(this.x, this.y, this.maxRadius * 2);
   }
 
@@ -151,7 +155,7 @@ class soundArea {
 
   showWaveform() {
     let wave = this.waveform.getValue();
-    fill(this.h, 100, 100);
+    fill(this.r, this.g, this.b);
     noStroke();
     beginShape();
     for (let i = 0; i <= 360; i++) {
@@ -171,7 +175,7 @@ class soundArea {
 
     let opacity = map(this.volume, -10, 0, 0, 255);
 
-    fill(this.h, 100, 100, opacity);
+    fill(this.r, this.g, this.b, opacity);
 
     let angleR = listenerAngle + 90;
     let angleL = listenerAngle - 90;
@@ -190,7 +194,9 @@ class soundArea {
     const p = new Particle(
       this.x,
       this.y,
-      this.h,
+      this.r,
+      this.g,
+      this.b,
       this.minRadius,
       this.maxRadius
     );

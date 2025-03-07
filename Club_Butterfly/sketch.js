@@ -147,6 +147,8 @@ function preload() {
     areas[0] = new soundArea(
       canvasWidth / 2,
       canvasHeight - 50,
+      102,
+      255,
       0,
       minRadius,
       maxRadius,
@@ -156,7 +158,9 @@ function preload() {
     areas[1] = new soundArea(
       canvasWidth - 50,
       canvasHeight / 2,
-      25,
+      8,
+      232,
+      222,
       minRadius,
       maxRadius,
       "audio/constellation/CH2.wav",
@@ -165,7 +169,9 @@ function preload() {
     areas[2] = new soundArea(
       canvasWidth / 2,
       50,
-      50,
+      255,
+      240,
+      0,
       minRadius,
       maxRadius,
       "audio/constellation/CH3.wav",
@@ -174,7 +180,9 @@ function preload() {
     areas[3] = new soundArea(
       50,
       canvasHeight / 2,
-      75,
+      255,
+      0,
+      127,
       minRadius,
       maxRadius,
       "audio/constellation/CH4.wav",
@@ -233,7 +241,7 @@ function stopAudio() {
 
 function setup() {
   createCanvas(canvasWidth, canvasHeight);
-  colorMode(HSB, 100);
+  colorMode(RGB);
   angleMode(DEGREES);
   noStroke();
 

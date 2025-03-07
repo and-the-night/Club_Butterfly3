@@ -1,11 +1,13 @@
 class Particle {
-  constructor(centerX, centerY, h, minRadius, maxRadius) {
+  constructor(centerX, centerY, r, g, b, minRadius, maxRadius) {
     this.pos = p5.Vector.random2D().mult(minRadius);
     this.vel = createVector(0, 0);
     this.acc = this.pos.copy().mult(random(0.0001, 0.00001));
     this.centerX = centerX;
     this.centerY = centerY;
-    this.h = h;
+    this.r = r;
+    this.g = g;
+    this.b = b;
     this.w = random(1, 5);
     this.maxRadius = maxRadius;
   }
@@ -17,7 +19,7 @@ class Particle {
 
   show() {
     noStroke();
-    fill(this.h, 100, 100);
+    fill(this.r, this.g, this.b);
     ellipse(this.pos.x + this.centerX, this.pos.y + this.centerY, this.w);
   }
 
