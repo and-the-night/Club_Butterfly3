@@ -150,7 +150,7 @@ function preload() {
       0,
       minRadius,
       maxRadius,
-      "audio/constellation/CH1-test3.wav",
+      "audio/constellation/CH1-test4.wav",
       false
     );
     areas[1] = new soundArea(
@@ -366,7 +366,7 @@ function getListenerPosition() {
   textSize(30);
   text("acc: " + forwardAcc, 10, 30);
   text("volicity: " + velocity.mag().toFixed(2), 10, 60);
-  text("size1: " + size, 10, 90);
+  text("size2: " + size, 10, 90);
   
     // option 1: instead of going straight to 0
     // velocity.mult(0.9);
