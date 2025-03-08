@@ -115,7 +115,7 @@ let canvasWidth = 800;
 let canvasHeight = 800;
 
 function preload() {
-  listenerImg = loadImage("big-butterfly.png");
+  listenerImg = loadImage("images/listener.png");
   visitorImg = loadImage("small-butterfly.png");
   
   if (!editableMap && !loadedComposition) {
@@ -150,7 +150,7 @@ function preload() {
       0,
       minRadius,
       maxRadius,
-      "audio/constellation/CH1-test4.wav",
+      "audio/constellation/CH1-test7_(5-40).wav",
       false
     );
     areas[1] = new soundArea(
@@ -159,7 +159,7 @@ function preload() {
       25,
       minRadius,
       maxRadius,
-      "audio/constellation/CH2.wav",
+      "audio/constellation/CH1-test7_(5-40).wav",
       false
     );
     areas[2] = new soundArea(
@@ -168,7 +168,7 @@ function preload() {
       50,
       minRadius,
       maxRadius,
-      "audio/constellation/CH3.wav",
+      "audio/constellation/CH1-test7_(5-40).wav",
       false
     );
     areas[3] = new soundArea(
@@ -177,7 +177,7 @@ function preload() {
       75,
       minRadius,
       maxRadius,
-      "audio/constellation/CH4.wav",
+      "audio/constellation/CH1-test7_(5-40).wav",
       false
     );
   }
@@ -237,7 +237,7 @@ function setup() {
   angleMode(DEGREES);
   noStroke();
 
-  listener = new Draggable(width / 2, height - 60, 64, 64, listenerImg);
+  listener = new Draggable(width / 2, height - 60, 32, 45, listenerImg);
   autoListener = new Vehicle(width / 2, height - 60, listenerImg);
 
   position = createVector(width / 2, height - 50);

@@ -56,14 +56,14 @@ class Draggable {
 
     translate(this.x, this.y);
     rotate(-alpha);
-    triangle(
-      -vehicleSize / 4,
-      vehicleSize / 3,
-      vehicleSize / 4,
-      vehicleSize / 3,
-      0,
-      -vehicleSize
-    );
+    // triangle(
+    //   -vehicleSize / 4,
+    //   vehicleSize / 3,
+    //   vehicleSize / 4,
+    //   vehicleSize / 3,
+    //   0,
+    //   -vehicleSize
+    // );
     image(this.img, -this.w / 2, -this.h / 2);
 
     pop();

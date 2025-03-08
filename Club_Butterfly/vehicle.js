@@ -16,7 +16,7 @@ class Vehicle {
     this.pos = createVector(x, y);
     this.vel = createVector(0, -1);
     this.acc = createVector(0, 0);
-    this.maxSpeed = 0.1;
+    this.maxSpeed = 0.25;
     this.maxForce = 0.001;
     this.r = 30;
     this.img = img;
@@ -72,9 +72,9 @@ class Vehicle {
     push();
       translate(this.pos.x, this.pos.y);
       rotate(this.vel.heading());
-      triangle(-this.r / 3, -this.r / 4, -this.r / 3, this.r / 4, this.r, 0);
+      // triangle(-this.r / 3, -this.r / 4, -this.r / 3, this.r / 4, this.r, 0);
       rotate(90);
-      image(this.img, -32, -32);
+      image(this.img, -16, -22);
     pop();
   }
 
