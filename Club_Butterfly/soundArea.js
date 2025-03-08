@@ -8,7 +8,8 @@ class soundArea {
     filePath,
     schedulePlay,
     isEditable,
-    file
+    file,
+    isAlwaysOn = false
   ) {
     this.x = x;
     this.y = y;
@@ -18,6 +19,7 @@ class soundArea {
     this.maxRadius = maxRadius;
     this.filePath = filePath;
     this.file = file;
+    this.isAlwaysOn = isAlwaysOn;
     this.schedulePlay = schedulePlay;
     this.isEditable = isEditable;
     this.isDragging = false;
@@ -41,8 +43,11 @@ class soundArea {
         console.error("Error converting file to base64:", error)
       );
 
-
-    this.player = new Tone.Player(this.filePath);
+      this.player = new Tone.Player(this.filePath);
+      
+      this.player.on('load', () => {
+        console.log('Player loaded successfully');
+      });
 
     this.player.loop = true;
     this.player.volume.value = this.volume;
@@ -63,29 +68,34 @@ class soundArea {
     let distance = dist(this.x, this.y, listenerX, listenerY);
     let edge = 20;
 
-    // Contiuous Volume Change
-    if (!this.schedulePlay) {
-      if (distance < this.minRadius) {
-        this.volume = 0;
-      } else if (distance > this.maxRadius) {
-        this.volume = -Infinity;
-      } else if(this.maxRadius - distance < edge) {
-        let distFromMax = this.maxRadius - distance;
-        this.volume = map(distFromMax, 0, edge, -60, -12);
-      } else {
-        let distFromMin = distance - this.minRadius;
-        this.volume = map(distFromMin, this.minRadius, this.maxRadius - edge, 0, -12);
+    if(this.isAlwaysOn) {
+      this.volume = 0;
+    } else {
+      // Contiuous Volume Change
+      if (!this.schedulePlay) {
+        if (distance < this.minRadius) {
+          this.volume = 0;
+        } else if (distance > this.maxRadius) {
+          this.volume = -Infinity;
+        } else if(this.maxRadius - distance < edge) {
+          let distFromMax = this.maxRadius - distance;
+          this.volume = map(distFromMax, 0, edge, -60, -12);
+        } else {
+          let distFromMin = distance - this.minRadius;
+          this.volume = map(distFromMin, this.minRadius, this.maxRadius - edge, 0, -12);
+        }
+      }
+  
+      // Schedule Volume Change
+      if (this.schedulePlay && isPlayTime) {
+        if (distance < this.maxRadius) {
+          this.volume = 0;
+        } else {
+          this.volume = -Infinity;
+        }
       }
     }
 
-    // Schedule Volume Change
-    if (this.schedulePlay && isPlayTime) {
-      if (distance < this.maxRadius) {
-        this.volume = 0;
-      } else {
-        this.volume = -Infinity;
-      }
-    }
 
     this.player.volume.value = this.volume;
   }
@@ -96,10 +106,12 @@ class soundArea {
 
     let panAngle = 0;
 
-    if (distance < this.minRadius) {
-      panAngle = 0;
-    } else if (distance < this.maxRadius) {
-      panAngle = sin(angle - 90 + listenerAngle); // Compare with Mobile version!!! used to be sin(angle - 90 + listenerAngle)
+    if(!this.isAlwaysOn) {
+      if (distance < this.minRadius) {
+        panAngle = 0;
+      } else if (distance < this.maxRadius) {
+        panAngle = sin(angle - 90 + listenerAngle); // Compare with Mobile version!!! used to be sin(angle - 90 + listenerAngle)
+      }
     }
 
     // Debugging
@@ -122,13 +134,15 @@ class soundArea {
   }
 
   show(listenerX, listenerY) {
-    this.showMaxRadius();
-    this.showParticles();
-    this.showTriangle(listenerX, listenerY);
-    this.showWaveform();
+    if(!this.isAlwaysOn) {
+      this.showMaxRadius();
+      this.showParticles();
+      this.showTriangle(listenerX, listenerY);
+      this.showWaveform();
 
-    if (this.volume > -15 && this.player.state == "started") {
-      this.addParticle();
+      if (this.volume > -15 && this.player.state == "started") {
+        this.addParticle();
+      }
     }
   }
 
