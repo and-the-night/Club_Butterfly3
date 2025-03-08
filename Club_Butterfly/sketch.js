@@ -150,7 +150,7 @@ function preload() {
       0,
       minRadius,
       maxRadius,
-      "audio/constellation/CH1-test6_(6-00).wav",
+      "audio/constellation/CH1.mp3",
       false
     );
     areas[1] = new soundArea(
@@ -159,7 +159,7 @@ function preload() {
       25,
       minRadius,
       maxRadius,
-      "audio/constellation/CH1.mp3",
+      "audio/constellation/CH2.mp3",
       false
     );
     areas[2] = new soundArea(
@@ -168,7 +168,7 @@ function preload() {
       50,
       minRadius,
       maxRadius,
-      "audio/constellation/CH3.wav",
+      "audio/constellation/CH3.mp3",
       false
     );
     areas[3] = new soundArea(
@@ -177,7 +177,7 @@ function preload() {
       75,
       minRadius,
       maxRadius,
-      "audio/constellation/CH4.wav",
+      "audio/constellation/CH4.mp3",
       false
     );
   }
@@ -364,7 +364,7 @@ function getListenerPosition() {
   textSize(30);
   text("acc: " + forwardAcc, 10, 30);
   text("volicity: " + velocity.mag().toFixed(2), 10, 60);
-  text("size test loading: " + size, 10, 90);
+  text("size mp3: " + size, 10, 90);
   
     position.add(velocity); 
 
