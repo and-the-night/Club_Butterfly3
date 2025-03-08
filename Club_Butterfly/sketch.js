@@ -150,7 +150,7 @@ function preload() {
       0,
       minRadius,
       maxRadius,
-      "audio/constellation/CH1-test.wav",
+      "audio/constellation/CH1-test2.wav",
       false
     );
     areas[1] = new soundArea(
