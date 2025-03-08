@@ -150,7 +150,7 @@ function preload() {
       0,
       minRadius,
       maxRadius,
-      "audio/constellation/CH1-test5.wav",
+      "audio/constellation/CH1-test6_(6-00).wav",
       false
     );
     areas[1] = new soundArea(
@@ -355,8 +355,6 @@ function getListenerPosition() {
     fill(255);
   } else {
     acc.set(0,0);
-    // velocity.set(0, 0); 
-    // option 1: instead of going straight to 0
     velocity.mult(0.9);
     if(velocity.mag() < 0.1) {
       velocity.set(0,0);
@@ -366,11 +364,9 @@ function getListenerPosition() {
   textSize(30);
   text("acc: " + forwardAcc, 10, 30);
   text("volicity: " + velocity.mag().toFixed(2), 10, 60);
-  text("size5: " + size, 10, 90);
+  text("size6: " + size, 10, 90);
   
-    // option 1: instead of going straight to 0
-    // velocity.mult(0.9);
-    position.add(velocity); // used to be line 333
+    position.add(velocity); 
 
   if (position.y < 0) position.y = 0;
   if (position.y > height) position.y = height;
