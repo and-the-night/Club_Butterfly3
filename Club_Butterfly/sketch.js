@@ -343,7 +343,7 @@ function getListenerPosition() {
   let betaChange = Math.abs(prevBeta - beta);
   let gammaChange = Math.abs(prevGamma - gamma);
 
-  size = sizeSlider.value ? sizeSlider.value : 20;
+  size = sizeSlider ? sizeSlider.value : 20;
   
   let acc = p5.Vector.fromAngle(((-alpha - 90) * PI) / 180);
 
