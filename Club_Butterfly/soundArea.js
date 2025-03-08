@@ -43,10 +43,8 @@ class soundArea {
         console.error("Error converting file to base64:", error)
       );
 
-      this.player = new Tone.Player(this.filePath);
-      
-      this.player.on('load', () => {
-        console.log('Player loaded successfully');
+      this.player = new Tone.Player(this.filePath, () => {
+        console.log('Player loaded');
       });
 
     this.player.loop = true;
