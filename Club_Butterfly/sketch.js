@@ -364,7 +364,7 @@ function getListenerPosition() {
   textSize(30);
   text("acc: " + forwardAcc, 10, 30);
   text("volicity: " + velocity.mag().toFixed(2), 10, 60);
-  text("size test8.1: " + size, 10, 90);
+  text("size test8.2: " + size, 10, 90);
   
     position.add(velocity); 
 
