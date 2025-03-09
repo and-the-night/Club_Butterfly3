@@ -181,6 +181,18 @@ function preload() {
       "audio/constellation/CH4.mp3",
       false
     );
+    areas[4] = new soundArea(
+      0,
+      0,
+      0,
+      0,
+      0,
+      "audio/constellation/CH-ALL.mp3",
+      false,
+      false,
+      null,
+      true
+    )
   }
 }
 
@@ -352,7 +364,7 @@ function getListenerPosition() {
   let betaChange = Math.abs(prevBeta - beta);
   let gammaChange = Math.abs(prevGamma - gamma);
 
-  size = sizeSlider ? sizeSlider.value : 20;
+  size = sizeSlider ? sizeSlider.value : 10;
   
   let acc = p5.Vector.fromAngle(((-alpha - 90) * PI) / 180);
 
@@ -388,32 +400,42 @@ function getListenerPosition() {
 }
 
 function mousePressed() {
-  console.log(`Mouse X: ${mouseX}, Mouse Y: ${mouseY}`);
-  if (mouseButton === LEFT) {
-    listener.pressed();
-    if (
-      mouseX > listener.x + listener.w / 2 ||
-      mouseX < listener.x - listener.w / 2 ||
-      mouseY > listener.y + listener.h / 2 ||
-      mouseY < listener.y - listener.h / 2
+  if (state == "mobile") {
+    console.log(`Mouse X: ${mouseX}, Mouse Y: ${mouseY}`);
+    if(
+      mouseX > 0 && mouseX < width &&
+      mouseY > 0 && mouseY < height
     ) {
-      for (let i = areas.length - 1; i >= 0; i--) {
-        if (areas[i].isEditable) {
-          const isBeingEdited = areas[i].pressed();
-          if (isBeingEdited) {
-            break;
+      listener.x = mouseX;
+      listener.y = mouseY;
+    }
+  } else {
+    if (mouseButton === LEFT) {
+      listener.pressed();
+      if (
+        mouseX > listener.x + listener.w / 2 ||
+        mouseX < listener.x - listener.w / 2 ||
+        mouseY > listener.y + listener.h / 2 ||
+        mouseY < listener.y - listener.h / 2
+      ) {
+        for (let i = areas.length - 1; i >= 0; i--) {
+          if (areas[i].isEditable) {
+            const isBeingEdited = areas[i].pressed();
+            if (isBeingEdited) {
+              break;
+            }
           }
         }
+      } else {
+        if(state == "drag") {
+          isDragging = true;
+        }
       }
-    } else {
-      if(state == "drag") {
-        isDragging = true;
-      }
+    } else if (mouseButton === RIGHT) {
+      areas.forEach((area) => {
+        if (area.isEditable) area.rightPressed();
+      });
     }
-  } else if (mouseButton === RIGHT) {
-    areas.forEach((area) => {
-      if (area.isEditable) area.rightPressed();
-    });
   }
 }
 

@@ -139,6 +139,11 @@ body.mobile button#stateBtn {
   line-height: 50px;
 }
 
+.mobile #desktopText,
+.desktop #mobileText {
+  display: none;
+}
+
 /* Slider */
 .slider-container {
   display: flex;
