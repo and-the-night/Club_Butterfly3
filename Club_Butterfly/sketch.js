@@ -383,9 +383,8 @@ function getListenerPosition() {
     fill('red');
   }
   textSize(30);
-  text("acc: " + forwardAcc, 10, 30);
-  text("volicity: " + velocity.mag().toFixed(2), 10, 60);
-  text("size mp3: " + size, 10, 90);
+  textAlign(CENTER);
+  text("tapping screen test 2", width / 2, height / 2);
   
     position.add(velocity); 
 
@@ -406,8 +405,11 @@ function mousePressed() {
       mouseX > 0 && mouseX < width &&
       mouseY > 0 && mouseY < height
     ) {
-      listener.x = mouseX;
-      listener.y = mouseY;
+      // listener.x = mouseX;
+      // listener.y = mouseY;
+      position.x = mouseX;
+      position.y = mouseY;
+      velocity.set(0, 0);
     }
   } else {
     if (mouseButton === LEFT) {
