@@ -111,6 +111,7 @@ let otherListeners = [];
 let debug = false;
 let schedulePlay = true;
 let isLoaded;
+let isOnboarding = true; 
 
 let canvasWidth = 800;
 let canvasHeight = 800;
@@ -151,7 +152,7 @@ function preload() {
       0,
       minRadius,
       maxRadius,
-      "audio/constellation/CH1.mp3",
+      "audio/constellation/CH1+beat.mp3",
       false
     );
     areas[1] = new soundArea(
@@ -160,7 +161,7 @@ function preload() {
       25,
       minRadius,
       maxRadius,
-      "audio/constellation/CH2.mp3",
+      "audio/constellation/CH2+beat.mp3",
       false
     );
     areas[2] = new soundArea(
@@ -169,7 +170,7 @@ function preload() {
       50,
       minRadius,
       maxRadius,
-      "audio/constellation/CH3.mp3",
+      "audio/constellation/CH3+beat.mp3",
       false
     );
     areas[3] = new soundArea(
@@ -178,7 +179,7 @@ function preload() {
       75,
       minRadius,
       maxRadius,
-      "audio/constellation/CH4.mp3",
+      "audio/constellation/CH4+beat.mp3",
       false
     );
     areas[4] = new soundArea(
@@ -370,7 +371,7 @@ function getListenerPosition() {
 
   const forwardAcc = y * cos(beta) + z * sin(beta);
   
-  if (forwardAcc > 0.5 && alphaChange < 2 && betaChange < 20) {
+  if (forwardAcc > 0.5 && alphaChange < 1 && betaChange < 1) {
     acc.setMag(forwardAcc / size);
     velocity.add(acc);
     fill(255);
@@ -384,7 +385,7 @@ function getListenerPosition() {
   }
   textSize(30);
   textAlign(CENTER);
-  text("tapping screen test 2", width / 2, height / 2);
+  text("beat + onboradin fix", width / 2, height / 2);
   
     position.add(velocity); 
 
@@ -399,8 +400,7 @@ function getListenerPosition() {
 }
 
 function mousePressed() {
-  if (state == "mobile") {
-    console.log(`Mouse X: ${mouseX}, Mouse Y: ${mouseY}`);
+  if (state == "mobile" && !isOnboarding) {
     if(
       mouseX > 0 && mouseX < width &&
       mouseY > 0 && mouseY < height

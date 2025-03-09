@@ -28,6 +28,7 @@ function updatePopup() {
                 break;
             case 4:
             onboardingMobilePopup.style.display = "none";
+            isOnboarding = false;
             break;
         }
     } else {
@@ -52,6 +53,7 @@ function updatePopup() {
                 break;
             case 4:
             onboardingMobilePopup.style.display = "none";
+            isOnboarding = false;
             break;
         }
     }
