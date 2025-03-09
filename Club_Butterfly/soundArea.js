@@ -27,6 +27,7 @@ class soundArea {
     this.particles = [];
     this.offsetX = 0;
     this.offsetY = 0;
+    this.isLoaded = false;
 
     fetch(filePath, {
       mode: "no-cors",
@@ -44,7 +45,7 @@ class soundArea {
       );
 
       this.player = new Tone.Player(this.filePath, () => {
-        console.log('Player loaded');
+        this.isLoaded = true;
       });
 
     this.player.loop = true;

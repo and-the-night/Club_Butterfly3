@@ -110,12 +110,13 @@ let otherListeners = [];
 
 let debug = false;
 let schedulePlay = true;
+let isLoaded;
 
 let canvasWidth = 800;
 let canvasHeight = 800;
 
 function preload() {
-  listenerImg = loadImage("images/listener.png");
+  listenerImg = loadImage("big-butterfly.png");
   visitorImg = loadImage("small-butterfly.png");
   
   if (!editableMap && !loadedComposition) {
@@ -237,7 +238,7 @@ function setup() {
   angleMode(DEGREES);
   noStroke();
 
-  listener = new Draggable(width / 2, height - 60, 32, 45, listenerImg);
+  listener = new Draggable(width / 2, height - 60, 64, 64, listenerImg);
   autoListener = new Vehicle(width / 2, height - 60, listenerImg);
 
   position = createVector(width / 2, height - 50);
@@ -277,10 +278,16 @@ function draw() {
   const transport = Tone.Transport.position.split(":");
   let isNew2Bar = transport[1] == "0" && transport[0] % 2 == 0;
 
+  isLoaded = true;
+
   for (let area of areas) {
     let heading = state == "wander" ? autoListener.vel.heading() : alpha;
     area.update(listener.x, listener.y, heading, isNew2Bar);
     area.show(listener.x, listener.y);
+
+    if(!area.isLoaded) {
+      isLoaded = false;
+    }
 
     // Debugging
     if (debug) {
@@ -302,6 +309,8 @@ function draw() {
       }
     }
   }
+
+  if (!isLoaded) showLoading();
 
   if (state == "mobile") {
     getListenerPosition();
@@ -379,6 +388,7 @@ function getListenerPosition() {
 }
 
 function mousePressed() {
+  console.log(`Mouse X: ${mouseX}, Mouse Y: ${mouseY}`);
   if (mouseButton === LEFT) {
     listener.pressed();
     if (
@@ -445,4 +455,13 @@ function showOthers() {
     image(visitorImg, -16, -16);
     pop();
   }
+}
+
+function showLoading() {
+  fill(0);
+  rect(0, 0, width, height);
+  fill(255);
+  textSize(30);
+  textAlign(CENTER);
+  text("Loading...", width / 2, height / 2);
 }

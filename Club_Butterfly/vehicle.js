@@ -74,7 +74,7 @@ class Vehicle {
       rotate(this.vel.heading());
       // triangle(-this.r / 3, -this.r / 4, -this.r / 3, this.r / 4, this.r, 0);
       rotate(90);
-      image(this.img, -16, -22);
+      image(this.img, -32, -32);
     pop();
   }
 
