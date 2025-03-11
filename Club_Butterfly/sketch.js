@@ -119,6 +119,8 @@ let canvasHeight = 800;
 function preload() {
   listenerImg = loadImage("big-butterfly.png");
   visitorImg = loadImage("small-butterfly.png");
+  loopingImage = loadImage("images/loop.png");
+  nonLoopingImage = loadImage("images/arrow.png");
   
   if (!editableMap && !loadedComposition) {
     // const urlParams = new URLSearchParams(window.location.search);
@@ -383,11 +385,13 @@ function getListenerPosition() {
     }
     fill('red');
   }
+
   textSize(30);
   textAlign(CENTER);
-  text("composition test B", width / 2, height / 2);
-  
-    position.add(velocity); 
+  text("cos(beta)" + cos(beta), width / 2, height / 2);
+  text("sin(beta)" + sin(beta), width / 2, height / 2 + 30);
+  text("forwardAcc" + forwardAcc, width / 2, height / 2 + 60);
+  position.add(velocity); 
 
   if (position.y < 0) position.y = 0;
   if (position.y > height) position.y = height;
@@ -405,8 +409,6 @@ function mousePressed() {
       mouseX > 0 && mouseX < width &&
       mouseY > 0 && mouseY < height
     ) {
-      // listener.x = mouseX;
-      // listener.y = mouseY;
       position.x = mouseX;
       position.y = mouseY;
       velocity.set(0, 0);
@@ -482,7 +484,7 @@ function showOthers() {
 }
 
 function showLoading() {
-  fill(0);
+  fill(0, 0, 0, 50);
   rect(0, 0, width, height);
   fill(255);
   textSize(30);

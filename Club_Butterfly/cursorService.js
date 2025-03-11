@@ -51,7 +51,6 @@ function updateCursor() {
     cursor("grab");
 
     if(isDragging) {
-      console.log("dragging");
       cursor("grabbing");
     }
   }

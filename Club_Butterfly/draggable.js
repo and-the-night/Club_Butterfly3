@@ -43,14 +43,7 @@ class Draggable {
 
   show() {
     noStroke();
-    // Different fill based on state
-    if (this.dragging) {
-      fill(50);
-    } else if (this.rollover) {
-      fill(100);
-    } else {
-      fill(175, 200);
-    }
+    fill(255);
 
     push();
 

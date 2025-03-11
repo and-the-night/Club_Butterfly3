@@ -22,6 +22,7 @@ class soundArea {
     this.isAlwaysOn = isAlwaysOn;
     this.schedulePlay = schedulePlay;
     this.isEditable = isEditable;
+    this.isLooping = true;
     this.isDragging = false;
     this.state = null;
     this.particles = [];
@@ -48,7 +49,7 @@ class soundArea {
         this.isLoaded = true;
       });
 
-    this.player.loop = true;
+    this.player.loop = this.isLooping;
     this.player.volume.value = this.volume;
 
     this.panner = new Tone.Panner(0).toDestination();
@@ -81,7 +82,8 @@ class soundArea {
           this.volume = map(distFromMax, 0, edge, -60, -12);
         } else {
           let distFromMin = distance - this.minRadius;
-          this.volume = map(distFromMin, this.minRadius, this.maxRadius - edge, 0, -12);
+
+          this.volume = map(distFromMin, 0, this.maxRadius - this.minRadius - edge, 0, -12);
         }
       }
   
@@ -94,7 +96,6 @@ class soundArea {
         }
       }
     }
-
 
     this.player.volume.value = this.volume;
   }
@@ -138,6 +139,10 @@ class soundArea {
       this.showParticles();
       this.showTriangle(listenerX, listenerY);
       this.showWaveform();
+
+      if (this.isEditable) {
+        this.showLooping();
+      }
 
       if (this.volume > -15 && this.player.state == "started") {
         this.addParticle();
@@ -199,6 +204,14 @@ class soundArea {
     );
   }
 
+  showLooping() {
+    if (this.isLooping) {
+      image(loopingImage, this.x - 16, this.y - 16, 32, 32);
+    } else {
+      image(nonLoopingImage, this.x - 16, this.y - 16, 32, 32);
+    }
+  }
+
   addParticle() {
     const p = new Particle(
       this.x,
@@ -244,7 +257,8 @@ class soundArea {
     const distFromCenter = dist(this.x, this.y, mouseX, mouseY);
     if (distFromCenter < this.minRadius) {
       isDirty = true;
-      this.h = random(100);
+      this.isLooping = !this.isLooping;
+      this.player.loop = this.isLooping;
     }
   }
 

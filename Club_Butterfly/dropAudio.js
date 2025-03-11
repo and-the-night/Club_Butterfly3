@@ -1,4 +1,13 @@
 if (editableMap) {
+  const hues = [
+    32,
+    86,
+    16,
+    50,
+    10,
+    0
+  ]
+
   document.addEventListener("DOMContentLoaded", (event) => {
     const dropArea = document.getElementById("drop-area");
 
@@ -57,13 +66,14 @@ if (editableMap) {
           const x = mouseX - dropAreaX;
           const y = mouseY - dropAreaY;
 
-          const hue = floor(random(100));
-
           const blob = new Blob([file], { type: file.type });
           const url = URL.createObjectURL(blob);
           console.log("Blob URL:", url);
 
           isDirty = true;
+
+          hueIndex = areas.length % 6;
+          const hue = hues[hueIndex];
 
           const sound = new soundArea(
             x,

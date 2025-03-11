@@ -556,7 +556,7 @@ function closePopups() {
 }
 
 // Blocker 
-checkScreenWidth();
+// checkScreenWidth();
 function showBlocker(blockerClass) {
   console.log("showing blocker");
   const blocker = document.getElementById('blocker');
