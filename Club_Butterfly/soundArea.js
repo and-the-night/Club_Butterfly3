@@ -187,11 +187,13 @@ class soundArea {
   }
 
   showHighlight() {
-    if(this === selectedSoundArea) {
-      stroke(255);
-      strokeWeight(2);
-      noFill();
-      ellipse(this.x, this.y, this.maxRadius * 2);
+    if(this.isEditable) {
+      if(selectedSoundArea && this === selectedSoundArea) {
+        stroke(255);
+        strokeWeight(2);
+        noFill();
+        ellipse(this.x, this.y, this.maxRadius * 2);
+      }
     }
   }
 
