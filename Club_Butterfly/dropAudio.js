@@ -91,6 +91,8 @@ if (editableMap) {
           );
 
             areas.push(sound);
+
+            stopAudio();
         } else {
           showMessage("Not an audio file");
           console.log("Not an audio file:", file);

@@ -110,7 +110,7 @@ class soundArea {
 
     if (!this.isAlwaysOn && distance < this.maxRadius && distance > this.minRadius) {
       if(state === "wander") {
-        panAngle = sin(angle);
+        panAngle = sin(angle - 90);
       } else {
         panAngle = sin(angle - 90 + listenerAngle); 
       }
@@ -126,7 +126,9 @@ class soundArea {
     // Debugging
     fill(255);
     textSize(20);
-    text("Pan Angle: " + panAngle.toFixed(2), this.x, this.y + 10);
+    stroke(0);
+    strokeWeight(1);
+    text(panAngle.toFixed(2), this.x, this.y + 10);
 
     this.panner.pan.setValueAtTime(panAngle, 0.25);
   }
@@ -135,10 +137,32 @@ class soundArea {
     if (this.state === "dragging") {
       this.x = mouseX + this.offsetX;
       this.y = mouseY + this.offsetY;
+      if(this === selectedSoundArea) {
+        soundAreaX.value = this.x;
+        soundAreaY.value = this.y; 
+      }
     } else if (this.state === "resizingMin") {
       this.minRadius = dist(this.x, this.y, mouseX, mouseY);
+      if(this === selectedSoundArea) {
+        soundAreaMinRadius.value = this.minRadius;
+      }
+      if (this.minRadius > this.maxRadius) {
+        this.maxRadius = this.minRadius;
+        if(this === selectedSoundArea) {
+          soundAreaMaxRadius.value = this.maxRadius;
+        }
+      }
     } else if (this.state === "resizingMax") {
       this.maxRadius = dist(this.x, this.y, mouseX, mouseY);
+      if(this === selectedSoundArea) {
+        soundAreaMaxRadius.value = this.maxRadius;
+      }
+      if (this.maxRadius < this.minRadius) {
+        this.minRadius = this.maxRadius;
+        if(this === selectedSoundArea) {
+          soundAreaMinRadius.value = this.minRadius;
+        }
+      }
     }
   }
 
@@ -204,7 +228,7 @@ class soundArea {
 
   showTriangle(listenerX, listenerY) {
     let distance = dist(this.x, this.y, listenerX, listenerY);
-    if(distance < this.minRadius) return;
+    if(distance < this.minRadius || this.minRadius === this.maxRadius) return;
     
     let listenerAngle = round(atan2(listenerY - this.y, listenerX - this.x));
 
