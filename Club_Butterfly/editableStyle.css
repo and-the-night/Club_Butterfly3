@@ -515,3 +515,30 @@ body.mobile #stateButton {
   background: white;
   border: 1px solid black;
 }
+
+/* Sound Area Editor */
+#soundAreaEditor {
+  padding: 10px;
+  border: 1px dashed black;
+}
+
+#soundAreaEditor .row {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 10px;
+}
+
+#soundAreaEditor #soundAreaColor {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid black;
+}
+
+#soundAreaEditor input[type="number"] {
+  width: 40px;
+}
+
+#soundAreaEditor input[type="text"] {
+  width: 240px;
+}

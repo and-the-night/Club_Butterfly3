@@ -88,7 +88,6 @@ function loadComposition(uid, compId) {
     console.log("Snapshot received at: " + Date.now());
     const comp = snapshot.val();
 
-
     const compName = document.getElementById("compositionName");
     compName.innerHTML = comp.name;
 
@@ -107,7 +106,7 @@ function loadComposition(uid, compId) {
           areaData.maxRadius,
           areaData.filePath,
           areaData.schedulePlay,
-          areaData.isEditable
+          false,
         )
       );
     });

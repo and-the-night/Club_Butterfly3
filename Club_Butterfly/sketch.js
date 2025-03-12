@@ -297,8 +297,8 @@ function draw() {
 
   for (let area of areas) {
     let heading = state == "wander" ? autoListener.vel.heading() : alpha;
-    area.update(listener.x, listener.y, heading, isNew2Bar);
     area.show(listener.x, listener.y);
+    area.update(listener.x, listener.y, heading, isNew2Bar);
 
     if(!area.isLoaded) {
       isLoaded = false;
@@ -409,6 +409,7 @@ function mousePressed() {
       mouseX > 0 && mouseX < width &&
       mouseY > 0 && mouseY < height
     ) {
+      console.log("mouseX: ", mouseX, "; mouseY: ", mouseY);
       position.x = mouseX;
       position.y = mouseY;
       velocity.set(0, 0);
@@ -454,11 +455,7 @@ function mouseReleased() {
 function doubleClicked() {
   for (let i = areas.length - 1; i >= 0; i--) {
     if (areas[i].isEditable && areas[i].centerClicked()) {
-      let confirmDelete = confirm("Are you sure you want to delete this sound area?");
-      if (confirmDelete) {
-        areas[i].player.dispose();
-        areas.splice(i, 1);
-      }
+      soundAreaEdit(areas[i], i);
       break;
     }
   }

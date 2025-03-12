@@ -64,8 +64,40 @@
                 <img id="qrCode" alt="" title="" />
               </div>
             </button>
+            <div>
+              <button id="symmetrize">Symmetrize</button>
+            </div>
           </div>
         </div>
+      </div>
+      <div id="soundAreaEditor">
+        <div class="row">
+          Sound Area Editor
+          <button id="prevSoundArea"><</button>
+          <button id="nextSoundArea">></button>
+          <button id="closeSoundAreaEditor">X</button>
+        </div>
+        <div class="row">
+          <div id="soundAreaColor"></div>
+          <input type="text" id="soundAreaNameInput" />
+        </div>
+        <div class="row">
+          <label>x:</label>
+          <input type="number" id="soundAreaX" />
+          <label>y:</label>
+          <input type="number" id="soundAreaY" />
+        </div>
+        <div class="row">
+          <label>Inner Radius:</label>
+          <input type="number" id="soundAreaMinRadius" />
+        </div>
+        <div class="row">
+          <label>Outer Radius:</label>
+          <input type="number" id="soundAreaMaxRadius" />
+        </div>
+        <input type="checkbox" id="soundAreaLoop" />
+        <label for="soundAreaLooping">Looping</label>
+        <button id="soundAreaDelete">Delete</button>
       </div>
       <div id="infoContainer">
         <button id="info" class="popup-wrapper">
@@ -109,6 +141,7 @@
     <script src="sketch.js"></script>
     <script src="dropAudio.js"></script>
     <script src="authService.js" type="module"></script>
+    <script src="soundAreaEdit.js"></script>
     <script src="cursorService.js"></script>
   </body>
 </html>

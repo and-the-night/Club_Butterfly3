@@ -75,6 +75,8 @@ if (editableMap) {
           hueIndex = areas.length % 6;
           const hue = hues[hueIndex];
 
+          console.log("file", file);
+
           const sound = new soundArea(
             x,
             y,
@@ -84,7 +86,8 @@ if (editableMap) {
             url,
             false,
             true,
-            file
+            file,
+            false,
           );
 
             areas.push(sound);

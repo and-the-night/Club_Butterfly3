@@ -203,6 +203,7 @@ saveButton.addEventListener("click", function () {
       }
 
       areasData.push({
+        name: area.name,
         x: area.x,
         y: area.y,
         h: area.h,
@@ -365,20 +366,25 @@ function loadSketch(sketch, key) {
 
   updateSketchName(sketch.name);
   areas = [];
-  sketch.areas[0].forEach((areaData) => {
-    areas.push(
-      new soundArea(
-        areaData.x,
-        areaData.y,
-        areaData.h,
-        areaData.minRadius,
-        areaData.maxRadius,
-        areaData.filePath,
-        areaData.schedulePlay,
-        areaData.isEditable
-      )
-    );
-  });
+  if(sketch.areas) {
+    sketch.areas[0].forEach((areaData) => {
+      areas.push(
+        new soundArea(
+          areaData.x,
+          areaData.y,
+          areaData.h,
+          areaData.minRadius,
+          areaData.maxRadius,
+          areaData.filePath,
+          areaData.schedulePlay,
+          areaData.isEditable,
+          false,
+          null,
+          areaData.name,
+        )
+      );
+    });
+  }
 }
 
 // New Sketch
@@ -527,6 +533,29 @@ function enableShareButton() {
   });
 
   document.getElementById("qrCode").src = `https://quickchart.io/qr?text=${shareUrl}&size=200`;
+}
+
+// Symmetrize
+const symmetrizeButton = document.getElementById("symmetrize");
+symmetrizeButton.addEventListener("click", function () {
+  symmetrize();
+});
+
+function symmetrize() {
+  const centerX = canvasWidth / 2;
+  const centerY = canvasHeight / 2;
+  const radius = 350;
+  const angleStep = (2 * Math.PI) / areas.length;
+
+  areas.forEach((area, index) => {
+    const angle = index * angleStep - Math.PI / 2;
+    area.x = centerX + radius * Math.cos(angle);
+    area.y = centerY + radius * Math.sin(angle);
+    area.maxRadius = radius + 100;
+    area.minRadius = 50;
+  });
+
+  isDirty = true;
 }
 
 // Info

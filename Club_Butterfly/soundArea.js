@@ -9,7 +9,8 @@ class soundArea {
     schedulePlay,
     isEditable,
     file,
-    isAlwaysOn = false
+    isAlwaysOn = false,
+    name
   ) {
     this.x = x;
     this.y = y;
@@ -19,6 +20,7 @@ class soundArea {
     this.maxRadius = maxRadius;
     this.filePath = filePath;
     this.file = file;
+    this.name = file ? file.name : name;
     this.isAlwaysOn = isAlwaysOn;
     this.schedulePlay = schedulePlay;
     this.isEditable = isEditable;
@@ -107,17 +109,19 @@ class soundArea {
     let panAngle = 0;
 
     if(!this.isAlwaysOn) {
-      if (distance < this.minRadius) {
-        panAngle = 0;
-      } else if (distance < this.maxRadius) {
-        panAngle = sin(angle - 90 + listenerAngle); // Compare with Mobile version!!! used to be sin(angle - 90 + listenerAngle)
+      if (distance < this.maxRadius && distance > this.minRadius) {
+        if(state === "wander") {
+          panAngle = sin(angle);
+        } else {
+          panAngle = sin(angle - 90 + listenerAngle); 
+        }
       }
     }
 
     // Debugging
-    // fill(255);
-    // textSize(20);
-    // text("Pan Angle: " + panAngle, this.x, this.y + 10);
+    fill(255);
+    textSize(20);
+    text("Pan Angle: " + panAngle.toFixed(2), this.x, this.y + 10);
 
     this.panner.pan.setValueAtTime(panAngle, 0.25);
   }
@@ -139,6 +143,7 @@ class soundArea {
       this.showParticles();
       this.showTriangle(listenerX, listenerY);
       this.showWaveform();
+      this.showHighlight();
 
       if (this.isEditable) {
         this.showLooping();
@@ -179,6 +184,15 @@ class soundArea {
       vertex(this.x + sin(i) * waveRadius, this.y + cos(i) * waveRadius);
     }
     endShape(CLOSE);
+  }
+
+  showHighlight() {
+    if(this === selectedSoundArea) {
+      stroke(255);
+      strokeWeight(2);
+      noFill();
+      ellipse(this.x, this.y, this.maxRadius * 2);
+    }
   }
 
   showTriangle(listenerX, listenerY) {
@@ -252,6 +266,7 @@ class soundArea {
 
     return isBeingEdited;
   }
+
 
   rightPressed() {
     const distFromCenter = dist(this.x, this.y, mouseX, mouseY);
