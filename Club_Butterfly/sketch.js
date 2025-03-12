@@ -388,9 +388,7 @@ function getListenerPosition() {
 
   textSize(30);
   textAlign(CENTER);
-  text("cos(beta)" + cos(beta), width / 2, height / 2);
-  text("sin(beta)" + sin(beta), width / 2, height / 2 + 30);
-  text("forwardAcc" + forwardAcc, width / 2, height / 2 + 60);
+  text("forwardAcc" + forwardAcc.toFixed(2), width / 2, height / 2);
   position.add(velocity); 
 
   if (position.y < 0) position.y = 0;
