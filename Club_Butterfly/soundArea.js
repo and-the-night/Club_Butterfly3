@@ -108,15 +108,20 @@ class soundArea {
 
     let panAngle = 0;
 
-    if(!this.isAlwaysOn) {
-      if (distance < this.maxRadius && distance > this.minRadius) {
-        if(state === "wander") {
-          panAngle = sin(angle);
-        } else {
-          panAngle = sin(angle - 90 + listenerAngle); 
-        }
+    if (!this.isAlwaysOn && distance < this.maxRadius && distance > this.minRadius) {
+      if(state === "wander") {
+        panAngle = sin(angle);
+      } else {
+        panAngle = sin(angle - 90 + listenerAngle); 
       }
+
+      const distFromMin = distance - this.minRadius;
+      const maxfromMin = this.maxRadius - this.minRadius;
+      const panAmount = map(distFromMin, 0, maxfromMin, 0, 1);
+
+      panAngle *= panAmount;
     }
+    
 
     // Debugging
     fill(255);
@@ -203,7 +208,7 @@ class soundArea {
     
     let listenerAngle = round(atan2(listenerY - this.y, listenerX - this.x));
 
-    let opacity = map(this.volume, -10, 0, 0, 255);
+    let opacity = map(distance, this.maxRadius, this.minRadius, 0, 200);
 
     fill(this.h, 100, 100, opacity);
 

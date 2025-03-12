@@ -402,7 +402,9 @@ function getListenerPosition() {
 }
 
 function mousePressed() {
+  console.log("mousePressed");
   if (state == "mobile" && !isOnboarding) {
+    console.log("state: ", state);
     if(
       mouseX > 0 && mouseX < width &&
       mouseY > 0 && mouseY < height
