@@ -47,7 +47,7 @@ class soundArea {
         console.error("Error converting file to base64:", error)
       );
 
-      this.player = new Tone.Player(this.filePath, () => {
+      this.player = new SimplePlayer(this.filePath, () => {
         this.isLoaded = true;
       });
 
@@ -173,9 +173,10 @@ class soundArea {
       this.showTriangle(listenerX, listenerY);
       this.showWaveform();
       this.showHighlight();
-
+      
       if (this.isEditable) {
-        this.showLooping();
+        // this.showLooping();
+        this.showProgress();
       }
 
       if (this.volume > -15 && this.player.state == "started") {
@@ -266,6 +267,13 @@ class soundArea {
       this.maxRadius
     );
     this.particles.push(p);
+  }
+
+  showProgress() {
+    const progress = map(this.player.progress(), 0, 1, -90, 270);
+    fill(this.h, 100, 50);
+    noStroke();
+    if(this.minRadius > 25) arc(this.x, this.y, 50, 50, -90, progress);
   }
 
   pressed() {

@@ -244,6 +244,9 @@ body.mobile #stateButton {
   padding: 4px;
 }
 .saved-sketch {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
   position: relative;
   padding: 4px 10px;
   cursor: pointer;
@@ -254,6 +257,17 @@ body.mobile #stateButton {
   color: white;
 }
 
+.saved-sketch .sketch-name {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+.saved-sketch:hover .sketch-name {
+  max-width: calc(100% - 24px);
+}
+
 .saved-sketch:first-of-type:hover:after {
   content: "";
   position: absolute;
@@ -262,6 +276,31 @@ body.mobile #stateButton {
   border-right-color: black;
   z-index: 2;
 }
+
+
+#buttonsContainer .saved-sketch .delete-button {
+  display: none;
+  width: 24px;
+  height: auto;
+  padding: 0;
+  margin: 0;
+  background: none;
+  cursor: pointer;
+}
+
+#buttonsContainer .saved-sketch .delete-button img {
+  width: 100%;
+  filter: invert(1);
+}
+
+#buttonsContainer .saved-sketch .delete-button:hover img {
+  filter: invert(34%) sepia(100%) saturate(7463%) hue-rotate(292deg) brightness(101%) contrast(106%);
+}
+
+#buttonsContainer .saved-sketch:hover .delete-button {
+  display: flex;
+}
+
 
 /* Popups */
 .popup-wrapper {
@@ -362,41 +401,6 @@ body.mobile #stateButton {
 #savedSketchesContainer {
   max-height: calc(100vh - 330px);
   overflow-y: auto;
-}
-
-#buttonsContainer .delete-button {
-  display: none;
-  position: absolute;
-  right: 10px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 20px;
-  height: 22px;
-  background: url('images/trash_icon-white.png');
-  padding: 0;
-  margin: 0;
-  cursor: pointer;
-}
-
-#buttonsContainer .delete-button:after {
-  content: "";
-  display: block;
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: url('images/trash_icon-pink.png');
-  opacity: 0;
-  transition: opacity 250ms;
-}
-
-#buttonsContainer .delete-button:hover:after {
-  opacity: 1;
-}
-
-#buttonsContainer .saved-sketch:hover .delete-button {
-  display: block;
 }
 
 /* Log Out Popup */

@@ -306,12 +306,17 @@ function showSavedSketches(sketches) {
   for (const key in sketches) {
     const sketch = sketches[key];
     const sketchDiv = document.createElement("div");
-    sketchDiv.innerHTML = sketch.name;
+    // sketchDiv.innerHTML = sketch.name;
     sketchDiv.setAttribute("class", "saved-sketch");
     sketchDiv.addEventListener("click", function () {
       loadSketch(sketch, key);
     });
     sketchesDiv.appendChild(sketchDiv);
+
+    const sketchName = document.createElement("p");
+    sketchName.innerHTML = sketch.name;
+    sketchName.setAttribute("class", "sketch-name");
+    sketchDiv.appendChild(sketchName);
 
     const deleteButton = document.createElement("button");
     deleteButton.setAttribute("class", "delete-button");
@@ -332,6 +337,11 @@ function showSavedSketches(sketches) {
       }
     });
     sketchDiv.appendChild(deleteButton);
+
+    const deleteIcon = document.createElement("img");
+    deleteIcon.src = "images/trash-icon.svg"; // Replace with the actual path to your delete icon
+    deleteIcon.alt = "Delete";
+    deleteButton.appendChild(deleteIcon);
   }
 }
 

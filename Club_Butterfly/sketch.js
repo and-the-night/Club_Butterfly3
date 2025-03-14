@@ -94,6 +94,7 @@ function orientationListener() {
 
 let startButton;
 let sizeSlider;
+let wanderSpeedSlider;
 let position;
 let velocity;
 
@@ -256,10 +257,12 @@ function setup() {
   listener = new Draggable(width / 2, height - 60, 64, 64, listenerImg);
   autoListener = new Vehicle(width / 2, height - 60, listenerImg);
 
+
   position = createVector(width / 2, height - 50);
   velocity = createVector(0, 0);
 
   sizeSlider = document.getElementById("sizeSlider");
+  wanderSpeedSlider = document.getElementById("wanderSpeedSlider");
 }
 
 function newData(data, id) {
@@ -353,6 +356,10 @@ function draw() {
     };
     listener.update(pos);
   }
+
+  autoListener.maxSpeed = parseFloat(wanderSpeedSlider.value);
+
+  console.log("wanderSpeedSlider.value", wanderSpeedSlider.value)
 
   // let heading = state == "wander" ? autoListener.vel.heading() : -alpha - 90;
   // p5lm.send(JSON.stringify({ x: listener.x, y: listener.y, a: heading }));
