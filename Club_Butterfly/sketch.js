@@ -357,9 +357,9 @@ function draw() {
     listener.update(pos);
   }
 
-  autoListener.maxSpeed = parseFloat(wanderSpeedSlider.value);
+  // autoListener.maxSpeed = parseFloat(wanderSpeedSlider.value);
 
-  console.log("wanderSpeedSlider.value", wanderSpeedSlider.value)
+  // console.log("wanderSpeedSlider.value", wanderSpeedSlider.value)
 
   // let heading = state == "wander" ? autoListener.vel.heading() : -alpha - 90;
   // p5lm.send(JSON.stringify({ x: listener.x, y: listener.y, a: heading }));
