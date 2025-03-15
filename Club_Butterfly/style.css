@@ -87,7 +87,7 @@ button {
   transition: all 0.2s ease;
 }
 
-button:hover {
+.desktop button:hover {
   /* background: #ff82f9; */
   background: black;
   color: white;
