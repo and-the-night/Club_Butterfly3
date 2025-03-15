@@ -14,6 +14,7 @@ const soundAreaDelete = document.getElementById("soundAreaDelete");
 const prevSoundArea = document.getElementById("prevSoundArea");
 const nextSoundArea = document.getElementById("nextSoundArea");
 const closeSoundAreaEditor = document.getElementById("closeSoundAreaEditor");
+const hueSlider = document.getElementById('hueSlider');
 
 soundAreaNameInput.addEventListener("keypress", function(event) {
     if (event.key === "Enter") {
@@ -67,11 +68,25 @@ soundAreaDelete.addEventListener("click", function(event) {
 
 // Changing Color
 soundAreaColor.addEventListener("click", function(event) {
-    console.log("Color picker clicked");
-    const h = selectedSoundArea.h;
-    const newH = (h + 30) % 100;
-    selectedSoundArea.h = newH;
-    soundAreaColor.style.background = `hsl(${newH * 3.6}, 100%, 50%)`;
+    hueSlider.style.display = "block";
+    hueSlider.focus();
+    hueSlider.value = selectedSoundArea.h;
+});
+
+// Function to update the color display based on the hue value
+function updateColor(hue) {
+    const color = `hsl(${hue * 3.6}, 100%, 50%)`; // HSL color format
+    soundAreaColor.style.backgroundColor = color; // Apply color to the display box
+    selectedSoundArea.h = hue; // Update the sound area color
+}
+
+// Event listener for slider change
+hueSlider.addEventListener('input', function() {
+    updateColor(hueSlider.value); // Update color on slide
+});
+
+hueSlider.addEventListener('blur', function() {
+    hueSlider.style.display = "none"; // Hide the slider when not in use
 });
 
 nextSoundArea.addEventListener("click", function(event) {

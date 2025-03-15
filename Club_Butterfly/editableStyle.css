@@ -619,8 +619,9 @@ body.mobile #stateButton {
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  border: 1px solid black;
   margin-right: 10px;
+  border: 1px solid black;
+  cursor: pointer;
 }
 
 #soundAreaEditor #soundAreaDelete {
@@ -686,4 +687,29 @@ body.mobile #stateButton {
 
 #soundAreaEditor .loop-container input[type="checkbox"]:checked + label.checkbox-label img {
   display: block;
+}
+
+/* Color Picker */
+.hue-slider {
+  display: none;
+  position: absolute;
+  left: 0;
+  bottom: -3px;
+  width: 207px; /* Set width of the slider */
+  height: 20px; /* Set height of the slider */
+  -webkit-appearance: none; /* Remove default styling */
+  appearance: none; /* Remove default styling */
+  background: linear-gradient(to right, 
+      red, orange, yellow, rgb(0, 255, 0), cyan, blue, violet, red); /* Gradient for hue */
+  transform: rotate(-90deg); /* Rotate the slider */
+  transform-origin: left bottom; /* Set the origin for rotation */
+}
+
+.hue-slider::-webkit-slider-thumb {
+  -webkit-appearance: none; /* Remove default thumb */
+  appearance: none; /* Remove default thumb */
+  width: 4px; /* Width of the thumb */
+  height: 30px; /* Height of the thumb */
+  background: black; /* Thumb background color */
+  cursor: pointer; /* Change cursor on hover */
 }
