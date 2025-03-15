@@ -1,6 +1,7 @@
 const onboardingMobilePopup = document.getElementById("onboardingMobilePopup");
 const onboardingMobileTitle = document.getElementById("onboardingMobileTitle");
 const onboardingMobileText = document.getElementById("onboardingMobileText");
+const onboardingMobileWelcome = document.getElementById("onboardingMobileWelcome");
 const onboardingMobileNextButton = document.getElementById("onboardingMobileNextButton");
 
 let onboardingStep = 0;
@@ -10,10 +11,11 @@ function updatePopup() {
         // Mobile Onboarding
         switch (onboardingStep) {
             case 0:
-                onboardingMobileTitle.textContent = "Welcome to Club Butterfly!";
+                onboardingMobileTitle.textContent = "Club Butterfly!";
                 onboardingMobileText.textContent = "An immersive audio experience you can enjoy anywhere.";
             break;
             case 1:
+                onboardingMobileWelcome.style.display = "none";
                 onboardingMobileTitle.textContent = "Step 1/3";
                 onboardingMobileText.textContent = "First, connect headphones or earbuds to your device.";
             break;
@@ -35,10 +37,11 @@ function updatePopup() {
         // Desktop Onboarding
         switch (onboardingStep) {
             case 0:
-                onboardingMobileTitle.textContent = "Welcome to Club Butterfly!";
-                onboardingMobileText.textContent = "A non-linear music experience.";
+                onboardingMobileTitle.textContent = loadedComposition ? "VennWave" : "Constellations no. 4";
+                onboardingMobileText.textContent = loadedComposition ? "An immersive, spatial and non-linear music platform." : "An immersive, spatial and non-linear musical experience.";
             break;
             case 1:
+                onboardingMobileWelcome.style.display = "none";
                 onboardingMobileTitle.textContent = "Step 1/3";
                 onboardingMobileText.textContent = "Press the play button to start the experience.";
             break;

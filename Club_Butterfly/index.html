@@ -115,9 +115,12 @@
           <img src="images/play-icon.svg" class="play-icon"/>
           <img src="images/stop-icon.svg" class="stop-icon"/>
         </button>
-        <button id="stateBtn">
+        <button id="stateBtn" class="popup-wrapper">
           <img src="images/drag-icon-3.svg" class="drag-icon"/>
           <img src="images/wander-icon-2.svg" class="wander-icon"/>
+          <div class="popup left align-top">
+            Drag / Autopilot
+          </div>
         </button>
         <div class="slider-container">
             <label>Adjust Speed</label>
@@ -138,6 +141,7 @@
       </p>
     </div>
     <div id="onboardingMobilePopup">
+      <p id="onboardingMobileWelcome">Welcome to</p>
       <h1 id="onboardingMobileTitle"></h1>
       <p id="onboardingMobileText"></p>
       <button id="onboardingMobileNextButton">Next</button>

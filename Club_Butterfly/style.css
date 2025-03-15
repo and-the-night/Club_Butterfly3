@@ -35,7 +35,7 @@ body.desktop #content-container {
 
 body.mobile #content-container {
   display: table;
-  padding: 0 40px;
+  width: 800px;
   margin: 0 auto;
 }
 
@@ -69,6 +69,7 @@ p,
 }
 
 body.mobile p {
+  font-size: 30px;
   font-weight: 400;
 }
 
@@ -106,7 +107,7 @@ button img {
   display: none;
 }
 
-button:hover {
+.desktop button:hover {
   background: black;
   color: white;
 }
@@ -228,4 +229,60 @@ body.mobile button#stateBtn {
   background: #4CAF50;
   cursor: pointer;
   border-radius: 50%;
+}
+
+/* Popups */
+.popup-wrapper {
+  position: relative;
+}
+
+.popup {
+  display: none;
+  position: absolute;
+  white-space: nowrap;
+  padding: 10px;
+  border: 1px solid black;
+  background: white;
+  color: black;
+  font-weight: 200;
+  font-size: 20px;
+  text-align: left;
+  z-index: 2;
+}
+
+.popup-wrapper:hover .popup {
+  display: block;
+}
+
+/* Popup opens Left */
+.popup.left {
+  left: calc(100% + 12px);
+}
+
+.popup.left.align-top {
+  top: -2px;
+}
+
+.popup.left:before {
+  content: "";
+  position: absolute;
+  left: -20px;
+  border: 10px solid transparent;
+  border-right-color: black;
+}
+
+.popup.left:after {
+  content: "";
+  position: absolute;
+  left: -18px;
+  border: 9px solid transparent;
+  border-right-color: white;
+}
+
+.popup.left.align-top:before {
+  top: calc(50% - 10px);
+}
+
+.popup.left.align-top:after {
+  top: calc(50% - 9px);
 }

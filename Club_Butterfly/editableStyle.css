@@ -330,6 +330,10 @@ body.mobile #stateButton {
   display: block;
 }
 
+.popup-wrapper.hoverable:hover .popup {
+  display: block;
+}
+
 /* Popup opens Bottom */
 .popup.bottom {
   top: calc(100% + 4px);
@@ -469,6 +473,21 @@ body.mobile #stateButton {
 #infoContainer {
   display: flex;
   flex-direction: column;
+}
+
+/* State Popup */
+#stateBtn .popup {
+  white-space: nowrap;
+  font-size: 20px;
+  top: -2px;
+}
+
+#stateBtn .popup:before {
+  top: calc(50% - 10px);
+}
+
+#stateBtn .popup:after {
+  top: calc(50% - 9px);
 }
 
 /* Transport Buttons */
