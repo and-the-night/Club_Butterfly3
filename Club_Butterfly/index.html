@@ -110,9 +110,20 @@
         that brings together people from everywhere in the world into one shared
         experience.
       </p>
-      <button id="playBtn">►</button>
-      <button id="stateBtn">↝</button>
-      <input type="range" id="wanderSpeedSlider" min="0.5" max="2" step="0.01" value="0.5" />
+      <div class="user-controls">
+        <button id="playBtn">
+          <img src="images/play-icon.svg" class="play-icon"/>
+          <img src="images/stop-icon.svg" class="stop-icon"/>
+        </button>
+        <button id="stateBtn">
+          <img src="images/drag-icon-3.svg" class="drag-icon"/>
+          <img src="images/wander-icon-2.svg" class="wander-icon"/>
+        </button>
+        <div class="slider-container">
+            <label>Adjust Speed</label>
+            <input type="range" id="wanderSpeedSlider" class="slider" min="0.5" max="2" step="0.01" value="0.5" />
+        </div>
+      </div>
       <p id="mobileText">
         "Constellation no. 4" is an interactive musical experience that allows
         participants to control and manipulate music through their movement in

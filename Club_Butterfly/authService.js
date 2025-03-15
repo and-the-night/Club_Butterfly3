@@ -50,7 +50,7 @@ function initFirebase() {
     storageBucket: "shared-minds-967a2.firebasestorage.app",
     messagingSenderId: "254122128784",
     appId: "1:254122128784:web:6b5aae86110cb85c472f15",
-    measurementId: "G-C5QS5WX9VY",
+    measurementId: "G-C5QS5WX9VY"
   };
   app = initializeApp(firebaseConfig);
 
@@ -234,12 +234,15 @@ saveButton.addEventListener("click", function () {
     } else {
       console.log("saving new sketch");
 
-      const newRef = push(dbRef, newComposition).then(() => {
+      try {
+        const newRef = push(dbRef, newComposition);
+        composition.id = newRef.key;
+        composition.name = newComposition.name;
         showSaved();
-        // showMessage("Composition saved successfully!");
-      })
-
-      composition.id = newRef.key;
+    
+      } catch (error) {
+          console.error("Error adding new composition:", error);
+      }
     }
 
     enableShareButton();

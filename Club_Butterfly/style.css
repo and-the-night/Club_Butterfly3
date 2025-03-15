@@ -5,8 +5,10 @@ html,
 body {
   margin: 0;
   padding: 0;
-  background: black;
-  color: #ff00f2;
+  /* background: black; */
+  /* color: #ff00f2; */
+  background: white;
+  color: black;
 }
 canvas {
   display: block;
@@ -74,20 +76,43 @@ button {
   width: 50px;
   height: 50px;
   font-size: 38px;
-  font-weight: bold;
   margin: 20px 20px 0 0;
-  background: #ff00f2;
-  border: none;
+  /* background: #ff00f2; */
+  background: white;
+  color: black;
+  border: 2px solid black;
   transition: background 100ms;
   cursor: pointer;
+  font-family: "Jost", sans-serif;
+  transition: all 0.2s ease;
 }
 
 button:hover {
-  background: #ff82f9;
+  /* background: #ff82f9; */
+  background: black;
+  color: white;
 }
 
-button:active {
-  background: white;
+button img {
+  width: 100%;
+  height: 100%;
+  transition: all 0.2s ease;
+}
+
+.play .stop-icon,
+.stop .play-icon,
+.drag .drag-icon,
+.wander .wander-icon{
+  display: none;
+}
+
+button:hover {
+  background: black;
+  color: white;
+}
+
+button:hover img {
+  filter: invert(1);
 }
 
 body.mobile button {
@@ -95,7 +120,6 @@ body.mobile button {
   width: 200px;
   height: 100px;
   text-align: center;
-  font-family: "Jost", sans-serif;
   color: black;
   margin: 20px auto;
 }
@@ -145,44 +169,63 @@ body.mobile button#stateBtn {
 }
 
 /* Slider */
+.user-controls {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin: 20px 0;
+}
+
 .slider-container {
   display: flex;
   flex-direction: column;
-  width: 806px;
-  margin: 0 auto;
+  margin: 12px 0 0;
 }
 
-.slider-container p {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-}
-
-.desktop .slider-container {
+.drag .slider-container {
   display: none;
 }
 
-.slider {
-  -webkit-appearance: none;
-  width: 100%;
-  height: 15px;
-  margin: 0;
-  background: #ff00f2;
-  outline: none;
+.slider-container label {
+  font-size: 20px;
+  font-family: "Jost", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 200;
+  font-style: normal;
 }
 
-.slider::-webkit-slider-thumb {
+.mobile .slider-container {
+  display: none;
+}
+
+#wanderSpeedSlider {
+  -webkit-appearance: none;
+  width: 200px;
+  height: 15px;
+  background: #ddd;
+  outline: none;
+  opacity: 0.7;
+  transition: opacity 0.2s;
+}
+
+#wanderSpeedSlider:hover {
+  opacity: 1;
+}
+
+#wanderSpeedSlider::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
   width: 25px;
   height: 25px;
-  background: white;
+  background: black;
   cursor: pointer;
+  border-radius: 50%;
 }
 
-.slider::-moz-range-thumb {
+#wanderSpeedSlider::-moz-range-thumb {
   width: 25px;
   height: 25px;
-  background: white;
+  background: #4CAF50;
   cursor: pointer;
+  border-radius: 50%;
 }

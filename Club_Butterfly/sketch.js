@@ -11,6 +11,7 @@ if (
 } else {
   state = "drag";
   document.body.classList.add("desktop");
+  document.body.classList.add("drag");
 }
 
 let isPlaying = false;
@@ -201,20 +202,23 @@ function preload() {
 }
 
 // Buttons
-
 let playText = state === "mobile" ? "Play" : "►";
 let stopText = state === "mobile" ? "Stop" : "⏹";
 
 let playBtn = document.getElementById("playBtn");
-playBtn.innerHTML = playText;
+playBtn.classList.add("play");
 
 playBtn.addEventListener("click", () => {
   if (state == "mobile") detect();
 
   if (!isPlaying) {
     playAudio();
+    playBtn.classList.remove("play");
+    playBtn.classList.add("stop");
   } else if (isPlaying) {
     stopAudio();
+    playBtn.classList.remove("stop");
+    playBtn.classList.add("play");
   }
 });
 
@@ -224,15 +228,18 @@ if (state != "mobile") {
   stateBtn.addEventListener("click", () => {
     if (state == "drag") {
       state = "wander";
+      document.body.classList.remove("drag");
+      document.body.classList.add("wander");
     } else if (state == "wander") {
       state = "drag";
+      document.body.classList.remove("wander");
+      document.body.classList.add("drag");
     }
   });
 }
 
 function playAudio() {
   Tone.Transport.start();
-  playBtn.innerHTML = stopText;
   isPlaying = true;
   for (let i = 0; i < areas.length; i++) {
     areas[i].player.start();
@@ -241,7 +248,6 @@ function playAudio() {
 
 function stopAudio() {
   Tone.Transport.stop();
-  playBtn.innerHTML = playText;
   isPlaying = false;
   for (let i = 0; i < areas.length; i++) {
     areas[i].player.stop();
@@ -335,7 +341,6 @@ function draw() {
     listener.show();
     listener.update(position);
   } else if (state == "drag") {
-    stateBtn.innerHTML = "↝";
     listener.over();
     listener.update();
     listener.show();
@@ -345,7 +350,6 @@ function draw() {
     };
     autoListener.update(pos);
   } else if (state == "wander") {
-    stateBtn.innerHTML = "⌖";
     autoListener.wander();
     autoListener.update();
     autoListener.show();
@@ -357,9 +361,7 @@ function draw() {
     listener.update(pos);
   }
 
-  // autoListener.maxSpeed = parseFloat(wanderSpeedSlider.value);
-
-  // console.log("wanderSpeedSlider.value", wanderSpeedSlider.value)
+  if (wanderSpeedSlider) autoListener.maxSpeed = parseFloat(wanderSpeedSlider.value);
 
   // let heading = state == "wander" ? autoListener.vel.heading() : -alpha - 90;
   // p5lm.send(JSON.stringify({ x: listener.x, y: listener.y, a: heading }));

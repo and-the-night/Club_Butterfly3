@@ -124,11 +124,11 @@ class soundArea {
     
 
     // Debugging
-    fill(255);
-    textSize(20);
-    stroke(0);
-    strokeWeight(1);
-    text(panAngle.toFixed(2), this.x, this.y + 10);
+    // fill(255);
+    // textSize(20);
+    // stroke(0);
+    // strokeWeight(1);
+    // text(panAngle.toFixed(2), this.x, this.y + 10);
 
     this.panner.pan.setValueAtTime(panAngle, 0.25);
   }
@@ -206,14 +206,16 @@ class soundArea {
     let wave = this.waveform.getValue();
     fill(this.h, 100, 100);
     noStroke();
-    beginShape();
-    for (let i = 0; i <= 360; i++) {
-      let waveIndex = floor(map(i, 0, 360, 0, wave.length - 1));
-      let waveRadius = map(wave[waveIndex], -1, 1, 0, this.minRadius * 2);
+    for(let t = -1; t <= 1; t += 2) {
+      beginShape();
+      for (let i = 0; i <= 180; i++) {
+        let waveIndex = floor(map(i, 0, 180, 0, wave.length - 1));
+        let waveRadius = map(wave[waveIndex], -1, 1, 0, this.minRadius * 2);
 
-      vertex(this.x + sin(i) * waveRadius, this.y + cos(i) * waveRadius);
+        vertex(this.x + t * sin(i) * waveRadius, this.y + cos(i) * waveRadius);
+      }
+      endShape(CLOSE);
     }
-    endShape(CLOSE);
   }
 
   showHighlight() {
@@ -308,12 +310,12 @@ class soundArea {
 
 
   rightPressed() {
-    const distFromCenter = dist(this.x, this.y, mouseX, mouseY);
-    if (distFromCenter < this.minRadius) {
-      isDirty = true;
-      this.isLooping = !this.isLooping;
-      this.player.loop = this.isLooping;
-    }
+    // const distFromCenter = dist(this.x, this.y, mouseX, mouseY);
+    // if (distFromCenter < this.minRadius) {
+    //   isDirty = true;
+    //   this.isLooping = !this.isLooping;
+    //   this.player.loop = this.isLooping;
+    // }
   }
 
   released() {

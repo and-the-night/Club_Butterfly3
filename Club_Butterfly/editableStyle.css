@@ -1,5 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Yeseva+One&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
 
 html,
 body {
@@ -7,10 +9,9 @@ body {
   padding: 0;
   background: white;
   color: black;
-
   font-family: "Jost", sans-serif;
   font-optical-sizing: auto;
-  font-weight: 200;
+  font-weight: 300;
   font-style: normal;
   font-size: 20px;
 }
@@ -205,6 +206,12 @@ body.mobile #stateButton {
   100% {
     color: #ff00f2;
   }
+}
+
+#buttonsContainer button .popup-icon {
+  width: 20px;
+  height: 20px;
+  margin-left: 10px;
 }
 
 #leftBar a {
@@ -466,24 +473,42 @@ body.mobile #stateButton {
 
 /* Transport Buttons */
 #transportButtonsContainer {
-  position: absolute;
-  right: -20px;
-  top: 0;
-  transform: translateX(100%);
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   text-align: center;
 }
 
 #transportButtonsContainer button {
-  width: 40px;
-  height: 40px;
-  margin: 4px 0;
-  padding: 0;
+  width: 50px;
+  height: 50px;
+  margin: 20px 20px 0 0;
+  padding: 4px;
   background: white;
   border: 1px solid black;
-  border-radius: 50%;
   cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+#transportButtonsContainer button img {
+  width: 100%;
+  height: 100%;
+  transition: all 0.2s ease;
+}
+
+.play .stop-icon,
+.stop .play-icon,
+.drag .drag-icon,
+.wander .wander-icon{
+  display: none;
+}
+
+#transportButtonsContainer button:hover {
+  background: black;
+  color: white;
+}
+
+#transportButtonsContainer button:hover img {
+  filter: invert(1);
 }
 
 /* Blocker */
@@ -522,6 +547,7 @@ body.mobile #stateButton {
 
 /* Sound Area Editor */
 #soundAreaEditor {
+  position: relative;
   padding: 10px;
   border: 1px dashed black;
 }
@@ -532,17 +558,132 @@ body.mobile #stateButton {
   margin-bottom: 10px;
 }
 
+#soundAreaEditor .col {
+  width: calc(50% - 5px);
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 16px;
+}
+
+#soundAreaEditor .col:first-of-type {
+  margin-right: 10px;
+}
+
+#soundAreaEditor #closeSoundAreaEditor {
+  width: 16px;
+  height: 16px;
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  margin: 0;
+}
+
+#soundAreaEditor #closeSoundAreaEditor img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+#soundAreaEditor #closeSoundAreaEditor:hover img {
+  filter: invert(34%) sepia(100%) saturate(7463%) hue-rotate(292deg) brightness(101%) contrast(106%);
+
+}
+
+#soundAreaEditor .nav-buttons {
+  margin-right: 3px;
+}
+
+#soundAreaEditor #prevSoundArea,
+#soundAreaEditor #nextSoundArea {
+  width: 20px;
+  height: 20px;
+  margin: 3px 2px 0 0;
+}
+
+#soundAreaEditor #prevSoundArea img,
+#soundAreaEditor #nextSoundArea img {
+  width: 100%;
+  height: 100%;
+}
+
+#soundAreaEditor #prevSoundArea:hover img,
+#soundAreaEditor #nextSoundArea:hover img {
+  filter: invert(34%) sepia(100%) saturate(7463%) hue-rotate(292deg) brightness(101%) contrast(106%);
+}
+
 #soundAreaEditor #soundAreaColor {
   width: 40px;
   height: 40px;
   border-radius: 50%;
   border: 1px solid black;
+  margin-right: 10px;
+}
+
+#soundAreaEditor #soundAreaDelete {
+  width: 24px;
+  height: auto;
+  margin: 2px 2px 0 10px;
+}
+
+#soundAreaEditor #soundAreaDelete img {
+  width: 100%;
+  height: 100%;
+}
+
+#soundAreaEditor #soundAreaDelete:hover img {
+  filter: invert(34%) sepia(100%) saturate(7463%) hue-rotate(292deg) brightness(101%) contrast(106%);
+
 }
 
 #soundAreaEditor input[type="number"] {
   width: 40px;
 }
 
+#soundAreaEditor input[type="number"]:focus-visible {
+  outline: none;
+}
+
 #soundAreaEditor input[type="text"] {
-  width: 240px;
+  width: 208px;
+  padding: 10px;
+  box-sizing: border-box;
+  font-family: "Jost", sans-serif;
+  ;
+}
+
+#soundAreaEditor input[type="text"]:focus-visible {
+  outline: none;
+}
+
+#soundAreaEditor .loop-container {
+  font-size: 16px;
+}
+
+#soundAreaEditor .loop-container input[type="checkbox"] {
+  margin-left: 0px;
+  display: none;
+}
+
+#soundAreaEditor .loop-container label.checkbox-label {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border: 1px solid black;
+  border-radius: 2px;
+  vertical-align: -1px;
+  cursor: pointer;
+}
+
+#soundAreaEditor .loop-container label.checkbox-label img {
+  width: 100%;
+  height: 100%;
+  display: none;
+}
+
+#soundAreaEditor .loop-container input[type="checkbox"]:checked + label.checkbox-label img {
+  display: block;
 }

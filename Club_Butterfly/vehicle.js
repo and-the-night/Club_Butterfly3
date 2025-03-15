@@ -17,7 +17,7 @@ class Vehicle {
     this.vel = createVector(0, -1);
     this.acc = createVector(0, 0);
     this.maxSpeed = 0.25;
-    this.maxForce = 0.1;
+    this.maxForce = 0.01;
     this.r = 30;
     this.img = img;
 

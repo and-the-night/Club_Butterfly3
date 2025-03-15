@@ -69,42 +69,71 @@
             </div>
           </div>
         </div>
+        <div id="transportButtonsContainer">
+          <button id="playBtn">
+            <img src="images/play-icon.svg" class="play-icon"/>
+            <img src="images/stop-icon.svg" class="stop-icon"/>
+          </button>
+          <button id="stateBtn">
+            <img src="images/drag-icon-3.svg" class="drag-icon"/>
+            <img src="images/wander-icon-2.svg" class="wander-icon"/>
+          </button>
+        </div>
       </div>
       <div id="soundAreaEditor">
+        <button id="closeSoundAreaEditor"><img src="images/close-icon.svg" /></button>
         <div class="row">
+          <div class="nav-buttons">
+            <button id="prevSoundArea">
+              <img src="images/prev-icon.svg" />
+            </button>
+            <button id="nextSoundArea">
+              <img src="images/next-icon.svg" />
+            </button>
+          </div>
           Sound Area Editor
-          <button id="prevSoundArea"><</button>
-          <button id="nextSoundArea">></button>
-          <button id="closeSoundAreaEditor">X</button>
         </div>
         <div class="row">
           <div id="soundAreaColor"></div>
           <input type="text" id="soundAreaNameInput" />
+          <button id="soundAreaDelete">
+            <img src="images/trash-icon.svg" />
+          </button>
         </div>
         <div class="row">
-          <label>x:</label>
-          <input type="number" id="soundAreaX" />
-          <label>y:</label>
-          <input type="number" id="soundAreaY" />
+          <div class="col">
+            <label>X position:</label>
+            <input type="number" id="soundAreaX" />
+          </div>
+          <div class="col">
+            <label>Y position:</label>
+            <input type="number" id="soundAreaY" />
+          </div>
         </div>
         <div class="row">
-          <label>Inner Radius:</label>
-          <input type="number" id="soundAreaMinRadius" />
+          <div class="col">
+            <label>Inner radius:</label>
+            <input type="number" id="soundAreaMinRadius" />
+          </div>
+          <div class="col">
+            <label>Outer radius:</label>
+            <input type="number" id="soundAreaMaxRadius" />
+          </div>
         </div>
-        <div class="row">
-          <label>Outer Radius:</label>
-          <input type="number" id="soundAreaMaxRadius" />
+        <div class="loop-container">
+          <input type="checkbox" id="soundAreaLoop" />
+          <label for="soundAreaLoop" class="checkbox-label">
+            <img src="images/check-icon.svg" />
+          </label>
+          <label for="soundAreaLoop">Looping</label>
         </div>
-        <input type="checkbox" id="soundAreaLoop" />
-        <label for="soundAreaLooping">Looping</label>
-        <button id="soundAreaDelete">Delete</button>
       </div>
       <div id="infoContainer">
         <button id="info" class="popup-wrapper">
           i
           <div id="infoPopup" class="popup left align-bottom">
             <ul>
-              <li>Drag and drop audio files to place them in the sketch.</li>
+              <li>Drag and drop audio files to place them in the composition.</li>
               <li>
                 The inner circle represents the area in which the audio is heard
                 in full volume and centered. Drag the inner circle to reposition
@@ -115,8 +144,7 @@
                 The outer circle represents the area in which the audio is
                 heard. Drag the edges of the outer circle to resize it.
               </li>
-              <li>Right click on the inner circle to switch between looping and non-looping audio.</li>
-              <li>Double click on the inner circle to delete the audio.</li>
+              <li>Double click on the inner circle to edit the sound area.</li>
             </ul>
           </div>
         </button>
@@ -125,10 +153,6 @@
     </div>
     <div id="mainContainer">
       <main id="drop-area"></main>
-      <div id="transportButtonsContainer">
-        <button id="playBtn">►</button>
-        <button id="stateBtn">↝</button>
-      </div>
     </div>
     <div id="blocker">
       <h1>This app is not supported in mobile yet (sorry)</h1>
