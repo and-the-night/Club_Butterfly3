@@ -312,7 +312,17 @@ function showSavedSketches(sketches) {
     // sketchDiv.innerHTML = sketch.name;
     sketchDiv.setAttribute("class", "saved-sketch");
     sketchDiv.addEventListener("click", function () {
-      loadSketch(sketch, key);
+      if (composition.id === key) {
+        showMessage("This is the current composition.");
+      } else if (isDirty) {
+        createConfirmationPopup("Are you sure you want to load a saved composition? Any unsaved changes will be lost.", "Load",
+          function() {
+            loadSketch(sketch, key);
+            closePopups();
+          });
+      } else {
+        loadSketch(sketch, key);
+      }
     });
     sketchesDiv.appendChild(sketchDiv);
 
@@ -326,18 +336,19 @@ function showSavedSketches(sketches) {
     
     deleteButton.addEventListener("click", function (e) {
       e.stopPropagation();
-      const userConfirmed = confirm("Are you sure you want to delete this composition?");
-      if (userConfirmed) {
-      const sketchRef = ref(db, appName + "/" + uid + "/" + key);
-      set(sketchRef, null).then(() => {
-        console.log("Sketch deleted");
-        getSavedSketches();
-        createNewSketch();
-        closePopups();
-      }).catch((error) => {
-        console.error("Error deleting sketch:", error);
-      });
-      }
+
+      createConfirmationPopup("Are you sure you want to delete this composition?", "Delete",
+        function() {
+          const sketchRef = ref(db, appName + "/" + uid + "/" + key);
+          set(sketchRef, null).then(() => {
+            console.log("Sketch deleted");
+            getSavedSketches();
+            createNewSketch();
+            closePopups();
+          }).catch((error) => {
+            console.error("Error deleting sketch:", error);
+          });
+        });
     });
     sketchDiv.appendChild(deleteButton);
 
@@ -361,12 +372,6 @@ function hideSavedSketches() {
 
 // Load Sketch from DB
 function loadSketch(sketch, key) {
-  if(isDirty) {
-    const userConfirmed = confirm("Are you sure you want to load a saved composition? Any unsaved changes will be lost.");
-    if (!userConfirmed) {
-      return;
-    }
-  }
   resetSketch();
 
   composition.id = key;
@@ -402,15 +407,21 @@ function loadSketch(sketch, key) {
 
 // New Sketch
 const newSketchButton = document.getElementById("newSketch");
-newSketchButton.addEventListener("click", createNewSketch);
+newSketchButton.addEventListener("click", confirmCreateNewSketch);
+
+function confirmCreateNewSketch() {
+  if (isDirty) {
+    createConfirmationPopup("Are you sure you want to create a new sketch? Any unsaved changes will be lost.", "OK",
+      function() {
+        createNewSketch();
+        closePopups();
+      });
+  } else {
+    createNewSketch();
+  }
+}
 
 function createNewSketch() {
-  if(isDirty) {
-    const userConfirmed = confirm("Are you sure you want to create a new composition? Any unsaved changes will be lost.");
-    if (!userConfirmed) {
-      return;
-    }
-  }
   resetSketch();
   areas = [];
   composition.id = null;
@@ -610,4 +621,44 @@ function hideBlocker() {
   console.log("hiding blocker");
   const blocker = document.getElementById('blocker');
   blocker.style.display = "none";
+}
+
+// Confirmations
+function createConfirmationPopup(message, confirmText, onConfirm) {
+  const blocker = document.createElement("div");
+  blocker.classList.add("message-blocker");
+  blocker.addEventListener("click", (e) => {
+    e.stopPropagation();
+  });
+  const popup = document.createElement("div");
+  popup.classList.add("confirmation-popup");
+
+  const messageDiv = document.createElement("div");
+  messageDiv.classList.add("confirmation-message");
+  messageDiv.innerText = message;
+  popup.appendChild(messageDiv);
+
+  const buttonsDiv = document.createElement("div");
+  buttonsDiv.classList.add("confirmation-buttons");
+
+  const confirmButton = document.createElement("button");
+  confirmButton.classList.add("confirm-button");
+  confirmButton.innerText = confirmText || "OK";
+  confirmButton.addEventListener("click", () => {
+    onConfirm();
+    document.body.removeChild(blocker);
+  });
+  buttonsDiv.appendChild(confirmButton);
+
+  const cancelButton = document.createElement("button");
+  cancelButton.classList.add("cancel-button");
+  cancelButton.innerText = "Cancel";
+  cancelButton.addEventListener("click", () => {
+    document.body.removeChild(blocker);
+  });
+  buttonsDiv.appendChild(cancelButton);
+
+  popup.appendChild(buttonsDiv);
+  blocker.appendChild(popup);
+  document.body.appendChild(blocker);
 }

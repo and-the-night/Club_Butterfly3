@@ -112,7 +112,7 @@ button img {
   color: white;
 }
 
-button:hover img {
+.desktop button:hover img {
   filter: invert(1);
 }
 

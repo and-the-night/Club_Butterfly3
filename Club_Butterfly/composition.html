@@ -10,7 +10,7 @@
 
     <link rel="stylesheet" type="text/css" href="style.css" />
     <link rel="stylesheet" type="text/css" href="composition.css" />
-    <link rel="stylesheet" type="text/css" href="onboardingMobile.css" />
+    <link rel="stylesheet" type="text/css" href="onboarding.css" />
 
 
     <meta charset="utf-8" />
@@ -21,13 +21,23 @@
       <h1 id="compositionName">
         Loading...
       </h1>
-      <p>
+      <p class="composition-author-container">
         by
         <span id="compositionAuthor">Anonymous</span>
       </p>
-      <p id="desktop-text">
-        Desktop text: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-      </p>
+      <div id="desktop-text">
+        <ul>
+          <li>
+            Press the play button to start the experience.
+          </li>
+          <li>
+            Drag the butterfly around the screen to change the music.
+          </li>
+          <li>
+            Press the 'Autopilot' button to let the butterfly fly around the screen.
+          </li>
+        </ul>
+      </div>
       <button id="playBtn">
         <img src="images/play-icon.svg" class="play-icon"/>
         <img src="images/stop-icon.svg" class="stop-icon"/>
@@ -39,9 +49,26 @@
           Drag / Autopilot
         </div>
       </button>
-      <p id="mobile-text">
-        Mobile text: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-      </p>
+      <div id="mobile-text">
+        <ul>
+          <li>
+            Connect headphones or earbuds to your device.
+          </li>
+          <li>
+            Face the room you are in with space in front of you, holding your device in front of you.
+          </li>
+          <li>
+            Face the room you are in with space in front of you, holding your device in front of you.
+          </li>
+          <li>
+            Press the play button, allow detection and start walking around. You'll hear the music change as you move.
+          </li>
+          <li>
+            If the space you're in is too small, tap the screen to move around.
+          </li>
+        </ul>
+      </div>
+      <p>Created with <a>VennWave</a></p>
     </div>
     <div id="onboardingMobilePopup">
       <p id="onboardingMobileWelcome">Welcome to</p>
@@ -57,6 +84,6 @@
     <script src="loadComposition.js" type="module"></script>
     <script src="sketch.js"></script>
     <script src="cursorService.js"></script>
-    <script src="onboardingMobile.js"></script>
+    <script src="onboarding.js"></script>
   </body>
 </html>
