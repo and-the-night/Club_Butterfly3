@@ -397,7 +397,7 @@ function getListenerPosition() {
 
   textSize(30);
   textAlign(CENTER);
-  text("forwardAcc" + forwardAcc.toFixed(2), width / 2, height / 2);
+  // text("forwardAcc" + forwardAcc.toFixed(2), width / 2, height / 2);
   position.add(velocity); 
 
   if (position.y < 0) position.y = 0;
