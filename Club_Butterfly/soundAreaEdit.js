@@ -104,9 +104,13 @@ prevSoundArea.addEventListener("click", function(event) {
 });
 
 closeSoundAreaEditor.addEventListener("click", function(event) {
+    closeSoundAreaEditorFunction();
+});
+
+function closeSoundAreaEditorFunction() {
     soundAreaEditor.style.display = "none";
     selectedSoundArea = null;
-});
+}
 
 function soundAreaEdit(soundArea, i) {
     soundAreaEditor.style.display = "block";

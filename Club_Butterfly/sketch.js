@@ -386,7 +386,7 @@ function getListenerPosition() {
   const avgAcc = lerp(prevAcc, forwardAcc, 0.5);
   
   if (forwardAcc > 0.5 && alphaChange < 1 && betaChange < 1) {
-    acc.setMag(forwardAcc / size);
+    acc.setMag(avgAcc / size);
     velocity.add(acc);
     fill(255);
   } else {
@@ -400,7 +400,7 @@ function getListenerPosition() {
 
   textSize(30);
   textAlign(CENTER);
-  // text("forwardAcc" + forwardAcc.toFixed(2), width / 2, height / 2);
+  text("avgAcc" + avgAcc.toFixed(2), width / 2, height / 2);
   position.add(velocity); 
 
   if (position.y < 0) position.y = 0;
@@ -411,6 +411,8 @@ function getListenerPosition() {
   prevAlpha = alpha;
   prevBeta = beta;
   prevGamma = gamma;
+
+  prevAcc = forwardAcc;
 }
 
 function mousePressed() {

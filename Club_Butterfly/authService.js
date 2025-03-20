@@ -373,6 +373,7 @@ function hideSavedSketches() {
 // Load Sketch from DB
 function loadSketch(sketch, key) {
   resetSketch();
+  closeSoundAreaEditorFunction();
 
   composition.id = key;
   composition.name = sketch.name;
@@ -423,6 +424,7 @@ function confirmCreateNewSketch() {
 
 function createNewSketch() {
   resetSketch();
+  closeSoundAreaEditorFunction();
   areas = [];
   composition.id = null;
   composition.name = null;
@@ -430,6 +432,7 @@ function createNewSketch() {
   const suggestedName = getSuggestedName();
   updateSketchName(suggestedName);
   disableShareButton(user);
+  isDirty = false;
 }
 
 function getSuggestedName() {
