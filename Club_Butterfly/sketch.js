@@ -31,6 +31,8 @@ let prevBeta = 0;
 let gamma = 0;
 let prevGamma = 0;
 
+let prevAcc = 0;
+
 let vehicleSize = 30;
 let othersSize = 15;
 
@@ -376,11 +378,12 @@ function getListenerPosition() {
   let betaChange = Math.abs(prevBeta - beta);
   let gammaChange = Math.abs(prevGamma - gamma);
 
-  size = sizeSlider ? sizeSlider.value : 10;
+  size = sizeSlider ? sizeSlider.value : 5;
   
   let acc = p5.Vector.fromAngle(((-alpha - 90) * PI) / 180);
 
   const forwardAcc = y * cos(beta) + z * sin(beta);
+  const avgAcc = lerp(prevAcc, forwardAcc, 0.5);
   
   if (forwardAcc > 0.5 && alphaChange < 1 && betaChange < 1) {
     acc.setMag(forwardAcc / size);
