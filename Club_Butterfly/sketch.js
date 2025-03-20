@@ -365,10 +365,9 @@ function draw() {
 
   if (wanderSpeedSlider) autoListener.maxSpeed = parseFloat(wanderSpeedSlider.value);
 
-  // let heading = state == "wander" ? autoListener.vel.heading() : -alpha - 90;
-  // p5lm.send(JSON.stringify({ x: listener.x, y: listener.y, a: heading }));
+  let heading = state == "wander" ? autoListener.vel.heading() : -alpha - 90;
 
-  // if(sendPosition) sendPosition({ x: listener.x, y: listener.y, a: heading });
+  if(sendPosition) sendPosition({ x: listener.x, y: listener.y, a: heading });
   showOthers();
   updateCursor();
 }
@@ -474,7 +473,7 @@ function doubleClicked() {
 
 function showOthers() {
   noStroke();
-  for (let l of otherListeners) {
+  for (let l of listeners) {
     push();
     translate(l.x, l.y);
     rotate(l.a + 90);

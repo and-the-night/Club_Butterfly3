@@ -1,23 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <title>Constellations no. 4</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.9/Tone.js"></script>
 
-    <!-- <script type="text/javascript">
+    <script type="text/javascript" src="/socket.io/socket.io.js"></script>
+    <script type="text/javascript">
       let leftOffset, topOffset;
       let visitorsP;
       let listeners = [];
 
       window.addEventListener("load", function () {
         visitorsP = document.getElementById("visitors");
-        // visitorsP.innerHTML = listeners.length;
+        visitorsP.innerHTML = listeners.length;
 
         leftOffset = window.innerWidth / 2 - 350;
         topOffset = window.innerHeight / 2 - 350;
 
         // Constraints - what do we want?
-        let constraints = { audio: true, video: true };
+        let constraints = { audio: false, video: false };
       });
 
       var socket = io.connect();
@@ -62,7 +64,7 @@
       let updateListenersNumber = () => {
         visitorsP.innerHTML = listeners.length;
       };
-    </script> -->
+    </script>
     <script type="text/javascript">
       editableMap = false;
       loadedComposition = false;
@@ -82,16 +84,6 @@
     </div>
     <main></main>
     <div id="content-container">
-      <!--
-      <div class="slider-container">
-        <p class="slider-heading">
-          <span>Smaller Room</span>
-          <span><b>Adjust Room Size</b></span>
-          <span>Larger Room</span>
-        </p>
-        <input type="range" class="slider" id="sizeSlider" min="1" max="50" value="30" />
-      </div>
-    -->
       <div id="desktopNameContainer">
         <p>
           You and <span id="visitors"></span> other butterflies are currently in
