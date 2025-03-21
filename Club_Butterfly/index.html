@@ -10,6 +10,7 @@
       let leftOffset, topOffset;
       let visitorsP;
       let listeners = [];
+      let sendPosition;
 
       window.addEventListener("load", function () {
         visitorsP = document.getElementById("visitors");
@@ -57,7 +58,7 @@
         updateListenersNumber();
       });
 
-      let sendPosition = function (pos) {
+      sendPosition = function (pos) {
         socket.emit("positionChange", pos);
       };
 

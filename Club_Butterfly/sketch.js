@@ -473,6 +473,7 @@ function doubleClicked() {
 
 function showOthers() {
   noStroke();
+  if(!listeners || listeners.length == 0) return;
   for (let l of listeners) {
     push();
     translate(l.x, l.y);
