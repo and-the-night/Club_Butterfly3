@@ -57,9 +57,11 @@
           return l.id == id;
         });
 
-        console.log("listener disconnected", id);
-        console.log("listeners", listeners);
-        console.log("recordedListeners", recordedListeners);
+        let listenerPath = recordedListeners[id];
+
+        if (listenerPath) {
+          localStorage.setItem(`listenerPath_${id}`, JSON.stringify(listenerPath));
+        }
         listeners.splice(listenerIndex, 1);
         updateListenersNumber();
       });
