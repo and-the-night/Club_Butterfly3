@@ -8,13 +8,16 @@
     <script type="text/javascript" src="/socket.io/socket.io.js"></script>
     <script type="text/javascript">
       let leftOffset, topOffset;
-      let visitorsP;
+      let visitorsMobile, visitorsDesktop;
       let listeners = [];
       let sendPosition;
 
       window.addEventListener("load", function () {
-        visitorsP = document.getElementById("visitors");
-        visitorsP.innerHTML = listeners.length;
+        visitorsMobile = document.getElementById("visitorsMobile");
+        visitorsDesktop = document.getElementById("visitorsDesktop");
+        visitorsMobile.innerHTML = listeners.length;
+        visitorsDesktop.innerHTML = listeners.length;
+
 
         leftOffset = window.innerWidth / 2 - 350;
         topOffset = window.innerHeight / 2 - 350;
@@ -110,8 +113,8 @@
           <div class="popup left align-top">
             Drag / Autopilot
           </div>
-          <button>Show others</button>
         </button>
+        <button id="isShowingOthersBtn">Show others</button>
         <div class="slider-container">
             <label>Adjust Speed</label>
             <input type="range" id="wanderSpeedSlider" class="slider" min="0.5" max="2" step="0.01" value="0.5" />

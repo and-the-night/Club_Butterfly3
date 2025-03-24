@@ -129,6 +129,11 @@ body.mobile button#stateBtn {
   display: none;
 }
 
+button#isShowingOthersBtn {
+  width: 140px;
+  font-size: 20px;
+}
+
 /* Texts */
 .mobile #desktop-text {
   display: none;

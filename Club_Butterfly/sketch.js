@@ -227,6 +227,18 @@ playBtn.addEventListener("click", () => {
   }
 });
 
+let isShowingOthersBtn = document.getElementById("isShowingOthersBtn");
+
+isShowingOthersBtn.addEventListener("click", () => {
+  if (isShowingOthers) {
+    isShowingOthers = false;
+    isShowingOthersBtn.innerHTML = "Show Others";
+  } else {
+    isShowingOthers = true;
+    isShowingOthersBtn.innerHTML = "Hide Others";
+  }
+});
+
 let stateBtn = document.getElementById("stateBtn");
 
 if (state != "mobile") {
@@ -542,5 +554,6 @@ function showLoading() {
 }
 
 let updateListenersNumber = () => {
-  visitorsP.innerHTML = listeners.length;
+  visitorsMobile.innerHTML = listeners.length;
+  visitorsDesktop.innerHTML = listeners.length;
 };
