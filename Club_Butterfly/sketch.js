@@ -17,6 +17,9 @@ if (
 let isPlaying = false;
 let isDirty = false;
 let isDragging = false;
+let isShowingOthers = true;
+
+let savedListeners = [];
 
 let x = 0;
 let y = 0;
@@ -265,6 +268,17 @@ function setup() {
   listener = new Draggable(width / 2, height - 60, 64, 64, listenerImg);
   autoListener = new Vehicle(width / 2, height - 60, listenerImg);
 
+  fetch("savedListeners.json")
+    .then((response) => response.json())
+    .then((data) => {
+      savedListeners = data.savedListeners;
+      let numOfSplices = Math.floor(Math.random() * (savedListeners.length / 2));
+      for (let i = 0; i < numOfSplices; i++) {
+        let spliceIndex = Math.floor(Math.random() * savedListeners.length);
+        savedListeners.splice(spliceIndex, 1);
+      }
+    })
+    .catch((error) => console.error("Error loading savedListeners:", error));
 
   position = createVector(width / 2, height - 50);
   velocity = createVector(0, 0);
@@ -273,30 +287,31 @@ function setup() {
   wanderSpeedSlider = document.getElementById("wanderSpeedSlider");
 }
 
-function newData(data, id) {
-  let d = JSON.parse(data);
+// function newData(data, id) {
+//   console.log("newData", data, id);
+//   let d = JSON.parse(data);
 
-  let listener = otherListeners.find((l) => l.id == id);
+//   let listener = otherListeners.find((l) => l.id == id);
 
-  if (!listener) {
-    otherListeners.push({ id: id, ...d });
-    console.log("user ", id, " connected");
-  } else {
-    listener.x = d.x;
-    listener.y = d.y;
-    listener.a = d.a;
-  }
-}
+//   if (!listener) {
+//     otherListeners.push({ id: id, ...d });
+//     console.log("user ", id, " connected");
+//   } else {
+//     listener.x = d.x;
+//     listener.y = d.y;
+//     listener.a = d.a;
+//   }
+// }
 
-function userDisconect(id) {
-  let listener = otherListeners.find((l) => l.id == id);
+// function userDisconect(id) {
+//   let listener = otherListeners.find((l) => l.id == id);
 
-  let index = otherListeners.indexOf(listener);
-  if (index !== -1) {
-    otherListeners.splice(index, 1);
-  }
-  console.log("user ", id, " disconnected");
-}
+//   let index = otherListeners.indexOf(listener);
+//   if (index !== -1) {
+//     otherListeners.splice(index, 1);
+//   }
+//   console.log("user ", id, " disconnected");
+// }
 
 function draw() {
   background(0, 0, 0);
@@ -368,7 +383,13 @@ function draw() {
   let heading = state == "wander" ? autoListener.vel.heading() : -alpha - 90;
 
   if(sendPosition) sendPosition({ x: listener.x, y: listener.y, a: heading });
-  showOthers();
+
+  if(editableMap && areas.length == 0) {
+    textSize(30);
+    textAlign(CENTER);
+    text("Drag & Drop audio files to begin your composition", width / 2, height / 2);
+  }
+  if(!editableMap && !loadedComposition && isShowingOthers) showOthers();
   updateCursor();
 }
 
@@ -472,8 +493,26 @@ function doubleClicked() {
 }
 
 function showOthers() {
-  noStroke();
+  // Saved Listeners
+  if(!savedListeners || savedListeners.length == 0) return;
+    for(let l of savedListeners) {
+      let currPos = l[(frameCount - 1) % l.length];
+      let listener = listeners.find((l) => {
+        return l.id == currPos.id;
+      });
+
+      if (listener) {
+        listener.x = currPos.x;
+        listener.y = currPos.y;
+        listener.a = currPos.a;
+      } else {
+        listeners.push(currPos);
+      }
+    }
+
+  // Live Listeners
   if(!listeners || listeners.length == 0) return;
+  noStroke();
   for (let l of listeners) {
     push();
     translate(l.x, l.y);
@@ -489,6 +528,8 @@ function showOthers() {
     image(visitorImg, -16, -16);
     pop();
   }
+
+  updateListenersNumber();
 }
 
 function showLoading() {
@@ -499,3 +540,7 @@ function showLoading() {
   textAlign(CENTER);
   text("Loading...", width / 2, height / 2);
 }
+
+let updateListenersNumber = () => {
+  visitorsP.innerHTML = listeners.length;
+};

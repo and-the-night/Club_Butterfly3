@@ -61,10 +61,6 @@
       sendPosition = function (pos) {
         socket.emit("positionChange", pos);
       };
-
-      let updateListenersNumber = () => {
-        visitorsP.innerHTML = listeners.length;
-      };
     </script>
     <script type="text/javascript">
       editableMap = false;
@@ -78,7 +74,7 @@
   <body>
     <div id="mobileNameContainer">
       <p>
-        You and <span id="visitors"></span> other butterflies are currently in
+        You and <span id="visitorsMobile"></span>other butterflies are currently in
       </p>
       <h1>Constellations no. 4</h1>
       <p>by <a>&theNIGHT</a></p>
@@ -87,7 +83,7 @@
     <div id="content-container">
       <div id="desktopNameContainer">
         <p>
-          You and <span id="visitors"></span> other butterflies are currently in
+          You and <span id="visitorsDesktop"></span> other butterflies are currently in
         </p>
         <h1 id="compName">Constellations no. 4</h1>
       </div>
@@ -114,6 +110,7 @@
           <div class="popup left align-top">
             Drag / Autopilot
           </div>
+          <button>Show others</button>
         </button>
         <div class="slider-container">
             <label>Adjust Speed</label>

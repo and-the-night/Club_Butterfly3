@@ -574,6 +574,15 @@ function symmetrize() {
   const radius = 350;
   const angleStep = (2 * Math.PI) / areas.length;
 
+  if(areas.length == 1) {
+    areas[0].x = centerX;
+    areas[0].y = centerY;
+    areas[0].maxRadius = radius;
+    areas[0].minRadius = 50;
+    isDirty = true;
+    return;
+  }
+
   areas.forEach((area, index) => {
     const angle = index * angleStep - Math.PI / 2;
     area.x = centerX + radius * Math.cos(angle);
