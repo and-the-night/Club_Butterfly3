@@ -57,6 +57,9 @@
           return l.id == id;
         });
 
+        console.log("listener disconnected", id);
+        console.log("listeners", listeners);
+        console.log("recordedListeners", recordedListeners);
         listeners.splice(listenerIndex, 1);
         updateListenersNumber();
       });

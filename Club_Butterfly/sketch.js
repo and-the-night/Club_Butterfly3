@@ -504,6 +504,8 @@ function doubleClicked() {
   }
 }
 
+let recordedListeners = {};
+
 function showOthers() {
   // Saved Listeners
   if(!savedListeners || savedListeners.length == 0) return;
@@ -526,6 +528,13 @@ function showOthers() {
   if(!listeners || listeners.length == 0) return;
   noStroke();
   for (let l of listeners) {
+    if(recordedListeners[l.id]) {
+      recordedListeners[l.id].push(l);
+    }
+    else {
+      recordedListeners[l.id] = [];
+      recordedListeners[l.id].push(l);
+    }
     push();
     translate(l.x, l.y);
     rotate(l.a + 90);
