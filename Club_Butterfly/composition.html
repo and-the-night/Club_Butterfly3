@@ -13,65 +13,79 @@
     <link rel="stylesheet" type="text/css" href="style.css" />
     <link rel="stylesheet" type="text/css" href="composition.css" />
     <link rel="stylesheet" type="text/css" href="onboarding.css" />
+    <link rel="stylesheet" type="text/css" href="general.css" />
 
 
     <meta charset="utf-8" />
   </head>
   <body>
+    <button id="modeBtn">
+      <img src="images/light-mode-icon.svg" class="light-mode-icon" />
+      <img src="images/dark-mode-icon.svg" class="dark-mode-icon"/>
+    </button>
     <main></main>
     <div id="content-container">
-      <h1 id="compositionName">
-        Loading...
-      </h1>
-      <p class="composition-author-container">
-        by
-        <span id="compositionAuthor">Anonymous</span>
-      </p>
-      <div id="desktop-text">
-        <ul>
-          <li>
-            Press the play button to start the experience.
-          </li>
-          <li>
-            Drag the butterfly around the screen to change the music.
-          </li>
-          <li>
-            Press the 'Autopilot' button to let the butterfly fly around the screen.
-          </li>
-        </ul>
-      </div>
-      <button id="playBtn">
-        <img src="images/play-icon.svg" class="play-icon"/>
-        <img src="images/stop-icon.svg" class="stop-icon"/>
-      </button>
-      <button id="stateBtn" class="popup-wrapper">
-        <img src="images/drag-icon-3.svg" class="drag-icon"/>
-        <img src="images/wander-icon-2.svg" class="wander-icon"/>
-        <div class="popup left align-top">
-          Drag / Autopilot
+        <div>
+        <h1 id="compositionName">
+          Loading...
+        </h1>
+        <p class="composition-author-container">
+          by
+          <span id="compositionAuthor">Anonymous</span>
+        </p>
+        <div>
+        <div id="desktop-text">
+          <p>Welcome to VennWave, an interactive musical experience. Here are a few instructions on how for experience this composition:</p>
+          <ul>
+            <li>
+              Press the play button to start the experience.
+            </li>
+            <li>
+              Drag the butterfly around the screen to change the music.
+            </li>
+            <li>
+              Press the 'Autopilot' button to let the butterfly fly around the screen.
+            </li>
+          </ul>
         </div>
-      </button>
-      <div id="mobile-text">
-        <ul>
-          <li>
-            Connect headphones or earbuds to your device.
-          </li>
-          <li>
-            Face the room you are in with space in front of you, holding your device in front of you.
-          </li>
-          <li>
-            Face the room you are in with space in front of you, holding your device in front of you.
-          </li>
-          <li>
-            Press the play button, allow detection and start walking around. You'll hear the music change as you move.
-          </li>
-          <li>
-            If the space you're in is too small, tap the screen to move around.
-          </li>
-        </ul>
+        <div class="buttons-container">
+          <button id="playBtn">
+            <img src="images/play-icon.svg" class="play-icon"/>
+            <img src="images/stop-icon.svg" class="stop-icon"/>
+          </button>
+          <button id="stateBtn" class="popup-wrapper">
+            <img src="images/drag-icon-3.svg" class="drag-icon"/>
+            <img src="images/wander-icon-2.svg" class="wander-icon"/>
+            <div class="popup top align-top">
+              Drag / Autopilot
+            </div>
+          </button>
+          <div class="slider-container">
+            <label>Adjust Speed</label>
+            <input type="range" id="wanderSpeedSlider" class="slider" min="0.5" max="2" step="0.01" value="0.5" />
+        </div>
+        <div id="mobile-text">
+          <ul>
+            <li>
+              Connect headphones or earbuds to your device.
+            </li>
+            <li>
+              Face the room you are in with space in front of you, holding your device in front of you.
+            </li>
+            <li>
+              Face the room you are in with space in front of you, holding your device in front of you.
+            </li>
+            <li>
+              Press the play button, allow detection and start walking around. You'll hear the music change as you move.
+            </li>
+            <li>
+              If the space you're in is too small, tap the screen to move around.
+            </li>
+          </ul>
+        </div>
       </div>
-      <p>Created with <a>VennWave</a></p>
     </div>
+    <p class>Created with <a>VennWave</a></p>
     <div id="onboardingMobilePopup">
       <p id="onboardingMobileWelcome">Welcome to</p>
       <h1 id="onboardingMobileTitle"></h1>
@@ -87,5 +101,6 @@
     <script src="sketch.js"></script>
     <script src="cursorService.js"></script>
     <script src="onboarding.js"></script>
+    <script src="applyMode.js"></script>
   </body>
 </html>

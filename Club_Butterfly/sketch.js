@@ -17,7 +17,7 @@ if (
 let isPlaying = false;
 let isDirty = false;
 let isDragging = false;
-let isShowingOthers = true;
+let isShowingOthers = false;
 
 let savedListeners = [];
 
@@ -227,17 +227,22 @@ playBtn.addEventListener("click", () => {
   }
 });
 
-let isShowingOthersBtn = document.getElementById("isShowingOthersBtn");
+const showOthersBtn = document.getElementById("showOthersBtn");
 
-isShowingOthersBtn.addEventListener("click", () => {
-  if (isShowingOthers) {
-    isShowingOthers = false;
-    isShowingOthersBtn.innerHTML = "Show Others";
-  } else {
-    isShowingOthers = true;
-    isShowingOthersBtn.innerHTML = "Hide Others";
-  }
-});
+if(showOthersBtn) {
+  showOthersBtn.addEventListener("click", () => {
+    if (isShowingOthers) {
+      isShowingOthers = false;
+      showOthersBtn.classList.remove("hide-others");
+      showOthersBtn.classList.add("show-others");
+    } else {
+      isShowingOthers = true;
+      showOthersBtn.classList.remove("show-others");
+      showOthersBtn.classList.add("hide-others");
+    }
+  });
+}
+
 
 let stateBtn = document.getElementById("stateBtn");
 
@@ -399,7 +404,7 @@ function draw() {
   if(editableMap && areas.length == 0) {
     textSize(30);
     textAlign(CENTER);
-    text("Drag & Drop audio files to begin your composition", width / 2, height / 2);
+    text("drag + drop audio files to begin your composition", width / 2, height / 2);
   }
   if(!editableMap && !loadedComposition && isShowingOthers) showOthers();
   updateCursor();
@@ -507,6 +512,7 @@ function doubleClicked() {
 let recordedListeners = {};
 
 function showOthers() {
+
   // Saved Listeners
   if(!savedListeners || savedListeners.length == 0) return;
     for(let l of savedListeners) {
@@ -528,13 +534,13 @@ function showOthers() {
   if(!listeners || listeners.length == 0) return;
   noStroke();
   for (let l of listeners) {
-    if(recordedListeners[l.id]) {
-      recordedListeners[l.id].push(l);
+
+    if(!recordedListeners[l.id]) {
+      recordedListeners[l.id] = [];   
     }
-    else {
-      recordedListeners[l.id] = [];
-      recordedListeners[l.id].push(l);
-    }
+
+    recordedListeners[l.id].push({...l});
+
     push();
     translate(l.x, l.y);
     rotate(l.a + 90);

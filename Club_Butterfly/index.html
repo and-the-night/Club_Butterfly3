@@ -61,6 +61,7 @@
 
         if (listenerPath) {
           localStorage.setItem(`listenerPath_${id}`, JSON.stringify(listenerPath));
+          console.log(`listenerPath_${id}`, listenerPath);
         }
         listeners.splice(listenerIndex, 1);
         updateListenersNumber();
@@ -77,9 +78,14 @@
 
     <link rel="stylesheet" type="text/css" href="style.css" />
     <link rel="stylesheet" type="text/css" href="onboarding.css" />
+    <link rel="stylesheet" type="text/css" href="general.css" />
     <meta charset="utf-8" />
   </head>
   <body>
+    <button id="modeBtn">
+      <img src="images/light-mode-icon.svg" class="light-mode-icon" />
+      <img src="images/dark-mode-icon.svg" class="dark-mode-icon"/>
+    </button>
     <div id="mobileNameContainer">
       <p>
         You and <span id="visitorsMobile"></span>other butterflies are currently in
@@ -112,14 +118,20 @@
           <img src="images/play-icon.svg" class="play-icon"/>
           <img src="images/stop-icon.svg" class="stop-icon"/>
         </button>
+        <button id="showOthersBtn" class="popup-wrapper show-others">
+          <img src="images/show-users-icon.svg" class="show-users-icon"/>
+          <img src="images/hide-users-icon.svg" class="hide-users-icon"/>
+          <div class="popup top">
+            Show / Hide other visitors
+          </div>
+        </button>
         <button id="stateBtn" class="popup-wrapper">
           <img src="images/drag-icon-3.svg" class="drag-icon"/>
           <img src="images/wander-icon-2.svg" class="wander-icon"/>
-          <div class="popup left align-top">
+          <div class="popup top">
             Drag / Autopilot
           </div>
         </button>
-        <button id="isShowingOthersBtn">Show others</button>
         <div class="slider-container">
             <label>Adjust Speed</label>
             <input type="range" id="wanderSpeedSlider" class="slider" min="0.5" max="2" step="0.01" value="0.5" />
@@ -153,5 +165,6 @@
     <script src="sketch.js"></script>
     <script src="cursorService.js"></script>
     <script src="onboarding.js"></script>
+    <script src="applyMode.js"></script>
   </body>
 </html>

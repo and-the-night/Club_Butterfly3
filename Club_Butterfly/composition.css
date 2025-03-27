@@ -20,8 +20,14 @@ button {
 }
 
 /* User Composition Style */
+#content-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
 .desktop #compositionName {
-    margin-top: calc(50vh - 400px);
+    padding-top: calc(50vh - 400px);
 }
 
 .mobile #compositionName {
@@ -35,4 +41,25 @@ button {
 .mobile li {
     font-family: "Jost", sans-serif;
     font-size: 30px;
+}
+
+.desktop p {
+    font-size: 20px;
+    margin: 10px 0;    
+}
+
+.desktop ul {
+    padding-left: 18px;
+    margin-bottom: 20px;
+}
+
+.desktop li {
+    font-family: "Jost", sans-serif;
+    font-size: 20px;
+    font-weight: 200;
+}
+
+.buttons-container {
+    display: flex;
+    align-items: center;
 }

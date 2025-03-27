@@ -563,12 +563,13 @@ function enableShareButton() {
 }
 
 // Symmetrize
-const symmetrizeButton = document.getElementById("symmetrize");
+const symmetrizeButton = document.getElementById("symmetrizeButton");
 symmetrizeButton.addEventListener("click", function () {
   symmetrize();
 });
 
 function symmetrize() {
+  console.log("symmetrizing");
   const centerX = canvasWidth / 2;
   const centerY = canvasHeight / 2;
   const radius = 350;
@@ -593,6 +594,7 @@ function symmetrize() {
 
   isDirty = true;
 }
+
 
 // Info
 document.getElementById("info").addEventListener("click", function (e) {

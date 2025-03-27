@@ -3,18 +3,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
 
-html,
-body {
-  margin: 0;
-  padding: 0;
-  background: white;
-  color: black;
-  font-family: "Jost", sans-serif;
-  font-optical-sizing: auto;
-  font-weight: 300;
-  font-style: normal;
-  font-size: 20px;
-}
+
 
 body {
   display: flex;
@@ -25,6 +14,7 @@ canvas {
   display: block;
   border: 3px solid white;
 }
+
 
 #mainContainer {
   display: table;
@@ -64,13 +54,19 @@ button {
   font-size: 20px;
   font-family: "Jost", sans-serif;
   font-weight: 200;
-  color: black;
   padding: 0;
-  margin: 6px 20px 0 0;
-  background: white;
+  background: none;
   border: none;
   transition: background 100ms;
   cursor: pointer;
+}
+
+.light-mode button {
+  color: black;
+}
+
+.dark-mode button {
+  color: white;
 }
 
 button:not([disabled]):hover {
@@ -83,15 +79,8 @@ button[disabled] {
 }
 
 button[disabled]:hover:after {
-  /* position: absolute; */
   font-size: 14px;
-  color: black;
-  /* top: 0; */
-  /* left: calc(100% + 20px); */
-  /* width: 205px; */
-  /* padding: 4px; */
 } 
-
 
 button[disabled]:not(.disabled-not-saved):hover:after {
   content: "(Sign in to use this feature)";
@@ -124,18 +113,31 @@ body.mobile #stateButton {
   height: 100vh;
   padding: 20px;
   box-sizing: border-box;
-  color: black;
-  background: white;
+}
+
+.light-mode #leftBar {
   border-right: 1px solid black;
+}
+
+.dark-mode #leftBar {
+  border-right: 1px solid white;
 }
 
 #leftBar p {
   margin: 0;
 }
 
+/* Left Bar Header */
+#leftBarHeader {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
 /* User Login */
 #loginContainer {
-  margin-bottom: 52px;
+  /* margin-bottom: 52px; */
 }
 
 /* User Info */
@@ -147,6 +149,7 @@ body.mobile #stateButton {
 #sketchNameContainer {
   display: flex;
   flex-direction: row;
+  align-items: center;
   margin: 40px 0 20px;
 }
 
@@ -215,7 +218,6 @@ body.mobile #stateButton {
 }
 
 #leftBar a {
-  color: black;
   text-decoration: none;
   cursor: pointer;
   transition: color 100ms;
@@ -237,13 +239,25 @@ body.mobile #stateButton {
   height: 40px;
   border-radius: 50%;
   margin: 8px 0;
-  border: 1px solid black;
   font-weight: bold;
 }
 
-#leftBar #info:hover {
+.light-mode #leftBar #info {
+  border: 1px solid black;
+}
+
+.dark-mode #leftBar #info {
+  border: 1px solid white;
+}
+
+.light-mode #leftBar #info:hover {
   background: black;
   color: white;
+}
+
+.dark-mode #leftBar #info:hover {
+  background: white;
+  color: black;
 }
 
 /* Saved Sketches */
@@ -403,6 +417,39 @@ body.mobile #stateButton {
   bottom: 9px;
 }
 
+/* Popup opens Right */
+.popup.right {
+  right: calc(100% + 12px);
+}
+
+.popup.right.align-center {
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.popup.right:before {
+  content: "";
+  position: absolute;
+  right: -20px;
+  border: 10px solid transparent;
+  border-left-color: black;
+}
+
+.popup.right:after {
+  content: "";
+  position: absolute;
+  right: -18px;
+  border: 9px solid transparent;
+  border-left-color: white;
+}
+
+.popup.right.align-center:before {
+  top: calc(50% - 10px);
+}
+.popup.right.align-center:after {
+  top: calc(50% - 9px);
+}
+
 /* Open Sketch Popup */
 #openSketchPopup {
   width: 320px;
@@ -467,7 +514,21 @@ body.mobile #stateButton {
 /* Info Popup */
 #infoPopup {
   width: 700px;
-  padding: 0 10px 0 0;
+  padding: 10px;
+}
+
+#infoPopup p b {
+  font-weight: 400;
+}
+
+#infoPopup ul {
+  padding-left: 24px;
+  margin: 0;
+}
+
+#infoPopup li {
+  font-size: 18px;
+  margin: 8px 0;
 }
 
 #infoContainer {
@@ -502,16 +563,28 @@ body.mobile #stateButton {
   height: 50px;
   margin: 20px 20px 0 0;
   padding: 4px;
-  background: white;
-  border: 1px solid black;
   cursor: pointer;
   transition: all 0.2s ease;
+}
+
+.light-mode #transportButtonsContainer button {
+  background: white;
+  border: 1px solid black;
+}
+
+.dark-mode #transportButtonsContainer button {
+  background: black;
+  border: 1px solid white;
 }
 
 #transportButtonsContainer button img {
   width: 100%;
   height: 100%;
   transition: all 0.2s ease;
+}
+
+.dark-mode #transportButtonsContainer button img {
+  filter: invert(1);
 }
 
 .play .stop-icon,
@@ -521,13 +594,22 @@ body.mobile #stateButton {
   display: none;
 }
 
-#transportButtonsContainer button:hover {
+.light-mode #transportButtonsContainer button:hover {
   background: black;
   color: white;
 }
 
-#transportButtonsContainer button:hover img {
+.dark-mode #transportButtonsContainer button:hover {
+  background: white;
+  color: black;
+}
+
+.light-mode #transportButtonsContainer button:hover img {
   filter: invert(1);
+}
+
+.dark-mode #transportButtonsContainer button:hover img {
+  filter: invert(0);
 }
 
 /* Blocker */
@@ -778,4 +860,121 @@ body.mobile #stateButton {
 .confirmation-popup .confirmation-buttons button:hover {
   background: black;
   color: white;
+}
+
+/* Symmetrize Button */
+#symmetrizeButton {
+  position: absolute;
+  left: -50px;
+  top: 0;
+  width: 50px;
+  height: 50px;
+  margin: 0;
+  border: 1px solid;
+  border-right: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.light-mode #symmetrizeButton {
+  background: white;
+  border-color: black;
+  top: 3px;
+  left: -47px;
+}
+
+.dark-mode #symmetrizeButton {
+  background: black;
+  border-color: white;
+}
+
+#symmetrizeButton img {
+  width: 100%;
+  height: 100%;
+}
+
+.light-mode #symmetrizeButton img {
+  filter: invert(0);
+}
+
+.dark-mode #symmetrizeButton img {
+  filter: invert(1);
+}
+
+.light-mode #symmetrizeButton:hover {
+  background: black;
+  color: white;
+}
+
+.dark-mode #symmetrizeButton:hover {
+  background: white;
+  color: black;
+}
+
+.light-mode #symmetrizeButton:hover img {
+  filter: invert(1);
+}
+
+.dark-mode #symmetrizeButton:hover img {
+  filter: invert(0);
+}
+
+.user-controls {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin: 20px 0;
+}
+
+.slider-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin: 15px 0;
+}
+
+.drag .slider-container {
+  display: none;
+}
+
+.slider-container label {
+  font-size: 16px;
+  font-family: "Jost", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 600;
+  font-style: normal;
+}
+
+#wanderSpeedSlider {
+  -webkit-appearance: none;
+  width: 200px;
+  height: 5px;
+  margin-left: 8px;
+  background: #ddd;
+  outline: none;
+  opacity: 0.7;
+  transition: opacity 0.2s;
+}
+
+#wanderSpeedSlider:hover {
+  opacity: 1;
+}
+
+#wanderSpeedSlider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 25px;
+  height: 25px;
+  background: black;
+  cursor: pointer;
+  border-radius: 50%;
+}
+
+#wanderSpeedSlider::-moz-range-thumb {
+  width: 25px;
+  height: 25px;
+  background: #4CAF50;
+  cursor: pointer;
+  border-radius: 50%;
 }

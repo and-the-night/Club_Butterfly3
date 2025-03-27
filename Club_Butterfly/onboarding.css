@@ -13,6 +13,15 @@
   align-items: center;
 }
 
+.light-mode #onboardingMobilePopup {
+  background-color: white;
+  color: black;
+}
+.dark-mode #onboardingMobilePopup {
+  background-color: black;
+  color: white;
+}
+
 #onboardingMobilePopup p {
     font-size: 40px;
     text-align: center;
