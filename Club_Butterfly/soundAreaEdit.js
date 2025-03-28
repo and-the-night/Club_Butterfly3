@@ -58,11 +58,10 @@ soundAreaLoop.addEventListener("change", function(event) {
 soundAreaDelete.addEventListener("click", function(event) {
     console.log("Delete sound area");
     if (selectedSoundArea) {
-        let confirmDelete = confirm("Are you sure you want to delete this sound area?");
-        if (confirmDelete) {
-          selectedSoundArea.player.dispose();
-          areas.splice(selectedSoundArea.i, 1);
-        }
+        createConfirmationPopup("Are you sure you want to delete this sound area?", "Delete", () => {
+            selectedSoundArea.player.dispose();
+            areas.splice(selectedSoundArea.i, 1);
+        });
     }
 });
 
@@ -126,3 +125,43 @@ function soundAreaEdit(soundArea, i) {
     soundAreaMaxRadius.value = soundArea.maxRadius;
     soundAreaLoop.checked = soundArea.isLooping;
 }
+
+// Confirmations
+function createConfirmationPopup(message, confirmText, onConfirm) {
+    const blocker = document.createElement("div");
+    blocker.classList.add("message-blocker");
+    blocker.addEventListener("click", (e) => {
+      e.stopPropagation();
+    });
+    const popup = document.createElement("div");
+    popup.classList.add("confirmation-popup");
+  
+    const messageDiv = document.createElement("div");
+    messageDiv.classList.add("confirmation-message");
+    messageDiv.innerText = message;
+    popup.appendChild(messageDiv);
+  
+    const buttonsDiv = document.createElement("div");
+    buttonsDiv.classList.add("confirmation-buttons");
+  
+    const confirmButton = document.createElement("button");
+    confirmButton.classList.add("confirm-button");
+    confirmButton.innerText = confirmText || "OK";
+    confirmButton.addEventListener("click", () => {
+      onConfirm();
+      document.body.removeChild(blocker);
+    });
+    buttonsDiv.appendChild(confirmButton);
+  
+    const cancelButton = document.createElement("button");
+    cancelButton.classList.add("cancel-button");
+    cancelButton.innerText = "Cancel";
+    cancelButton.addEventListener("click", () => {
+      document.body.removeChild(blocker);
+    });
+    buttonsDiv.appendChild(cancelButton);
+  
+    popup.appendChild(buttonsDiv);
+    blocker.appendChild(popup);
+    document.body.appendChild(blocker);
+  }
