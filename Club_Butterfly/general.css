@@ -55,6 +55,13 @@ button img {
   z-index: 1;
 }
 
+.mobile #modeBtn {
+    min-width: 50px;
+    min-height: 50px;
+    width: 100px;
+    padding: 10px;
+}
+
 .light-mode #modeBtn {
     border: 1px solid black;
 }

@@ -435,9 +435,6 @@ function getListenerPosition() {
     fill('red');
   }
 
-  textSize(30);
-  textAlign(CENTER);
-  text("avgAcc" + avgAcc.toFixed(2), width / 2, height / 2);
   position.add(velocity); 
 
   if (position.y < 0) position.y = 0;
