@@ -304,32 +304,6 @@ function setup() {
   wanderSpeedSlider = document.getElementById("wanderSpeedSlider");
 }
 
-// function newData(data, id) {
-//   console.log("newData", data, id);
-//   let d = JSON.parse(data);
-
-//   let listener = otherListeners.find((l) => l.id == id);
-
-//   if (!listener) {
-//     otherListeners.push({ id: id, ...d });
-//     console.log("user ", id, " connected");
-//   } else {
-//     listener.x = d.x;
-//     listener.y = d.y;
-//     listener.a = d.a;
-//   }
-// }
-
-// function userDisconect(id) {
-//   let listener = otherListeners.find((l) => l.id == id);
-
-//   let index = otherListeners.indexOf(listener);
-//   if (index !== -1) {
-//     otherListeners.splice(index, 1);
-//   }
-//   console.log("user ", id, " disconnected");
-// }
-
 function draw() {
   background(0, 0, 0);
 
@@ -506,10 +480,7 @@ function doubleClicked() {
   }
 }
 
-let recordedListeners = {};
-
 function showOthers() {
-
   // Saved Listeners
   if(!savedListeners || savedListeners.length == 0) return;
     for(let l of savedListeners) {
@@ -531,12 +502,6 @@ function showOthers() {
   if(!listeners || listeners.length == 0) return;
   noStroke();
   for (let l of listeners) {
-
-    if(!recordedListeners[l.id]) {
-      recordedListeners[l.id] = [];   
-    }
-
-    recordedListeners[l.id].push({...l});
 
     push();
     translate(l.x, l.y);

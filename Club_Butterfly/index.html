@@ -57,12 +57,6 @@
           return l.id == id;
         });
 
-        let listenerPath = recordedListeners[id];
-
-        if (listenerPath) {
-          localStorage.setItem(`listenerPath_${id}`, JSON.stringify(listenerPath));
-          console.log(`listenerPath_${id}`, listenerPath);
-        }
         listeners.splice(listenerIndex, 1);
         updateListenersNumber();
       });
