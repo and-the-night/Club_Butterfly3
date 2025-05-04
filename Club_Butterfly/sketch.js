@@ -130,30 +130,8 @@ function preload() {
   nonLoopingImage = loadImage("images/arrow.png");
   
   if (!editableMap && !loadedComposition) {
-    // const urlParams = new URLSearchParams(window.location.search);
-    // const composition = urlParams.get("composition");
-    // const compName = compsData[composition].name;
-    // document.getElementById("compName").innerHTML = compName;
-    
-    // const compAreas = compsData[composition].areas;
-
-    // for (let i = 0; i < compAreas.length; i++) {
-    //   const area = compAreas[i];
-      
-    //   areas[i] = new soundArea(
-    //     area.x,
-    //     area.y,
-    //     area.h,
-    //     area.minRadius,
-    //     area.maxRadius,
-    //     area.filePath,
-    //     false
-    //   );
-    // }
-
-
     let minRadius = canvasWidth / 16; // 50
-    let maxRadius = canvasWidth / 2; // 400
+    let maxRadius = 420;
 
     areas[0] = new soundArea(
       canvasWidth / 2,
@@ -285,17 +263,26 @@ function setup() {
   listener = new Draggable(width / 2, height - 60, 64, 64, listenerImg);
   autoListener = new Vehicle(width / 2, height - 60, listenerImg);
 
-  fetch("savedListeners.json")
-    .then((response) => response.json())
-    .then((data) => {
-      savedListeners = data.savedListeners;
-      let numOfSplices = Math.floor(Math.random() * (savedListeners.length / 2));
-      for (let i = 0; i < numOfSplices; i++) {
-        let spliceIndex = Math.floor(Math.random() * savedListeners.length);
-        savedListeners.splice(spliceIndex, 1);
-      }
-    })
-    .catch((error) => console.error("Error loading savedListeners:", error));
+  if (!editableMap && !loadedComposition) {
+    fetch("savedListeners.json")
+      .then((response) => response.json())
+      .then((data) => {
+        savedListeners = data.savedListeners;
+        let numOfSplices = Math.floor(Math.random() * (savedListeners.length / 2));
+        for (let i = 0; i < numOfSplices; i++) {
+          let spliceIndex = Math.floor(Math.random() * savedListeners.length);
+          savedListeners.splice(spliceIndex, 1);
+        }
+        
+        for(let i = 0; i < savedListeners.length; i++) {
+          let l = savedListeners[i];
+          listeners.push(l[0]);
+        }
+
+        updateListenersNumber();
+      })
+      .catch((error) => console.error("Error loading savedListeners:", error));
+  }
 
   position = createVector(width / 2, height - 50);
   velocity = createVector(0, 0);
@@ -342,7 +329,12 @@ function draw() {
     }
   }
 
-  if (!isLoaded) showLoading();
+  if (!isLoaded) {
+    showLoading();
+    playBtn.disabled = true;
+  } else {
+    playBtn.disabled = false;
+  }
 
   if (state == "mobile") {
     getListenerPosition();
@@ -505,7 +497,7 @@ function showOthers() {
 
     push();
     translate(l.x, l.y);
-    rotate(l.a + 90);
+    rotate(l.a);
     triangle(
       -othersSize / 2,
       -othersSize / 4,
@@ -514,6 +506,7 @@ function showOthers() {
       othersSize,
       0
     );
+    rotate(90);
     image(visitorImg, -16, -16);
     pop();
   }

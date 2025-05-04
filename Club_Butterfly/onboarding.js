@@ -11,8 +11,8 @@ function updatePopup() {
         // Mobile Onboarding
         switch (onboardingStep) {
             case 0:
-                onboardingMobileTitle.textContent = "Club Butterfly!";
-                onboardingMobileText.textContent = "An immersive audio experience you can enjoy anywhere.";
+                onboardingMobileTitle.textContent = loadedComposition ? "vennWave" : "Constellation no. 4";
+                onboardingMobileText.textContent = loadedComposition ? "An interactive, immersive and non-linear music platform." : "An interactive, immersive and non-linear musical experience.";
             break;
             case 1:
                 onboardingMobileWelcome.style.display = "none";
@@ -21,15 +21,15 @@ function updatePopup() {
             break;
             case 2:
                 onboardingMobileTitle.textContent = "Step 2/4";
-                onboardingMobileText.textContent = "Now face the room you are in with space in front of you, holding your device in front of you.";
+                onboardingMobileText.textContent = "Stand facing the space you're in, holding your device in front of you.";
             break;
             case 3:
                 onboardingMobileTitle.textContent = "Step 3/4";
-                onboardingMobileText.textContent = "Press the play button, allow detection and start walking around the room.";
+                onboardingMobileText.textContent = "Press the play button, allow motion detection and start walking around the room.";
                 break;
             case 4:
                 onboardingMobileTitle.textContent = "Step 4/4";
-                onboardingMobileText.textContent = " If the space you're in is too small, tap the screen to move around.";
+                onboardingMobileText.textContent = "If the space you're in is too small, tap the screen to teleport to another position.";
                 onboardingMobileNextButton.textContent = "Close";
                 break;
             case 5:
@@ -41,8 +41,8 @@ function updatePopup() {
         // Desktop Onboarding
         switch (onboardingStep) {
             case 0:
-                onboardingMobileTitle.textContent = loadedComposition ? "VennWave" : "Constellations no. 4";
-                onboardingMobileText.textContent = loadedComposition ? "An immersive, spatial and non-linear music platform." : "An immersive, spatial and non-linear musical experience.";
+                onboardingMobileTitle.textContent = loadedComposition ? "vennWave" : "Constellation no. 4";
+                onboardingMobileText.textContent = loadedComposition ? "An interactive, immersive, and non-linear music platform." : "An interactive, immersive, and non-linear musical experience.";
             break;
             case 1:
                 onboardingMobileWelcome.style.display = "none";
@@ -51,11 +51,11 @@ function updatePopup() {
             break;
             case 2:
                 onboardingMobileTitle.textContent = "Step 2/3";
-                onboardingMobileText.textContent = "Drag the butterfly around the screen to change the music.";
+                onboardingMobileText.textContent = "Drag the butterfly around the screen to manipulate the music.";
             break;
             case 3:
                 onboardingMobileTitle.textContent = "Step 3/3";
-                onboardingMobileText.textContent = "Press the 'Autopilot' button to let the butterfly fly around the screen.";
+                onboardingMobileText.textContent = "Press the 'Autopilot' button to let the butterfly move on its own.";
                 onboardingMobileNextButton.textContent = "Close";
                 break;
             case 4:

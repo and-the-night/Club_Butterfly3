@@ -436,10 +436,10 @@ function createNewSketch() {
 }
 
 function getSuggestedName() {
-  const randomInt1 = Math.floor(Math.random() * 88);
+  const randomInt1 = Math.floor(Math.random() * 100);
   const randomInt2 = Math.floor(Math.random() * 100);
 
-  return constellationAdjectives[randomInt2] + " " + constellations[randomInt1];
+  return randomAdjectives[randomInt2] + " " + randomNouns[randomInt1];
 }
 
 function updateSketchName(newSketchName) {
