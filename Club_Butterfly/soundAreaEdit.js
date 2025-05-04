@@ -20,7 +20,6 @@ soundAreaNameInput.addEventListener("keypress", function(event) {
     if (event.key === "Enter") {
         event.preventDefault();
         // Add your logic here for what should happen when Enter is pressed
-        console.log("Enter key pressed in soundAreaNameInput");
         soundAreaNameInput.blur();
     }
 });
@@ -56,7 +55,6 @@ soundAreaLoop.addEventListener("change", function(event) {
 });
 
 soundAreaDelete.addEventListener("click", function(event) {
-    console.log("Delete sound area");
     if (selectedSoundArea) {
         createConfirmationPopup("Are you sure you want to delete this sound area?", "Delete", () => {
             selectedSoundArea.player.dispose();

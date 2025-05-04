@@ -43,7 +43,6 @@ if (editableMap) {
     }
 
     function handleDrop(e) {
-      console.log("Drop event:", e);
       const dt = e.dataTransfer;
       const files = dt.files;
 
@@ -54,7 +53,6 @@ if (editableMap) {
       [...files].forEach((file) => {
         if (file.type.startsWith("audio/")) {
           // Process the audio file
-          console.log("Audio file dropped:", file);
 
           const dropAreaRect = dropArea.getBoundingClientRect();
           const dropAreaX = dropAreaRect.left + window.scrollX;
@@ -68,14 +66,11 @@ if (editableMap) {
 
           const blob = new Blob([file], { type: file.type });
           const url = URL.createObjectURL(blob);
-          console.log("Blob URL:", url);
 
           isDirty = true;
 
           hueIndex = areas.length % 6;
           const hue = hues[hueIndex];
-
-          console.log("file", file);
 
           const sound = new soundArea(
             x,
@@ -95,7 +90,6 @@ if (editableMap) {
             stopAudio();
         } else {
           showMessage("Not an audio file");
-          console.log("Not an audio file:", file);
         }
       });
     }

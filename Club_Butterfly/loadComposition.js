@@ -82,10 +82,8 @@ if (queryParams.user && queryParams.comp) {
 }
 
 function loadComposition(uid, compId) {
-  console.log("Loading composition at: " + Date.now());
   const compRef = ref(db, appName + "/" + uid + "/" + compId + "/");
   onValue(compRef, (snapshot) => {
-    console.log("Snapshot received at: " + Date.now());
     const comp = snapshot.val();
 
     const compName = document.getElementById("compositionName");
@@ -95,7 +93,6 @@ function loadComposition(uid, compId) {
     compAuthor.innerHTML = comp.author;
 
     areas = [];
-    console.log("compareas:", comp.areas);
     comp.areas[0].forEach((areaData) => {
       areas.push(
         new soundArea(

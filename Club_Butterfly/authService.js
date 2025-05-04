@@ -69,14 +69,12 @@ onAuthStateChanged(auth, (newUser) => {
     // User is signed in, see docs for a list of available properties
     // https://firebase.google.com/docs/reference/js/auth.user
     uid = user.uid;
-    console.log("userino is signed in", user);
     showLogOutButton(user);
     getSavedSketches();
     enableUserButtons();
     disableShareButton(user)
   } else {
     user = undefined;
-    console.log("userino is signed out");
     showLoginButtons();
     hideSavedSketches();
     disableUserButtons();
@@ -98,7 +96,6 @@ function showLogOutButton(user) {
   }
 
   userPhoto.addEventListener("click", function (e) {
-    console.log("click photo");
     e.stopPropagation();
     const logOutPopup = document.getElementById("logOutPopup");
     if (logOutPopup.classList.contains("show")) {
@@ -110,16 +107,7 @@ function showLogOutButton(user) {
   });
 
   document.getElementById("logOut").addEventListener("click", function () {
-    console.log("signing out");
     signOut(auth)
-      .then(() => {
-        // Sign-out successful.
-        console.log("signed out");
-      })
-      .catch((error) => {
-        // An error happened.
-        console.log("error signing out");
-      });
   });
 
   const loginContainer = document.getElementById("loginContainer");
@@ -192,9 +180,7 @@ saveButton.addEventListener("click", function () {
         const fileRef = storageRef(storage, folder + file.name);
   
         await uploadBytes(fileRef, file).then((snapshot) => {
-          console.log("Uploaded a file!");
           return getDownloadURL(snapshot.ref).then((downloadURL) => {
-            console.log("File available at", downloadURL);
             area.filePath = downloadURL;
           });
         })
@@ -223,7 +209,6 @@ saveButton.addEventListener("click", function () {
       areas: areasData,
     };
     if(composition.id) { 
-      console.log("updating existing sketch");
       const folder = appName + "/" + uid + "/" + composition.id + "/";
       const dbRef = ref(db, folder);
 
@@ -232,8 +217,6 @@ saveButton.addEventListener("click", function () {
         // showMessage("Composition saved successfully!");
       });
     } else {
-      console.log("saving new sketch");
-
       try {
         const newRef = push(dbRef, newComposition);
         composition.id = newRef.key;
@@ -273,7 +256,6 @@ function getSavedSketches() {
   const sketchesRef = ref(db, appName + "/" + uid + "/");
   onValue(sketchesRef, (snapshot) => {
     const sketches = snapshot.val();
-    console.log("sketches", sketches);
     if (sketches) {
       showSavedSketches(sketches);
     } else {
@@ -341,7 +323,6 @@ function showSavedSketches(sketches) {
         function() {
           const sketchRef = ref(db, appName + "/" + uid + "/" + key);
           set(sketchRef, null).then(() => {
-            console.log("Sketch deleted");
             getSavedSketches();
             createNewSketch();
             closePopups();
@@ -554,9 +535,7 @@ function enableShareButton() {
 
     showMessage("Link copied to clipboard");
     
-    navigator.clipboard.writeText(shareUrl).then(function () {
-      console.log("Copied to clipboard");
-    });
+    navigator.clipboard.writeText(shareUrl);
   });
 
   document.getElementById("qrCode").src = `https://quickchart.io/qr?text=${shareUrl}&size=200`;
@@ -569,7 +548,6 @@ symmetrizeButton.addEventListener("click", function () {
 });
 
 function symmetrize() {
-  console.log("symmetrizing");
   const centerX = canvasWidth / 2;
   const centerY = canvasHeight / 2;
   const radius = 350;
@@ -620,21 +598,6 @@ function closePopups() {
       popup.classList.remove("show");
     }
   }
-}
-
-// Blocker 
-// checkScreenWidth();
-function showBlocker(blockerClass) {
-  console.log("showing blocker");
-  const blocker = document.getElementById('blocker');
-  blocker.style.display = "block";
-  blocker.classList.add(blockerClass);
-}
-
-function hideBlocker() {
-  console.log("hiding blocker");
-  const blocker = document.getElementById('blocker');
-  blocker.style.display = "none";
 }
 
 // Confirmations

@@ -45,8 +45,6 @@ let visitorImg;
 function motion() {
   //iOS
   if (typeof DeviceMotionEvent.requestPermission === "function") {
-    console.log("iOS");
-
     DeviceMotionEvent.requestPermission()
       .then((response) => {
         if (response == "granted") {
@@ -56,7 +54,6 @@ function motion() {
       .catch(console.error);
   } else {
     //not iOS
-    console.log("Not iOS");
     motionListener();
   }
 }
@@ -73,8 +70,6 @@ function motionListener() {
 function orientation() {
   //iOS
   if (typeof DeviceOrientationEvent.requestPermission === "function") {
-    console.log("iOS");
-
     DeviceOrientationEvent.requestPermission()
       .then((response) => {
         if (response == "granted") {
@@ -84,7 +79,6 @@ function orientation() {
       .catch(console.error);
   } else {
     //not iOS
-    console.log("Not iOS");
     orientationListener();
   }
 }

@@ -41,12 +41,10 @@
         });
 
         if (listener) {
-          // console.log("listener already exists!");
           listener.x = data.x;
           listener.y = data.y;
           listener.a = data.a;
         } else {
-          console.log("new listener");
           listeners.push(data);
           updateListenersNumber();
         }
