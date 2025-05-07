@@ -41,7 +41,15 @@ function updatePopup() {
         // Desktop Onboarding
         switch (onboardingStep) {
             case 0:
-                onboardingMobileTitle.textContent = loadedComposition ? "vennWave" : "Constellation no. 4";
+                if(loadedComposition) {
+                    const vennwaveLogo = document.createElement("img");
+                    vennwaveLogo.src = "images/vennwave-logo.svg";
+                    vennwaveLogo.style.width = "300px"; 
+                    onboardingMobileTitle.appendChild(vennwaveLogo);
+
+                } else {
+                    onboardingMobileTitle.textContent = "Constellation no. 4";
+                }
                 onboardingMobileText.textContent = loadedComposition ? "An interactive, immersive, and non-linear music platform." : "An interactive, immersive, and non-linear musical experience.";
             break;
             case 1:

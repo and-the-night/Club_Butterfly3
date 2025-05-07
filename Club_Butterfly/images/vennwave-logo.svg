@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 158.45 83.33">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #fff;
+      }
+
+      .cls-1, .cls-2 {
+        font-family: AnnaiMN-Regular, 'Annai MN';
+        font-size: 30px;
+      }
+
+      .cls-2, .cls-3 {
+        fill: #231f20;
+      }
+
+      .cls-3 {
+        stroke: #231f20;
+        stroke-miterlimit: 10;
+      }
+    </style>
+  </defs>
+  <circle class="cls-3" cx="41.67" cy="41.67" r="41.17"/>
+  <text class="cls-1" transform="translate(7.1 48.29)"><tspan x="0" y="0">venn</tspan></text>
+  <text class="cls-2" transform="translate(84.36 48.29)"><tspan x="0" y="0">wave</tspan></text>
+</svg>

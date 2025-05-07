@@ -39,7 +39,7 @@
 #onboardingMobileWelcome {
   position: absolute;
   top: 40%;
-  transform: translateY(-170px);
+  transform: translateY(-240px);
 }
 
 #onboardingMobileTitle {
@@ -51,7 +51,6 @@
 #onboardingMobileText {
   position: absolute;
   top: 40%;
-  transform: translateY(20px);
 }
 
 #onboardingMobileNextButton {

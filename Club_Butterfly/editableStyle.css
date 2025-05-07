@@ -47,6 +47,16 @@ body.mobile p {
   font-weight: 400;
 }
 
+.light-mode a {
+  color: black;
+  text-decoration: underline;
+}
+
+.dark-mode a {
+  color: white;
+  text-decoration: underline;
+}
+
 /* Buttons */
 button {
   position: relative;
@@ -135,10 +145,12 @@ body.mobile #stateButton {
   align-items: center;
 }
 
-/* User Login */
-#loginContainer {
-  /* margin-bottom: 52px; */
+#leftBarHeader a {
+  text-decoration: none;
 }
+
+/* User Login */
+
 
 /* User Info */
 #userContainer p {
@@ -218,7 +230,6 @@ body.mobile #stateButton {
 }
 
 #leftBar a {
-  text-decoration: none;
   cursor: pointer;
   transition: color 100ms;
   z-index: 1;
@@ -977,4 +988,19 @@ body.mobile #stateButton {
   background: #4CAF50;
   cursor: pointer;
   border-radius: 50%;
+}
+
+.logo-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.logo-container img {
+  width: 100px;
+  margin: 4px 4px 0 0;
+}
+
+.logo-container a {
+  margin-left: 4px;
 }
