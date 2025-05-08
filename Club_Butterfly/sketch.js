@@ -133,7 +133,7 @@ function preload() {
       0,
       minRadius,
       maxRadius,
-      "audio/constellation/CH1B.mp3",
+      "audio/constellation/CH1.mp3",
       false
     );
     areas[1] = new soundArea(
@@ -142,7 +142,7 @@ function preload() {
       25,
       minRadius,
       maxRadius,
-      "audio/constellation/CH2B.mp3",
+      "audio/constellation/CH2.mp3",
       false
     );
     areas[2] = new soundArea(
@@ -151,7 +151,7 @@ function preload() {
       50,
       minRadius,
       maxRadius,
-      "audio/constellation/CH3B.mp3",
+      "audio/constellation/CH3.mp3",
       false
     );
     areas[3] = new soundArea(
@@ -160,7 +160,7 @@ function preload() {
       75,
       minRadius,
       maxRadius,
-      "audio/constellation/CH4B.mp3",
+      "audio/constellation/CH4.mp3",
       false
     );
     areas[4] = new soundArea(
@@ -169,7 +169,7 @@ function preload() {
       0,
       0,
       0,
-      "audio/constellation/CH-ALLB.mp3",
+      "audio/constellation/CHAll.mp3",
       false,
       false,
       null,

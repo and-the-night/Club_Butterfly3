@@ -255,6 +255,7 @@ body.mobile #stateButton {
 
 .light-mode #leftBar #info {
   border: 1px solid black;
+  margin: 0;
 }
 
 .dark-mode #leftBar #info {
@@ -1001,6 +1002,11 @@ body.mobile #stateButton {
   margin: 4px 4px 0 0;
 }
 
+.dark-mode .logo-container img {
+  filter: invert(1);
+}
+
 .logo-container a {
   margin-left: 4px;
+  margin-top: 9px;
 }

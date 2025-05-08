@@ -48,6 +48,10 @@
   transform: translateY(-50%);
 }
 
+.dark-mode #onboardingMobileTitle {
+  filter: invert(1);
+}
+
 #onboardingMobileText {
   position: absolute;
   top: 40%;
