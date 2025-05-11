@@ -49,6 +49,10 @@
 }
 
 .dark-mode #onboardingMobileTitle {
+  color: white;
+}
+
+.dark-mode #onboardingMobileTitle  img {
   filter: invert(1);
 }
 
